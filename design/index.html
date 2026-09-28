@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DemoBench · Design directions</title>
+<style>
+:root{--bg:#f4f4f1;--ink:#161615;--mid:#6d6c66;--line:#d9d8d2;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#121211;--ink:#eeede8;--mid:#96958e;--line:#2b2b28;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 ui-sans-serif,system-ui,-apple-system,sans-serif}
+.wrap{max-width:1200px;margin:0 auto;padding:40px 24px 60px}
+h1{margin:0;font-size:30px;letter-spacing:-.02em}
+.lede{color:var(--mid);max-width:720px;margin:8px 0 32px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 28px}
+.featured{margin-bottom:44px;padding-bottom:40px;border-bottom:1px solid var(--line)}
+.featured .pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:760px){.featured .pair{grid-template-columns:minmax(0,1fr)}}
+.new{color:#ff5a36;font-weight:700;font-size:13px;margin-left:8px;letter-spacing:.04em;text-transform:uppercase}
+a.card{color:inherit;text-decoration:none;display:block}
+a.card img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:top;border:1px solid var(--line)}
+a.card:hover img{outline:3px solid var(--ink);outline-offset:-3px}
+h2{margin:14px 0 2px;font-size:20px;letter-spacing:-.01em}
+h2 span{color:var(--mid);font-weight:400;font-size:15px}
+p{margin:4px 0 0}
+.fit{color:var(--mid);font-size:14px}
+.foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:var(--mid);font-size:14px}
+code{font-size:13px}
+@media (max-width:760px){.grid{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>DemoBench: design directions</h1>
+  <p class="lede">Each direction includes a browse page and a light detail view, using the same real data: nine cartridges (including Opus's <em>Daybreak</em>) captured on the reference WASM machine. Grids use 160×120 PNG posters; GIFs load on hover and in detail views.</p>
+  <section class="featured">
+    <div class="pair">
+      <a class="card" href="console.html"><img src="shots/console.jpg" alt="Cartridges page"></a>
+      <a class="card" href="studio.html"><img src="shots/studio.jpg" alt="Studio page"></a>
+    </div>
+    <h2>5 · Cartridges + Studio <span>demos you can hold</span><span class="new">new</span></h2>
+    <p>The <a href="console.html">Cartridges</a> page shows every demo as a physical cartridge: a modelled 3D shell with rounded corners and the demo's poster as label art. Hover a cartridge to turn it toward you and play the demo on its label; click it for details. The <a href="studio.html">Studio</a> is the revamped edit/inspection view. It runs the real machine through the unchanged <code>web/app.js</code>, with a cartridge picker, a live register file and a capacity gauge.</p>
+    <p class="fit">Keeps Teletext's warmth (catalogue numbers DB-201…) in a form a modern audience reads instantly. Flat interface; rounding only on the objects.</p>
+  </section>
+  <div class="grid">
+    <a class="card" href="control-room.html"><img src="shots/control-room.jpg" alt="Control Room direction">
+      <h2>1 · Control Room <span>broadcast multiviewer</span></h2>
+      <p>Every cartridge is a live feed on a monitor wall. Punch into preview, TAKE to program. Scopes and audio meters come from real frames and PCM.</p>
+      <p class="fit">Best for: showing many entries at once and comparing them side by side.</p></a>
+    <a class="card" href="teletext.html"><img src="shots/teletext.jpg" alt="Teletext direction">
+      <h2>2 · Teletext <span>Ceefax service</span></h2>
+      <p>P100 index, a page number for every demo, fastext navigation and a scene running order. Real pixels by default; M switches previews to teletext mosaics.</p>
+      <p class="fit">Best for: personality and a memorable identity. Needs the most restraint.</p></a>
+    <a class="card" href="contact-sheet.html"><img src="shots/contact-sheet.jpg" alt="Contact Sheet direction">
+      <h2>3 · Contact Sheet <span>light table &amp; film</span></h2>
+      <p>Each run is a film strip of eight real frames, with the chosen frame circled in grease pencil. Click for an enlargement. The Safelight toggle gives a dark mode.</p>
+      <p class="fit">Best for: evidence over time (benchmark reviews judge full clips, not single screenshots).</p></a>
+    <a class="card" href="byte-plates.html"><img src="shots/byte-plates.jpg" alt="Byte Plates direction">
+      <h2>4 · Byte Plates <span>every byte, visible</span></h2>
+      <p>Output next to the entire binary, one pixel per payload byte, on a 4,096-byte grid. A size ruler compares every entry to the limit; hover the bytes to read them.</p>
+      <p class="fit">Best for: making the size constraint the hero; scales to a leaderboard.</p></a>
+  </div>
+  <p class="foot">Previews are regenerated with <code>node design/tools/make-previews.mjs</code>. Use ‹ › at the bottom-left of each page to flip between directions.</p>
+</div>
+</body>
+</html>

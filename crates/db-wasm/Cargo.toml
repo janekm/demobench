@@ -1,0 +1,16 @@
+[package]
+name = "db-wasm"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+db-contracts = { path = "../db-contracts" }
+db-core = { path = "../db-core" }
+db-video = { path = "../db-video" }
+db-asm = { path = "../db-asm" }
+db-gpu = { path = "../db-gpu" }
+db-spu = { path = "../db-spu" }

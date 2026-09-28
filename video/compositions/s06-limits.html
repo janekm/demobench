@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Unbounded"; src: url("assets/fonts/unbounded.woff2") format("woff2"); font-weight: 200 900; font-display: block; }
+        @font-face { font-family: "Figtree"; src: url("assets/fonts/figtree.woff2") format("woff2"); font-weight: 300 900; font-display: block; }
+        @font-face { font-family: "Red Hat Mono"; src: url("assets/fonts/redhatmono.woff2") format("woff2"); font-weight: 300 700; font-display: block; }
+        #s06-root { position: absolute; inset: 0; overflow: hidden; background: #151619; color: #efeee9; font-family: "Figtree", sans-serif; }
+        #s06-root .glow { position: absolute; left: 1060px; top: 60px; width: 900px; height: 900px; background: radial-gradient(closest-side, rgba(255, 90, 54, 0.16), rgba(255, 90, 54, 0)); }
+        #s06-root .left { position: absolute; left: 72px; top: 64px; width: 860px; display: flex; flex-direction: column; gap: 18px; }
+        #s06-root .kicker { font-family: "Red Hat Mono", monospace; font-size: 22px; letter-spacing: 0.08em; text-transform: uppercase; color: #a3a19a; }
+        #s06-root .kicker b { color: #ff5a36; font-weight: 500; }
+        #s06-root .mask { overflow: hidden; padding-bottom: 4px; }
+        #s06-root .h { font-family: "Unbounded", sans-serif; font-weight: 800; word-spacing: 0.12em; font-size: 84px; line-height: 1.02; letter-spacing: -0.045em; }
+        #s06-root .body { font-size: 34px; line-height: 1.32; max-width: 780px; margin-top: 10px; }
+        #s06-root .receipts { position: absolute; left: 72px; top: 612px; width: 820px; display: flex; flex-direction: column; }
+        #s06-root .rc { position: relative; display: flex; flex-direction: column; gap: 6px; padding: 18px 0 20px; }
+        #s06-root .rc .hl { position: absolute; left: 0; top: 0; width: 100%; height: 2px; background: #4a4b52; transform-origin: 0 50%; }
+        #s06-root .rc .who { font-family: "Red Hat Mono", monospace; font-size: 20px; letter-spacing: 0.08em; color: #ff5a36; text-transform: uppercase; }
+        #s06-root .rc .what { font-size: 30px; line-height: 1.25; }
+        #s06-root .panel { position: absolute; left: 1000px; top: 150px; width: 848px; }
+        #s06-root .ptop { display: flex; justify-content: space-between; align-items: baseline; font-family: "Red Hat Mono", monospace; font-size: 22px; letter-spacing: 0.06em; color: #a3a19a; text-transform: uppercase; margin-bottom: 20px; font-variant-numeric: tabular-nums; }
+        #s06-root .ptop b { color: #efeee9; font-weight: 500; font-size: 30px; letter-spacing: 0; }
+        #s06-root .wrap { display: flex; gap: 36px; }
+        #s06-root canvas { display: block; width: 576px; height: 576px; flex: none; }
+        #s06-root .legend { display: flex; flex-direction: column; gap: 14px; padding-top: 4px; flex: 1; }
+        #s06-root .lg { display: grid; grid-template-columns: 18px 1fr; column-gap: 12px; row-gap: 2px; align-items: center; }
+        #s06-root .lg i { display: block; width: 18px; height: 18px; }
+        #s06-root .lg span { font-size: 23px; line-height: 1.1; }
+        #s06-root .lg em { grid-column: 2; font-style: normal; font-family: "Red Hat Mono", monospace; font-size: 20px; color: #a3a19a; font-variant-numeric: tabular-nums; }
+        #s06-root .cap { margin-top: 24px; font-size: 28px; color: #efeee9; }
+        #s06-root .cap b { color: #ff5a36; font-weight: 600; }
+      </style>
+
+      <div id="s06-root" data-composition-id="s06" data-width="1920" data-height="1080">
+        <div class="glow" id="s06-glow" data-layout-allow-overflow></div>
+        <div class="left">
+          <div class="kicker" id="s06-kicker"><b>2 / 4</b> · Tight limits</div>
+          <div class="mask"><div class="h" id="s06-h1" data-layout-allow-overflow>4 KB of code.</div></div>
+          <div class="mask"><div class="h" id="s06-h2" data-layout-allow-overflow>128 KiB of RAM.</div></div>
+          <div class="body" id="s06-body">Code, 3D scenes, instruments and the song share 4,096 bytes. Nothing fits by accident.</div>
+        </div>
+        <div class="receipts">
+          <div class="rc" id="s06-rc1"><i class="hl"></i><span class="who">Carpet</span><span class="what">A 6.6 KB program, packed into 4,093 bytes.</span></div>
+          <div class="rc" id="s06-rc2"><i class="hl"></i><span class="who">Carpet</span><span class="what">Two video frames overlap to free 5,760 bytes.</span></div>
+          <div class="rc" id="s06-rc3"><i class="hl"></i><span class="who">Megamix</span><span class="what">Registers renamed so it packs 125 bytes smaller.</span></div>
+        </div>
+        <div class="panel">
+          <div class="ptop" id="s06-ptop"><span>daybreak.db32 · every byte</span><span><b id="s06-count">0</b> / 4,096</span></div>
+          <div class="wrap">
+            <canvas id="s06-grid" width="576" height="576"></canvas>
+            <div class="legend" id="s06-legend"></div>
+          </div>
+          <div class="cap" id="s06-cap">One square per byte. <b>64</b> left over.</div>
+        </div>
+      </div>
+
+      <script>
+        (() => {
+          const R = "#s06-root ";
+          const $ = (s) => document.querySelector(R + s);
+          const beat = 60 / 128;
+          // Daybreak's payload by part, from its README (4,032 of 4,096 bytes).
+          const SEG = [
+            ["CPU code", 236, "#efeee9"],
+            ["Setup script", 180, "#a3a19a"],
+            ["GPU kernel", 1836, "#2aa39d"],
+            ["Synth code", 1068, "#8b6cf0"],
+            ["Song", 512, "#c9b8ff"],
+            ["Tables, text", 200, "#6b6c73"],
+          ];
+          const USED = SEG.reduce((a, s) => a + s[1], 0);
+          const colorOf = new Array(4096);
+          let o = 0;
+          const starts = [];
+          for (const [, n, c] of SEG) { starts.push(o); for (let i = 0; i < n; i++) colorOf[o++] = c; }
+          const legend = $("#s06-legend");
+          const rows = SEG.map(([name, n, c]) => {
+            const d = document.createElement("div");
+            d.className = "lg";
+            d.innerHTML = `<i style="background:${c}"></i><span>${name}</span><em>${n.toLocaleString("en-US")} B</em>`;
+            legend.appendChild(d);
+            return d;
+          });
+          const cv = $("#s06-grid"), ctx = cv.getContext("2d");
+          const count = $("#s06-count");
+          const T0 = 0.6, T1 = 4.4;
+          const ease = gsap.parseEase("power1.inOut");
+          const draw = (t) => {
+            const n = Math.round(USED * ease(Math.min(1, Math.max(0, (t - T0) / (T1 - T0)))));
+            ctx.clearRect(0, 0, 576, 576);
+            const blink = t > T1 && Math.floor((t - T1) / (beat / 2)) % 2 === 0;
+            for (let i = 0; i < 4096; i++) {
+              const x = (i % 64) * 9, y = ((i / 64) | 0) * 9;
+              if (i < n) { ctx.fillStyle = colorOf[i]; ctx.fillRect(x, y, 8, 8); }
+              else if (i >= USED && t > T1) { ctx.fillStyle = blink ? "#ff5a36" : "#5a2a22"; ctx.fillRect(x, y, 8, 8); }
+              else { ctx.fillStyle = "#24252a"; ctx.fillRect(x, y, 8, 8); }
+            }
+            count.textContent = n.toLocaleString("en-US");
+            rows.forEach((r, k) => { r.style.opacity = n > starts[k] ? 1 : 0.3; });
+          };
+
+          const tl = gsap.timeline({ paused: true });
+          const clock = { t: 0 };
+          tl.fromTo(clock, { t: 0 }, { t: 7.5, duration: 7.5, ease: "none", onUpdate: () => draw(clock.t) }, 0);
+          tl.fromTo(R + "#s06-glow", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 3, ease: "sine.inOut" }, 0);
+          tl.fromTo(R + "#s06-kicker", { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 0.08);
+          tl.fromTo([R + "#s06-h1", R + "#s06-h2"], { yPercent: 105 }, { yPercent: 0, duration: 0.75, ease: "expo.out", stagger: 0.14 }, 0.18);
+          tl.fromTo(R + "#s06-body", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 0.9);
+          tl.fromTo(R + "#s06-ptop", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "none" }, 0.4);
+          tl.fromTo(R + "#s06-grid", { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 0.4);
+          tl.fromTo(R + "#s06-legend", { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }, 0.55);
+          tl.fromTo(R + "#s06-cap", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: "back.out(1.6)" }, 4.45);
+          ["#s06-rc1", "#s06-rc2", "#s06-rc3"].forEach((s, i) => {
+            const t = 4.7 + i * 0.6;
+            tl.fromTo(R + s + " .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power4.inOut" }, t);
+            tl.fromTo([R + s + " .who", R + s + " .what"], { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.45, ease: "power3.out", stagger: 0.07 }, t + 0.1);
+          });
+          window.__timelines["s06"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

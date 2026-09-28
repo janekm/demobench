@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Archivo"; src: url("assets/fonts/archivo.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; font-display: block; }
+        @font-face { font-family: "Red Hat Mono"; src: url("assets/fonts/redhatmono.woff2") format("woff2"); font-weight: 300 700; font-display: block; }
+        #sf-root { position: absolute; inset: 0; overflow: hidden; background: #f2f1ec; color: #111; font-family: "Archivo", sans-serif; }
+        #sf-root .grid { position: absolute; inset: 0; background-image: linear-gradient(90deg, #d6d4cc 2px, rgba(214, 212, 204, 0) 2px), linear-gradient(#d6d4cc 2px, rgba(214, 212, 204, 0) 2px); background-size: 160px 120px; background-position: -1px -1px; }
+        #sf-root .ln { overflow: hidden; }
+        #sf-root .ln span { display: block; }
+        #sf-root .intro { position: absolute; left: 20px; top: 110px; font-weight: 900; font-stretch: 87%; font-size: 120px; line-height: 1.0; letter-spacing: -0.04em; }
+        #sf-root .vid { position: absolute; left: 1280px; top: 120px; width: 640px; height: 480px; overflow: hidden; background: #000; }
+        #sf-root .vid video { display: block; width: 640px; height: 480px; }
+        #sf-root .vtag { position: absolute; left: 1280px; top: 600px; padding: 8px 12px; background: #111; color: #f2f1ec; font-family: "Red Hat Mono", monospace; font-size: 22px; letter-spacing: 0.04em; }
+        #sf-root .logo { position: absolute; left: 8px; top: 600px; display: flex; font-weight: 900; font-stretch: 75%; font-size: 250px; line-height: 0.96; letter-spacing: -0.05em; overflow: hidden; }
+        #sf-root .logo .ch { display: inline-block; }
+        #sf-root .logo .sl { color: #ff3d17; }
+        #sf-root .url { position: absolute; left: 20px; top: 872px; display: flex; align-items: center; gap: 22px; font-weight: 800; font-size: 64px; letter-spacing: -0.02em; }
+        #sf-root .url i { display: block; width: 44px; height: 44px; background: #ff3d17; }
+        #sf-root .cred { position: absolute; left: 20px; right: 36px; top: 990px; display: flex; justify-content: space-between; font-family: "Red Hat Mono", monospace; font-size: 24px; letter-spacing: 0.05em; text-transform: uppercase; color: #555350; }
+        #sf-root .cred b { color: #111; font-weight: 500; }
+        #sf-root .take { position: absolute; inset: 0; background: #ff3d17; transform-origin: 0 50%; }
+        #sf-root .final { position: absolute; left: 20px; top: 380px; color: #f2f1ec; }
+        #sf-root .final .a { font-weight: 900; font-stretch: 87%; font-size: 200px; line-height: 1; letter-spacing: -0.045em; }
+        #sf-root .final .b { margin-top: 26px; font-family: "Red Hat Mono", monospace; font-size: 30px; letter-spacing: 0.06em; text-transform: uppercase; color: #111; }
+      </style>
+
+      <div id="sf-root" data-composition-id="sf" data-width="1920" data-height="1080">
+        <div class="grid"></div>
+        <div class="intro" id="sf-intro"><div class="ln" data-layout-allow-overflow><span>4 KB demos.</span></div><div class="ln" data-layout-allow-overflow><span>Written by</span></div><div class="ln" data-layout-allow-overflow><span style="color: #ff3d17">AI agents.</span></div></div>
+        <div class="vid" id="sf-vid">
+          <video id="sf-video" data-start="0" data-duration="7.5" data-track-index="0" src="assets/footage/f-daylight.mp4" muted playsinline></video>
+        </div>
+        <div class="vtag" id="sf-vtag">DAYBREAK · 4,032 B</div>
+        <h1 class="logo" id="sf-logo"><span class="ch">D</span><span class="ch">e</span><span class="ch">m</span><span class="ch">o</span><span class="ch sl">/</span><span class="ch">B</span><span class="ch">e</span><span class="ch">n</span><span class="ch">c</span><span class="ch">h</span></h1>
+        <div class="url" id="sf-url"><i></i><span>demobench.janekm.com</span></div>
+        <div class="cred" id="sf-cred"><span>Demos written by <b>Claude Opus</b></span><span>Music: <b>Daybreak</b>, 1,580 B of synth and song</span></div>
+        <div class="take" id="sf-take"></div>
+        <div class="final" id="sf-final"><div class="ln" data-layout-allow-overflow><span class="a">demobench</span></div><div class="ln" data-layout-allow-overflow><span class="a">.janekm.com</span></div><div class="b">An LLM agent benchmark in 4,096 bytes</div></div>
+      </div>
+
+      <script>
+        (() => {
+          const R = "#sf-root ";
+          const beat = 60 / 128, bar = beat * 4;
+          const tl = gsap.timeline({ paused: true });
+          tl.fromTo(R + "#sf-intro span", { yPercent: 110 }, { yPercent: 0, duration: 0.35, ease: "expo.out", stagger: beat }, 0.04);
+          tl.fromTo(R + "#sf-vid", { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 0.45, ease: "power4.out" }, beat);
+          tl.fromTo(R + "#sf-vtag", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out" }, beat * 2);
+          tl.fromTo(R + "#sf-logo .ch", { yPercent: 105 }, { yPercent: 0, duration: 0.5, ease: "expo.out", stagger: 0.035 }, beat * 3);
+          tl.fromTo(R + "#sf-url", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, beat * 5);
+          tl.fromTo(R + "#sf-url i", { rotation: -90, scale: 0 }, { rotation: 0, scale: 1, duration: 0.4, ease: "back.out(2)" }, beat * 5 + 0.05);
+          tl.fromTo(R + "#sf-cred span", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out", stagger: 0.1 }, beat * 6);
+          // last bar: everything leaves, red takes the frame, the address stays
+          const out = bar * 3;
+          tl.to([R + "#sf-intro", R + "#sf-vid", R + "#sf-vtag", R + "#sf-cred"], { x: -160, opacity: 0, duration: 0.25, ease: "power4.in", stagger: 0.04 }, out - 0.3);
+          tl.set(R + "#sf-final", { autoAlpha: 0 }, 0);
+          tl.set(R + "#sf-final", { autoAlpha: 1 }, out + 0.3);
+          tl.fromTo(R + "#sf-take", { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: "power4.inOut" }, out);
+          tl.set([R + "#sf-logo", R + "#sf-url"], { autoAlpha: 0 }, out + 0.36);
+          tl.fromTo(R + "#sf-final .a", { yPercent: 110 }, { yPercent: 0, duration: 0.4, ease: "expo.out", stagger: 0.08 }, out + 0.3);
+          tl.fromTo(R + "#sf-final .b", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "none" }, out + 0.7);
+          window.__timelines["sf"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

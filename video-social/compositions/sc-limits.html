@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Archivo"; src: url("assets/fonts/archivo.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; font-display: block; }
+        @font-face { font-family: "Red Hat Mono"; src: url("assets/fonts/redhatmono.woff2") format("woff2"); font-weight: 300 700; font-display: block; }
+        #sc-root { position: absolute; inset: 0; overflow: hidden; background: #f2f1ec; color: #111; font-family: "Archivo", sans-serif; }
+        #sc-root .grid { position: absolute; inset: 0; background-image: linear-gradient(90deg, #d6d4cc 2px, rgba(214, 212, 204, 0) 2px), linear-gradient(#d6d4cc 2px, rgba(214, 212, 204, 0) 2px); background-size: 160px 120px; background-position: -1px -1px; }
+        #sc-root .num { position: absolute; left: 20px; top: -34px; font-weight: 900; font-stretch: 62%; font-size: 280px; line-height: 1; letter-spacing: -0.05em; color: #ff3d17; }
+        #sc-root .ln { overflow: hidden; }
+        #sc-root .h { position: absolute; left: 336px; top: 22px; display: flex; gap: 0.24em; font-weight: 900; font-stretch: 87%; font-size: 84px; line-height: 1.08; letter-spacing: -0.035em; }
+        #sc-root .h span { display: block; }
+        #sc-root .sub { position: absolute; left: 336px; top: 138px; font-weight: 400; font-size: 34px; }
+        #sc-root .big { position: absolute; left: 12px; top: 236px; font-weight: 900; font-stretch: 62%; font-size: 520px; line-height: 0.86; letter-spacing: -0.045em; font-variant-numeric: tabular-nums; }
+        #sc-root .unit { position: absolute; left: 324px; top: 684px; font-weight: 900; font-stretch: 100%; font-size: 40px; letter-spacing: 0.02em; color: #ff3d17; }
+        #sc-root .legend { position: absolute; left: 1128px; top: 240px; width: 296px; display: flex; flex-direction: column; gap: 4px; }
+        #sc-root .lg { display: grid; grid-template-columns: 22px 1fr auto; column-gap: 12px; align-items: center; height: 44px; border-top: 2px solid #111; }
+        #sc-root .lg i { display: block; width: 22px; height: 22px; }
+        #sc-root .lg span { font-weight: 700; font-size: 25px; }
+        #sc-root .lg em { font-style: normal; font-family: "Red Hat Mono", monospace; font-size: 21px; font-variant-numeric: tabular-nums; }
+        #sc-root .lghead { font-family: "Red Hat Mono", monospace; font-size: 20px; letter-spacing: 0.06em; text-transform: uppercase; color: #8a8983; height: 34px; }
+        #sc-root canvas { position: absolute; left: 1440px; top: 240px; width: 480px; height: 480px; }
+        #sc-root .ramh { position: absolute; left: 20px; top: 738px; display: flex; gap: 0.24em; font-weight: 900; font-stretch: 87%; font-size: 76px; line-height: 1.08; letter-spacing: -0.035em; }
+        #sc-root .ramh span { display: block; }
+        #sc-root .ramr { position: absolute; right: 36px; top: 766px; font-family: "Red Hat Mono", monospace; font-size: 28px; font-variant-numeric: tabular-nums; }
+        #sc-root .bar { position: absolute; left: 0; top: 840px; width: 1920px; height: 120px; display: flex; gap: 6px; }
+        #sc-root .seg { height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 0 28px; background: #111; color: #f2f1ec; transform-origin: 0 50%; white-space: nowrap; }
+        #sc-root .seg b { font-weight: 900; font-size: 40px; letter-spacing: -0.02em; }
+        #sc-root .seg i { font-style: normal; font-family: "Red Hat Mono", monospace; font-size: 22px; }
+        #sc-root .seg.rest { background: #ff3d17; color: #111; flex: none; }
+        #sc-root .foot { position: absolute; left: 20px; top: 984px; right: 36px; display: flex; justify-content: space-between; align-items: baseline; font-size: 30px; }
+        #sc-root .foot em { font-style: normal; font-family: "Red Hat Mono", monospace; font-size: 22px; color: #555350; }
+      </style>
+
+      <div id="sc-root" data-composition-id="sc" data-width="1920" data-height="1080">
+        <div class="grid"></div>
+        <div class="num" id="sc-num" data-layout-allow-overlap>02</div>
+        <div class="h" id="sc-h"><div class="ln" data-layout-allow-overflow><span>Every</span></div><div class="ln" data-layout-allow-overflow><span>byte</span></div><div class="ln" data-layout-allow-overflow><span>counts.</span></div></div>
+        <div class="sub" id="sc-sub">Code, 3D graphics, instruments and the song share one cartridge.</div>
+        <div class="big" id="sc-big">0</div>
+        <div class="unit" id="sc-unit" data-layout-allow-overlap>BYTES OF CODE SPACE</div>
+        <div class="legend" id="sc-legend"><div class="lghead">Daybreak, byte by byte</div></div>
+        <canvas id="sc-grid" width="480" height="480"></canvas>
+        <div class="ramh" id="sc-ramh"><div class="ln" data-layout-allow-overflow><span>128</span></div><div class="ln" data-layout-allow-overflow><span>KiB</span></div><div class="ln" data-layout-allow-overflow><span>of</span></div><div class="ln" data-layout-allow-overflow><span>RAM.</span></div></div>
+        <div class="ramr" id="sc-ramr">131,072 B</div>
+        <div class="bar" id="sc-bar">
+          <div class="seg" id="sc-sa" style="flex: 57600"><b>Video frame A</b><i>160 × 120 × 3 = 57,600 B</i></div>
+          <div class="seg" id="sc-sb" style="flex: 57600"><b>Video frame B</b><i>57,600 B</i></div>
+          <div class="seg rest" id="sc-sr" style="width: 232px"><b>Rest</b><i>15,872 B</i></div>
+        </div>
+        <div class="foot" id="sc-foot"><span>Two frames of video take 88%. Everything else shares the rest.</span><em>Carpet overlaps its frames to win back 5,760 B</em></div>
+      </div>
+
+      <script>
+        (() => {
+          const R = "#sc-root ";
+          const $ = (s) => document.querySelector(R + s);
+          const beat = 60 / 128, bar = beat * 4;
+          // Daybreak's payload by part, from its README (4,032 of 4,096 bytes).
+          const SEG = [["CPU code", 236, "#555350"], ["Setup", 180, "#8a8983"], ["GPU kernel", 1836, "#111111"],
+            ["Synth", 1068, "#ff3d17"], ["Song", 512, "#ff9b85"], ["Tables", 200, "#b9b7af"]];
+          const USED = SEG.reduce((a, s) => a + s[1], 0);
+          const colorOf = []; const starts = [];
+          for (const [, n, c] of SEG) { starts.push(colorOf.length); for (let i = 0; i < n; i++) colorOf.push(c); }
+          const rows = SEG.map(([name, n, c]) => {
+            const d = document.createElement("div"); d.className = "lg";
+            d.innerHTML = `<i style="background:${c}"></i><span>${name}</span><em>${n.toLocaleString("en-US")}</em>`;
+            $("#sc-legend").appendChild(d); return d;
+          });
+          const ctx = $("#sc-grid").getContext("2d");
+          const big = $("#sc-big");
+          const ease = gsap.parseEase("power2.inOut");
+          const T0 = 0.25, T1 = 3.2;
+          const draw = (t) => {
+            const n = Math.round(USED * ease(Math.min(1, Math.max(0, (t - T0) / (T1 - T0)))));
+            ctx.clearRect(0, 0, 480, 480);
+            const blink = t > T1 && Math.floor((t - T1) / (beat / 2)) % 2 === 0;
+            for (let i = 0; i < 4096; i++) {
+              const x = (i % 64) * 7.5, y = ((i / 64) | 0) * 7.5;
+              ctx.fillStyle = i < n ? colorOf[i] : i >= USED && t > T1 ? (blink ? "#ff3d17" : "#f2f1ec") : "#e3e1da";
+              ctx.fillRect(x, y, 6.5, 6.5);
+            }
+            rows.forEach((r, k) => { r.style.opacity = n > starts[k] ? 1 : 0.25; });
+          };
+          const tl = gsap.timeline({ paused: true });
+          const clock = { t: 0 };
+          tl.fromTo(clock, { t: 0 }, { t: 7.5, duration: 7.5, ease: "none", onUpdate: () => draw(clock.t) }, 0);
+          tl.fromTo(R + "#sc-num", { yPercent: -100 }, { yPercent: 0, duration: 0.4, ease: "expo.out" }, 0.02);
+          tl.fromTo(R + "#sc-h span", { yPercent: 110 }, { yPercent: 0, duration: 0.3, ease: "expo.out", stagger: beat / 2 }, 0.06);
+          tl.fromTo(R + "#sc-sub", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" }, 0.5);
+          // the counter runs up to the cartridge limit
+          const n = { v: 0 };
+          tl.fromTo(n, { v: 0 }, { v: 4096, duration: 1.4, ease: "power3.out", immediateRender: false, onUpdate: () => { big.textContent = Math.round(n.v).toLocaleString("en-US"); } }, 0.1);
+          tl.fromTo(R + "#sc-unit", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.3, ease: "expo.out" }, beat * 3);
+          tl.fromTo(R + "#sc-legend", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 0.3);
+          tl.fromTo(R + "#sc-grid", { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.35, ease: "expo.out" }, 0.2);
+          // bar 3: RAM
+          tl.fromTo(R + "#sc-ramh span", { yPercent: 110 }, { yPercent: 0, duration: 0.3, ease: "expo.out", stagger: beat / 2 }, bar * 2);
+          tl.fromTo(R + "#sc-ramr", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, bar * 2 + beat);
+          ["#sc-sa", "#sc-sb", "#sc-sr"].forEach((s, i) => {
+            tl.fromTo(R + s, { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "expo.out" }, bar * 2 + beat * (1 + i));
+          });
+          tl.fromTo(R + "#sc-foot", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, bar * 2 + beat * 5);
+          window.__timelines["sc"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000000">
+<title>DemoBench · Teletext</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{
+  --k:#000;--r:#ff0000;--g:#00ff00;--y:#ffff00;--b:#0000ff;--m:#ff00ff;--c:#00ffff;--w:#ffffff;
+  --row:24px; --fs:25px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:#000;color:var(--w)}
+body{font-family:'VT323',ui-monospace,monospace;font-size:var(--fs);line-height:var(--row);min-height:100vh;padding-bottom:calc(var(--row) * 3)}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--y);outline-offset:2px}
+
+/* CRT treatment */
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;background:repeating-linear-gradient(transparent 0 2px,#0000002e 2px 3px)}
+.screen{max-width:1240px;margin:0 auto;padding:0 20px;text-shadow:0 0 6px currentColor}
+.screen canvas,.screen img{text-shadow:none}
+
+/* teletext colours */
+.r{color:var(--r)}.g{color:var(--g)}.y{color:var(--y)}.b{color:var(--b)}.m{color:var(--m)}.c{color:var(--c)}.w{color:var(--w)}
+.bg-r{background:var(--r)}.bg-g{background:var(--g)}.bg-y{background:var(--y)}.bg-b{background:var(--b)}.bg-m{background:var(--m)}.bg-c{background:var(--c)}.bg-w{background:var(--w)}
+[class*=bg-]{text-shadow:none}
+.bg-y,.bg-c,.bg-g,.bg-w{color:#000}
+.dh{display:block;height:calc(var(--row) * 2);line-height:var(--row);overflow:visible}
+.dh>span{display:inline-block;transform:scaleY(2);transform-origin:0 0}
+.flash{animation:flash 1s steps(1) infinite}
+@keyframes flash{50%{opacity:0}}
+.row{min-height:var(--row);white-space:pre-wrap}
+
+/* header */
+.header{position:sticky;top:0;z-index:20;background:#000;display:flex;gap:1ch;white-space:nowrap;overflow:hidden;padding-top:6px}
+.header .pg{min-width:5ch}
+.header .svc{flex:1}
+
+/* banner */
+.banner{position:relative;margin-top:var(--row)}
+.banner canvas{display:block;width:100%;height:auto;image-rendering:pixelated}
+.strap{display:flex;justify-content:space-between;gap:2ch;flex-wrap:wrap}
+
+/* mosaic previews */
+.mosaic{position:relative;background:#000;aspect-ratio:4/3}
+.mosaic canvas,.mosaic img{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated}
+.mosaic canvas{display:none}
+.mosaics .mosaic canvas{display:block}
+
+/* index */
+.top{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:2ch;margin-top:var(--row)}
+.top .label{display:inline-block;padding:0 1ch}
+.top h2{margin:var(--row) 0 calc(var(--row) * 1);font-weight:400;font-size:inherit;color:var(--y)}
+.top h2 .dh>span{white-space:normal}
+.top p{margin:0 0 var(--row)}
+.top .see{display:inline-flex;gap:1ch}
+.bar-head{display:flex;justify-content:space-between;padding:0 1ch;margin:calc(var(--row) * 2) 0 var(--row)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--row) 2ch}
+.tile{display:block}
+.tile .meta{display:flex;justify-content:space-between;gap:1ch;margin-top:6px}
+.tile .num{color:var(--y)}
+.tile .ttl{color:var(--w);text-transform:uppercase}
+.tile .facts{color:var(--c)}
+.tile:hover .ttl,.tile:focus-visible .ttl{background:var(--w);color:#000;text-shadow:none}
+.tile .mosaic{outline:0}
+.tile:hover .mosaic{box-shadow:0 0 0 3px var(--y)}
+.brief{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2ch;margin-top:calc(var(--row) * 2)}
+.brief>a{display:block;border-top:4px solid currentColor;padding-top:6px}
+.brief>a:hover{background:#ffffff12}
+.leaders{display:flex;gap:.5ch}.leaders i{flex:1;min-width:0;overflow:hidden;white-space:nowrap;color:var(--b)}
+.leaders i:before{content:"................................................................................................"}
+
+/* detail */
+.titleband{display:flex;justify-content:space-between;align-items:flex-start;padding:0 1ch;margin-top:var(--row)}
+.titleband .sp{font-size:var(--fs)}
+.detail{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:2ch;margin-top:var(--row)}
+.facts-list{margin:0}
+.facts-list div{display:flex;gap:.5ch}
+.facts-list dt{color:var(--c)}.facts-list dd{margin:0;color:var(--w);text-align:right}
+.facts-list i{flex:1;min-width:0;overflow:hidden;white-space:nowrap;color:var(--b)}
+.facts-list i:before{content:"................................................................................"}
+.bytes canvas{display:block;width:100%;height:auto;image-rendering:pixelated;margin:6px 0}
+.subpage{margin-top:var(--row);min-height:calc(var(--row) * 12)}
+.sched div{display:grid;grid-template-columns:7ch 1fr;gap:1ch}
+.sched div.on{background:var(--b)}
+.listing{color:var(--g);white-space:pre;overflow:auto;margin:0;font:inherit}
+.wave canvas{display:block;width:100%;height:auto;image-rendering:pixelated}
+.notfound{margin-top:calc(var(--row) * 4);text-align:center}
+
+/* fastext + remote */
+.fastext{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#000;border-top:2px solid #111}
+.fastext .inner{max-width:1240px;margin:0 auto;padding:6px 20px 8px;display:flex;gap:3ch;align-items:center;white-space:nowrap;overflow-x:auto;text-shadow:0 0 6px currentColor}
+.fastext a:hover{background:currentColor}.fastext a:hover span{color:#000;text-shadow:none}
+.fastext .keys{margin-left:auto;display:flex;gap:1.5ch;color:#8a8a8a}
+.fastext .keys button{padding:0 .6ch;border:1px solid #444;border-radius:3px;line-height:calc(var(--row) - 2px);color:#bbb;text-shadow:none}
+.fastext .keys button[aria-pressed=true]{background:var(--w);color:#000;border-color:var(--w)}
+.fastext .entry{color:var(--w)}
+
+/* subpage tabs */
+.subnav{display:flex;gap:2ch;margin-top:var(--row);flex-wrap:wrap}
+.subnav button{color:var(--c)}
+.subnav button[aria-selected=true]{background:var(--c);color:#000;text-shadow:none;padding:0 1ch}
+
+@media (max-width:1100px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:820px){
+  :root{--row:20px;--fs:21px}
+  .screen{padding:0 12px}
+  .top,.detail{grid-template-columns:minmax(0,1fr)}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .brief{grid-template-columns:minmax(0,1fr)}
+  .header .date{display:none}
+  .fastext .inner{padding:6px 12px 8px;gap:2ch}
+}
+@media (max-width:420px){.grid{gap:var(--row) 1ch}.tile .facts{display:none}}
+@media (prefers-reduced-motion:reduce){.flash{animation:none}}
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="header" aria-live="off">
+    <span class="pg w" id="hp">P100</span>
+    <span class="svc"><span class="y">DEMOBENCH</span> <span class="w" id="hc">100</span></span>
+    <span class="date w" id="hd"></span>
+    <span class="y" id="ht">--:--/--</span>
+  </div>
+  <main id="page" aria-live="polite"></main>
+</div>
+
+<nav class="fastext" aria-label="Fastext">
+  <div class="inner">
+    <span id="fastext" style="display:contents"></span>
+    <span class="keys">
+      <span class="entry" aria-hidden="true">P<span id="entry">___</span></span>
+      <button type="button" id="k-mosaic" aria-pressed="false" title="Render previews as teletext mosaics (M)">MOSAIC</button>
+    </span>
+  </div>
+</nav>
+
+<script src="previews/data.js"></script>
+<script>
+const ORDER = ['daybreak','aurora','rgb-study','ray-tracer','ray-tracer-r1','gpu-ray-tracer','gpu-ray-tracer-fast','signal-garden','neon-stadium'];
+const byId = Object.fromEntries(DEMOS.map(d => [d.id, d]));
+const list = ORDER.map(id => byId[id]).filter(Boolean);
+list.forEach((d, i) => d.page = 201 + i);
+const byPage = Object.fromEntries(list.map(d => [d.page, d]));
+const $ = s => document.querySelector(s);
+const fmt = n => n.toLocaleString('en-GB');
+const up = s => s.toUpperCase();
+const esc = s => s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]);
+const dh = (text, cls = '') => `<span class="dh ${cls}"><span>${text}</span></span>`;
+const name = d => d.subtitle.startsWith('revision') || d.subtitle.includes('rays') ? `${d.title} ${d.subtitle}` : d.title;
+const BAND = ['bg-r', 'bg-m', 'bg-b', 'bg-g', 'bg-c', 'bg-y'];
+const poster = d => `previews/${d.poster ?? d.keyframes[0].file}`;
+
+/* ── teletext mosaic renderer ── */
+const PAL = [[0,0,0],[255,0,0],[0,255,0],[255,255,0],[0,0,255],[255,0,255],[0,255,255],[255,255,255]];
+const CSS = ['#000','#f00','#0f0','#ff0','#00f','#f0f','#0ff','#fff'];
+// Teletext colour numbers are the channel bits themselves: red 1, green 2, blue 4 (yellow 3, magenta 5, cyan 6, white 7).
+const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map(v => (v + .5) * 16);
+const DIST = new Float32Array(64);
+for (let a = 0; a < 8; a++) for (let b = 0; b < 8; b++) DIST[a * 8 + b] = PAL[a].reduce((s, v, c) => s + (v - PAL[b][c]) ** 2, 0);
+const mosaics = new Set();
+class Mosaic {
+  constructor(host, d, cols, rows) {
+    this.frames = d.keyframes.map(k => Object.assign(new Image(), { src: `previews/${k.file}` }));
+    this.period = d.gifFrames / d.gifFps / this.frames.length * 1000;
+    this.shown = null; this.cols = cols; this.rows = rows;
+    this.canvas = document.createElement('canvas');
+    this.cw = 12; this.ch = 18;
+    this.canvas.width = cols * this.cw; this.canvas.height = rows * this.ch;
+    this.ctx = this.canvas.getContext('2d');
+    this.off = document.createElement('canvas'); this.off.width = cols * 2; this.off.height = rows * 3;
+    this.octx = this.off.getContext('2d', { willReadFrequently: true });
+    host.prepend(this.canvas);
+    mosaics.add(this);
+  }
+  draw(now) {
+    const img = this.frames[Math.floor(now / this.period) % this.frames.length];
+    const { cols, rows, ctx, octx, cw, ch } = this;
+    if (img === this.shown || !img.complete || !img.naturalWidth || !this.canvas.isConnected) return;
+    this.shown = img;
+    octx.drawImage(img, 0, 0, cols * 2, rows * 3);
+    const px = octx.getImageData(0, 0, cols * 2, rows * 3).data;
+    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    // per-channel auto-levels so low-contrast frames still separate into distinct corners
+    const lo = [255, 255, 255], hi = [0, 0, 0];
+    for (let i = 0; i < px.length; i += 4) for (let c = 0; c < 3; c++) { lo[c] = Math.min(lo[c], px[i + c]); hi[c] = Math.max(hi[c], px[i + c]); }
+    const top = Math.max(...hi), bottom = Math.min(...lo);
+    for (let c = 0; c < 3; c++) { lo[c] = Math.min(lo[c], bottom + 24); hi[c] = Math.max(hi[c], lo[c] + 60, top * .8); }
+    const sw = cw / 2, sh = ch / 3, W = cols * 2, idx = new Uint8Array(6), count = new Uint8Array(8);
+    for (let cy = 0; cy < rows; cy++) for (let cx = 0; cx < cols; cx++) {
+      // each sixel snaps to an RGB-cube corner through an ordered threshold, like hand-shaded teletext art
+      count.fill(0);
+      for (let s = 0; s < 6; s++) {
+        const x = cx * 2 + (s & 1), y = cy * 3 + (s >> 1), o = (y * W + x) * 4;
+        const t = BAYER[(y & 3) * 4 + (x & 3)];
+        const n = [0, 1, 2].map(c => Math.max(0, Math.min(255, (px[o + c] - lo[c]) * 255 / (hi[c] - lo[c]))));
+        const g = (n[0] + n[1] + n[2]) / 3;
+        let k = 0;
+        for (let c = 0; c < 3; c++) { const v = 255 * (Math.max(0, Math.min(255, g + (n[c] - g) * 1.35)) / 255) ** .85; if (v > t) k |= 1 << c; }
+        idx[s] = k;
+        count[idx[s]]++;
+      }
+      // a cell holds only two colours: keep the two most common, fold the rest into the nearer one
+      let a = 0, b = -1;
+      for (let k = 1; k < 8; k++) if (count[k] > count[a]) a = k;
+      for (let k = 0; k < 8; k++) if (k !== a && count[k] && (b < 0 || count[k] > count[b])) b = k;
+      if (a) { ctx.fillStyle = CSS[a]; ctx.fillRect(cx * cw, cy * ch, cw, ch); }
+      if (b < 0) continue;
+      ctx.fillStyle = CSS[b];
+      for (let s = 0; s < 6; s++) {
+        const k = idx[s];
+        if (k === b || (k !== a && DIST[k * 8 + b] < DIST[k * 8 + a])) ctx.fillRect(cx * cw + (s & 1) * sw, cy * ch + (s >> 1) * sh, sw, sh);
+      }
+    }
+  }
+}
+function mosaicBox(d, cols, rows, animated) {
+  const box = document.createElement('div');
+  box.className = 'mosaic';
+  const img = new Image(); img.src = animated ? `previews/${d.gif}` : poster(d); img.alt = `${d.title} preview`;
+  box.append(img);
+  new Mosaic(box, d, cols, rows);
+  return box;
+}
+let lastMosaic = 0;
+function mosaicLoop(now) {
+  if (document.body.classList.contains('mosaics') && now - lastMosaic > 100) { lastMosaic = now; for (const m of mosaics) m.canvas.isConnected ? m.draw(now) : mosaics.delete(m); }
+  requestAnimationFrame(mosaicLoop);
+}
+requestAnimationFrame(mosaicLoop);
+
+/* ── sixel text banner, rasterised from a block face ── */
+function banner(host, text, colour, sub) {
+  const cols = 100, rows = 6, cw = 12, ch = 18, sw = cw / 2, sh = ch / 3;
+  const c = document.createElement('canvas'); c.width = cols * cw; c.height = rows * ch;
+  const x = c.getContext('2d');
+  const o = document.createElement('canvas'); o.width = cols * 2; o.height = rows * 3;
+  const ox = o.getContext('2d', { willReadFrequently: true });
+  const paint = () => {
+    ox.clearRect(0, 0, o.width, o.height);
+    ox.fillStyle = '#fff'; ox.textBaseline = 'alphabetic';
+    const size = 16;
+    ox.font = `${size}px Bungee`;
+    const stretch = (o.width - 8) / ox.measureText(text).width;
+    ox.setTransform(stretch, 0, 0, 1, 3, 0);
+    ox.fillText(text, 0, 2 + size * .82);
+    ox.setTransform(1, 0, 0, 1, 0, 0);
+    const px = ox.getImageData(0, 0, o.width, o.height).data;
+    const on = (i, y) => i >= 0 && y >= 0 && i < o.width && y < o.height && px[(y * o.width + i) * 4 + 3] > 120;
+    x.fillStyle = CSS[4]; x.fillRect(0, 0, c.width, c.height);
+    for (let y = 0; y < o.height; y++) for (let i = 0; i < o.width; i++) {
+      if (on(i, y)) { x.fillStyle = CSS[colour]; x.fillRect(i * sw, y * sh, sw, sh); }
+      else if (on(i - 1, y - 1)) { x.fillStyle = CSS[1]; x.fillRect(i * sw, y * sh, sw, sh); }
+    }
+    x.fillStyle = CSS[6];
+    for (let i = 0; i < cols * 2; i += 4) x.fillRect(i * sw, (rows * 3 - 1) * sh, sw * 2, sh);
+  };
+  document.fonts.load('17px Bungee').then(paint, paint);
+  host.append(c);
+}
+
+/* ── page counter & navigation ── */
+let current = 100, entry = '';
+function header(p) { $('#hp').textContent = `P${p}`; }
+function go(p, push = true) {
+  p = Number(p);
+  if (push && location.hash !== `#${p}`) history.pushState(null, '', `#${p}`);
+  header(p);
+  $('#hc').textContent = p;
+  show(p);
+}
+function show(p) {
+  current = p;
+  mosaics.clear();
+  const page = $('#page');
+  page.innerHTML = '';
+  window.scrollTo(0, 0);
+  if (p === 100) index(page);
+  else if (byPage[p]) detail(page, byPage[p]);
+  else if (p === 300) bench(page);
+  else if (p === 400) machine(page);
+  else page.innerHTML = `<div class="notfound">${dh(`<span class="r">P${p}</span> <span class="w">IS NOT IN SERVICE</span>`)}<div class="row c">TRY <a class="y" href="#100">100</a> FOR THE INDEX</div></div>`;
+  fastext(p);
+}
+addEventListener('popstate', () => go(location.hash.slice(1) || 100, false));
+addEventListener('keydown', e => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (/^\d$/.test(e.key)) {
+    entry += e.key; $('#entry').textContent = entry.padEnd(3, '_');
+    if (entry.length === 3) { const p = entry; entry = ''; setTimeout(() => $('#entry').textContent = '___', 400); go(p); }
+  } else if (e.key === 'm') toggle();
+  else if (e.key === 'ArrowRight' && byPage[current + 1]) go(current + 1);
+  else if (e.key === 'ArrowLeft' && byPage[current - 1]) go(current - 1);
+});
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]'); if (!a) return;
+  e.preventDefault(); go(a.getAttribute('href').slice(1));
+});
+function toggle() {
+  const b = $('#k-mosaic'), on = b.getAttribute('aria-pressed') !== 'true';
+  b.setAttribute('aria-pressed', on);
+  document.body.classList.toggle('mosaics', on);
+}
+$('#k-mosaic').addEventListener('click', toggle);
+
+function fastext(p) {
+  const d = byPage[p];
+  const links = d
+    ? [['r', `#${byPage[p - 1] ? p - 1 : list.at(-1).page}`, '‹ PREVIOUS'], ['g', `#${byPage[p + 1] ? p + 1 : list[0].page}`, 'NEXT ›'], ['y', '#300', 'BENCHMARK'], ['c', '#100', 'INDEX']]
+    : [['r', `#${list[0].page}`, 'AGENT DEMOS'], ['g', '#400', 'THE MACHINE'], ['y', '#300', 'BENCHMARK'], ['c', '#100', 'INDEX']];
+  $('#fastext').innerHTML = links.map(([c, h, t]) => `<a class="${c}" href="${h}"><span>${t}</span></a>`).join('');
+}
+
+/* ── clock ── */
+const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const pad = n => String(n).padStart(2, '0');
+setInterval(() => {
+  const t = new Date();
+  $('#hd').textContent = `${DAYS[t.getDay()]} ${pad(t.getDate())} ${MONTHS[t.getMonth()]}`;
+  $('#ht').textContent = `${pad(t.getHours())}:${pad(t.getMinutes())}/${pad(t.getSeconds())}`;
+}, 250);
+
+/* ── P100 index ── */
+function index(page) {
+  const b = document.createElement('div'); b.className = 'banner'; banner(b, 'DEMOBENCH', 3); page.append(b);
+  page.insertAdjacentHTML('beforeend', `<div class="strap">${dh('<span class="c">4K DEMOS FOR A TINY COMPUTER</span>')}<span class="dh"><span class="w">${list.length} PROGRAMMES ON AIR</span></span></div>`);
+  const hero = list.find(d => d.author) ?? list[0];
+  const top = document.createElement('section'); top.className = 'top';
+  const left = document.createElement('a'); left.href = `#${hero.page}`; left.setAttribute('aria-label', `${hero.title}, page ${hero.page}`);
+  left.append(mosaicBox(hero, 40, 18, true));
+  const right = document.createElement('div');
+  right.innerHTML = hero.author
+    ? `<span class="label bg-r">TOP STORY</span>
+      <h2>${dh(`${up(hero.author)} FITS A ${hero.seconds}-SECOND INTRO INTO ${fmt(hero.payloadBytes)} BYTES`)}</h2>
+      <p class="w">${hero.scenes.length} scenes, night to full daylight, cut to an original 128 BPM track. Rendering, synthesis, sequencing and text all run inside the cartridge.</p>
+      <p class="c">GPU ray tracer and sphere tracer, a stateless FM synth, and a ${fmt(4096 - hero.payloadBytes)}-byte margin to spare.</p>
+      <a class="see y" href="#${hero.page}"><span class="w">FULL STORY</span> ${hero.page}</a>`
+    : `<span class="label bg-r">TOP STORY</span><h2>${dh(up(hero.title))}</h2><a class="see y" href="#${hero.page}">${hero.page}</a>`;
+  top.append(left, right); page.append(top);
+
+  page.insertAdjacentHTML('beforeend', `<div class="bar-head bg-b"><span class="y">REFERENCE CARTRIDGES</span><span class="w">${list.filter(d => !d.author)[0]?.page}–${list.at(-1).page}</span></div>`);
+  const grid = document.createElement('div'); grid.className = 'grid';
+  for (const d of list.filter(d => d !== hero)) {
+    const a = document.createElement('a'); a.className = 'tile'; a.href = `#${d.page}`;
+    a.append(mosaicBox(d, 20, 9));
+    const img = a.querySelector('img'), live = on => { img.src = on ? `previews/${d.gif}` : poster(d); };
+    a.addEventListener('mouseenter', () => live(true)); a.addEventListener('mouseleave', () => live(false));
+    a.addEventListener('focus', () => live(true)); a.addEventListener('blur', () => live(false));
+    a.insertAdjacentHTML('beforeend', `<div class="meta"><span class="ttl">${name(d)}</span><span class="num">${d.page}</span></div><div class="facts">${fmt(d.payloadBytes)}B ${d.format} ${d.engines.join('+')}</div>`);
+    grid.append(a);
+  }
+  page.append(grid);
+  page.insertAdjacentHTML('beforeend', `<section class="brief">
+    <a href="#300" class="y"><div class="leaders"><span>BENCHMARK</span><i></i><span>300</span></div><div class="w">12 pilot tasks: effects, compositions, repairs, optimisations.</div><div class="r flash">NO RESULTS YET</div></a>
+    <a href="#400" class="g"><div class="leaders"><span>THE MACHINE</span><i></i><span>400</span></div><div class="w">DB32: 16 registers, 128 KiB RAM, 160×120 video, 64-lane GPU, 48 kHz SPU.</div></a>
+    <a href="#${hero.page}" class="m"><div class="leaders"><span>HOW TO WATCH</span><i></i><span>${hero.page}</span></div><div class="w">Key a page number, use the coloured keys, or press M for teletext mosaics.</div></a>
+  </section>`);
+}
+
+/* ── P2xx programme pages ── */
+function detail(page, d) {
+  const i = list.indexOf(d), band = BAND[i % BAND.length];
+  page.insertAdjacentHTML('beforeend', `<div class="titleband ${band}">${dh(up(name(d)))}<span class="sp" id="sp">1/3</span></div>`);
+  const wrap = document.createElement('section'); wrap.className = 'detail';
+  const left = document.createElement('div'); left.append(mosaicBox(d, 40, 18, true));
+  const pct = d.payloadBytes / 4096;
+  const right = document.createElement('div');
+  const rows = [
+    ['BY', d.author ? up(d.author) : 'REFERENCE'], ['PROFILE', up(d.profile)], ['ENGINES', d.engines.join(' ')],
+    ['VIDEO', `160x120 ${d.format}`], ['PAYLOAD', `${fmt(d.payloadBytes)} B`], ['SOURCE', `${d.lines} LINES`],
+    ['FIRST PIXELS', `${(d.firstVisibleFrame / 60).toFixed(2)} S`],
+  ];
+  if (d.engines.includes('GPU')) rows.push(['GPU PEAK', `${Math.round(d.gpuBudgetPercent)}% FRAME`]);
+  if (d.engines.includes('SPU')) rows.push(['AUDIO PEAK', d.audioPeak.toFixed(2)]);
+  right.innerHTML = `<dl class="facts-list">${rows.map(([k, v]) => `<div><dt>${k}</dt><i></i><dd>${v}</dd></div>`).join('')}</dl>
+    <div class="row y" style="margin-top:var(--row)">CARTRIDGE ${Math.round(pct * 100)}% FULL</div><div class="bytes"></div>
+    <div class="row c">${fmt(4096 - d.payloadBytes)} BYTES LEFT OF 4096</div>`;
+  // byte gauge in separated graphics: one sixel per 32 bytes
+  const g = document.createElement('canvas'); g.width = 128 * 6; g.height = 18;
+  const gx = g.getContext('2d');
+  for (let k = 0; k < 128; k++) { gx.fillStyle = k < Math.ceil(d.payloadBytes / 32) ? (k > 110 ? CSS[1] : CSS[3]) : '#1a1a1a'; gx.fillRect(k * 6 + 1, 1, 4, 16); }
+  right.querySelector('.bytes').append(g);
+  wrap.append(left, right); page.append(wrap);
+
+  const tabs = document.createElement('nav'); tabs.className = 'subnav'; tabs.setAttribute('role', 'tablist');
+  tabs.innerHTML = [d.scenes ? 'RUNNING ORDER' : 'NOTES', 'SOURCE', 'EVIDENCE'].map((t, n) => `<button type="button" role="tab" data-k="${n}">${n + 1} ${t}</button>`).join('');
+  page.append(tabs);
+  const sub = document.createElement('section'); sub.className = 'subpage'; page.append(sub);
+  const subs = [
+    () => d.scenes
+      ? `<div class="bar-head bg-m" style="margin-top:0"><span class="w">TONIGHT'S RUNNING ORDER</span><span class="y">${d.seconds} S LOOP</span></div>
+        <div class="sched">${d.scenes.map((s, k) => `<div data-k="${k}"><span class="y">${pad(Math.floor(s.at / 60))}:${String(s.at.toFixed(1)).padStart(4, '0')}</span><span class="w">${up(s.name)}</span></div>`).join('')}</div>`
+      : `<div class="bar-head bg-m" style="margin-top:0"><span class="w">PROGRAMME NOTES</span><span class="y">${d.source}</span></div>
+        ${d.notes.map((n, k) => `<div class="row ${k ? 'w' : 'y'}">${esc(n)}</div>`).join('')}`,
+    () => `<div class="bar-head bg-g" style="margin-top:0"><span>SOURCE LISTING</span><span>${d.instructions} INSTRUCTIONS</span></div><pre class="listing">${esc(d.excerpt)}\n    ...</pre>`,
+    () => `<div class="bar-head bg-c" style="margin-top:0"><span>EVIDENCE</span><span>REFERENCE WASM</span></div>
+      <div class="row"><span class="c">CART SHA256 </span><span class="w">${d.cartridgeSha256.slice(0, 32)}</span></div>
+      <div class="row"><span class="c">             </span><span class="w">${d.cartridgeSha256.slice(32)}</span></div>
+      <div class="row"><span class="c">ENGINE       </span><span class="w">${d.wasmSha256.slice(0, 32)}</span></div>
+      <div class="row"><span class="c">CAPTURED     </span><span class="w">${d.frames} FRAMES / ${d.seconds} S</span></div>
+      ${d.audio ? `<div class="row y" style="margin-top:var(--row)">SOUND LEVEL, WHOLE CAPTURE</div><div class="wave"></div>` : `<div class="row y" style="margin-top:var(--row)">${d.halted ? 'CPU HALTS ONCE THE PICTURE IS COMPLETE' : 'RUNS CONTINUOUSLY'}</div>`}`,
+  ];
+  let k = 0;
+  const render = () => {
+    sub.innerHTML = subs[k]();
+    $('#sp').textContent = `${k + 1}/${subs.length}`;
+    tabs.querySelectorAll('button').forEach(b => b.setAttribute('aria-selected', Number(b.dataset.k) === k));
+    const w = sub.querySelector('.wave');
+    if (w) {
+      const wave = Uint8Array.from(atob(d.audio.wave), c => c.charCodeAt(0)), s = new Int8Array(wave.buffer);
+      const cols = 160, c = document.createElement('canvas'); c.width = cols * 6; c.height = 8 * 6;
+      const x = c.getContext('2d'), per = s.length / 2 / cols;
+      for (let i = 0; i < cols; i++) {
+        let peak = 0; for (let j = Math.floor(i * per); j < (i + 1) * per; j++) peak = Math.max(peak, Math.abs(s[j * 2]), Math.abs(s[j * 2 + 1]));
+        const h = Math.max(1, Math.round(peak / 127 * 8));
+        for (let y = 0; y < h; y++) { x.fillStyle = y > 6 ? CSS[1] : y > 4 ? CSS[3] : CSS[2]; x.fillRect(i * 6 + 1, (7 - y) * 6 + 1, 4, 4); }
+      }
+      w.append(c);
+    }
+  };
+  render();
+  tabs.addEventListener('click', e => { const b = e.target.closest('button'); if (b) { k = Number(b.dataset.k); render(); } });
+  if (d.scenes) {
+    const tick = () => {
+      if (!sub.isConnected) return;
+      const img = page.querySelector('.mosaic img');
+      const t = (performance.now() - (img._t0 ?? 0)) / 1000;
+      const s = Math.floor((Math.floor(t * d.gifFps) % d.gifFrames) / (d.gifFrames / d.scenes.length));
+      sub.querySelectorAll('.sched div').forEach(r => r.classList.toggle('on', Number(r.dataset.k) === s));
+      requestAnimationFrame(tick);
+    };
+    page.querySelector('.mosaic img').addEventListener('load', e => { e.target._t0 = performance.now(); });
+    requestAnimationFrame(tick);
+  }
+}
+
+/* ── P300 benchmark ── */
+function bench(page) {
+  page.insertAdjacentHTML('beforeend', `<div class="titleband bg-y">${dh('BENCHMARK')}<span class="sp">1/1</span></div>
+  <div class="row" style="margin-top:var(--row)"><span class="c">WHAT IS SCORED </span><span class="w">model + agent harness + tools + budget + task</span></div>
+  <div class="bar-head bg-b"><span class="y">PILOT: 12 TASKS</span><span class="w">NOT YET RUN</span></div>
+  <div class="grid" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+    ${[['4', 'EFFECTS', 'r'], ['4', 'COMPOSITIONS', 'm'], ['2', 'REPAIRS', 'g'], ['2', 'OPTIMISATIONS', 'c']].map(([n, t, c]) => `<div>${dh(`<span class="${c}">${n}</span> <span class="w">${t}</span>`)}</div>`).join('')}
+  </div>
+  <div class="bar-head bg-m"><span class="w">EXAMPLE BRIEF</span><span class="y">12 S · 4096 B</span></div>
+  <p class="w" style="margin:0">Produce a 12-second, looping 160×120 demo in at most 4,096 payload bytes. Begin with an indexed-colour starfield, transition to a rotating geometric object, and end with a full-screen RGB888 colour effect. Include three audible accents at 3, 6 and 9 seconds, each aligned to a visible event within two frames.</p>
+  <div class="bar-head bg-b"><span class="y">THREE LAYERS OF RESULT</span><span class="w">NO SINGLE SCORE</span></div>
+  <div class="row"><span class="g">1 VALIDITY      </span><span class="w">loads, fits, runs without faults</span></div>
+  <div class="row"><span class="y">2 REQUIREMENTS  </span><span class="w">observable brief behaviours, published tolerances</span></div>
+  <div class="row"><span class="m">3 PRESENTATION  </span><span class="w">blinded pairwise review of full clips</span></div>
+  <div class="row r flash" style="margin-top:var(--row)">RESULTS WILL APPEAR ON THIS PAGE</div>`);
+}
+
+/* ── P400 machine ── */
+function machine(page) {
+  const spec = [['CPU', '16 integer registers, 32-bit'], ['RAM', '128 KiB working memory'], ['VIDEO', '160×120, 1/2/4/8-bit indexed or RGB888'],
+    ['GPU', '64 lanes, 32 registers each, guest kernels'], ['SPU', 'guest kernels, 48 kHz stereo blocks'], ['CART', '4,096-byte payload + 32-byte header'],
+    ['CLOCK', '204,800 ticks per 60 Hz frame']];
+  page.insertAdjacentHTML('beforeend', `<div class="titleband bg-g">${dh('THE MACHINE: DB32')}<span class="sp">1/1</span></div>
+  <dl class="facts-list" style="margin-top:var(--row);max-width:900px">${spec.map(([k, v]) => `<div><dt>${k}</dt><i></i><dd>${v}</dd></div>`).join('')}</dl>
+  <div class="bar-head bg-b"><span class="y">THREE PROFILES</span><span class="w">SEPARATE RANKINGS</span></div>
+  ${[['BOOTSTRAP-1', 'CPU and video only', 'w'], ['GPU-1', 'adds the programmable 64-lane GPU', 'c'], ['SPU-1', 'adds programmable audio', 'm']].map(([p, t, c]) => `<div class="row"><span class="${c}">${p.padEnd(13, ' ')}</span><span class="w">${t}</span></div>`).join('')}
+  <div class="row c" style="margin-top:var(--row)">Every displayed pixel and every audio sample is written by guest code. Nothing is host-generated.</div>`);
+}
+
+go(location.hash.slice(1) || 100, false);
+</script>
+<script src="switcher.js"></script>
+</body>
+</html>

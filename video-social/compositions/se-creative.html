@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Archivo"; src: url("assets/fonts/archivo.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; font-display: block; }
+        @font-face { font-family: "Red Hat Mono"; src: url("assets/fonts/redhatmono.woff2") format("woff2"); font-weight: 300 700; font-display: block; }
+        #se-root { position: absolute; inset: 0; overflow: hidden; background: #f2f1ec; color: #111; font-family: "Archivo", sans-serif; }
+        #se-root .layer { position: absolute; inset: 0; overflow: hidden; }
+        #se-root .grid { position: absolute; inset: 0; background-image: linear-gradient(90deg, #d6d4cc 2px, rgba(214, 212, 204, 0) 2px), linear-gradient(#d6d4cc 2px, rgba(214, 212, 204, 0) 2px); background-size: 160px 120px; background-position: -1px -1px; }
+        #se-root .full video { display: block; width: 1920px; height: 1080px; }
+        #se-root .idx { position: absolute; top: 0; width: 480px; height: 1080px; padding: 0 36px; opacity: 0; }
+        #se-root .idx .k { display: block; margin-top: 60px; font-weight: 900; font-stretch: 62%; font-size: 360px; line-height: 0.9; letter-spacing: -0.05em; color: #ff3d17; }
+        #se-root .idx .nm { position: absolute; left: 36px; right: 24px; top: 720px; font-weight: 900; font-stretch: 87%; font-size: 76px; line-height: 1; letter-spacing: -0.035em; }
+        #se-root .idx .by { position: absolute; left: 36px; top: 948px; font-family: "Red Hat Mono", monospace; font-weight: 500; font-size: 26px; letter-spacing: 0.04em; }
+        #se-root .chip { position: absolute; left: 0; bottom: 120px; display: flex; align-items: flex-end; gap: 28px; padding: 22px 36px 24px; background: #111; color: #f2f1ec; opacity: 0; }
+        #se-root .chip .k { font-weight: 900; font-stretch: 62%; font-size: 150px; line-height: 0.8; color: #ff3d17; letter-spacing: -0.05em; }
+        #se-root .chip .nm { font-weight: 900; font-stretch: 87%; font-size: 76px; line-height: 1; letter-spacing: -0.035em; }
+        #se-root .chip .by { font-family: "Red Hat Mono", monospace; font-size: 26px; padding-bottom: 8px; }
+        #se-root .num { position: absolute; left: 20px; top: -34px; font-weight: 900; font-stretch: 62%; font-size: 280px; line-height: 1; letter-spacing: -0.05em; color: #ff3d17; }
+        #se-root .ln { overflow: hidden; }
+        #se-root .h { position: absolute; left: 336px; top: 30px; display: flex; gap: 0.22em; font-weight: 900; font-stretch: 87%; font-size: 150px; line-height: 1.02; letter-spacing: -0.04em; }
+        #se-root .h span { display: block; }
+        #se-root .sub { position: absolute; left: 336px; top: 206px; width: 1380px; font-weight: 400; font-size: 32px; line-height: 1.25; }
+        #se-root .wall { position: absolute; left: 0; top: 360px; width: 1920px; height: 720px; overflow: hidden; }
+        #se-root .wall video { display: block; width: 1920px; height: 720px; }
+        #se-root .cov { position: absolute; width: 480px; height: 360px; background: #ff3d17; transform-origin: 50% 0; }
+        #se-root .gut { position: absolute; background: #f2f1ec; }
+        #se-root .tt { position: absolute; padding: 6px 12px; background: #111; color: #f2f1ec; font-family: "Red Hat Mono", monospace; font-weight: 500; font-size: 22px; letter-spacing: 0.04em; text-transform: uppercase; }
+      </style>
+
+      <div id="se-root" data-composition-id="se" data-width="1920" data-height="1080">
+        <!-- bars 1–2: one demo per beat, each in its own module geometry (baked into e-rapid.mp4) -->
+        <div class="layer full" id="se-l1">
+          <video id="se-rapid" data-start="0" data-duration="3.75" data-track-index="0" src="assets/footage/e-rapid.mp4" muted playsinline></video>
+          <div id="se-over"></div>
+        </div>
+        <!-- bars 3–4: the wall -->
+        <div class="layer" id="se-l2" style="background: #f2f1ec">
+          <div class="grid"></div>
+          <div class="num" id="se-num">04</div>
+          <div class="h" id="se-h"><div class="ln" data-layout-allow-overflow><span>No</span></div><div class="ln" data-layout-allow-overflow><span>answer</span></div><div class="ln" data-layout-allow-overflow><span>key.</span></div></div>
+          <div class="sub" id="se-sub">The brief is just “make a demo”. What it shows, and how it looks and sounds, is up to the agent.</div>
+          <div class="wall">
+            <video id="se-wall" data-hf-media-start-basis="local" data-start="3.75" data-duration="3.75" data-track-index="1" src="assets/footage/e-wall.mp4" muted playsinline></video>
+          </div>
+          <div id="se-covers"></div>
+        </div>
+      </div>
+
+      <script>
+        (() => {
+          const R = "#se-root ";
+          const $ = (s) => document.querySelector(R + s);
+          const beat = 60 / 128, bar = beat * 4;
+          // [name, bytes, geometry]: R = footage right (index column left), L = footage left, F = full frame
+          const DEMOS = [["Pelican", "4,088 B", "R"], ["Carpet", "4,093 B", "F"], ["Limit Set", "4,074 B", "F"], ["Daybreak", "4,032 B", "L"],
+            ["Megamix", "4,070 B · vector balls", "R"], ["Megamix", "4,070 B · Boing", "L"], ["Megamix", "4,070 B · plasma", "F"], ["Supersaw", "4,012 B", "R"]];
+          const over = $("#se-over");
+          const panels = DEMOS.map(([name, bytes, g], i) => {
+            const d = document.createElement("div");
+            const k = String(i + 1).padStart(2, "0");
+            if (g === "F") {
+              d.className = "chip";
+              d.innerHTML = `<span class="k">${k}</span><span class="nm">${name}</span><span class="by">${bytes}</span>`;
+            } else {
+              d.className = "idx"; d.style.left = g === "R" ? "0px" : "1440px";
+              d.innerHTML = `<span class="k">${k}</span><span class="nm">${name}</span><span class="by">${bytes}</span>`;
+            }
+            over.appendChild(d); return d;
+          });
+          const tl = gsap.timeline({ paused: true });
+          panels.forEach((p, i) => {
+            const t = i * beat;
+            tl.set(p, { opacity: 1 }, t);
+            if (i < panels.length - 1) tl.set(p, { opacity: 0 }, t + beat);
+            tl.fromTo(p.querySelector(".k"), { yPercent: 60 }, { yPercent: 0, duration: 0.18, ease: "expo.out", immediateRender: false }, t);
+            tl.fromTo(p.querySelector(".nm"), { xPercent: -8, opacity: 0 }, { xPercent: 0, opacity: 1, duration: 0.18, ease: "power3.out", immediateRender: false }, t + 0.03);
+          });
+
+          // wall: covers flip away on sixteenths, then tile names
+          const TAGS = ["Pelican", "Carpet", "Limit Set", "Daybreak", "Megamix · vector balls", "Megamix · Boing", "Megamix · plasma", "Supersaw"];
+          const ORDER = [0, 5, 2, 7, 1, 4, 3, 6];
+          const cov = $("#se-covers"), covers = [], tags = [];
+          TAGS.forEach((name, i) => {
+            const x = (i % 4) * 480, y = 360 + ((i / 4) | 0) * 360;
+            const c = document.createElement("div"); c.className = "cov"; c.style.left = x + "px"; c.style.top = y + "px";
+            const t = document.createElement("div"); t.className = "tt"; t.textContent = name; t.style.left = x + 12 + "px"; t.style.top = y + 360 - 52 + "px";
+            cov.appendChild(t); cov.appendChild(c); covers.push(c); tags.push(t);
+          });
+          for (const [l, t, w, h] of [[477, 360, 6, 720], [957, 360, 6, 720], [1437, 360, 6, 720], [0, 717, 1920, 6]]) {
+            const g = document.createElement("div"); g.className = "gut";
+            Object.assign(g.style, { left: l + "px", top: t + "px", width: w + "px", height: h + "px" }); cov.appendChild(g);
+          }
+          tl.set(R + "#se-l2", { autoAlpha: 0 }, 0);
+          tl.set(R + "#se-l2", { autoAlpha: 1 }, bar * 2);
+          tl.set(R + "#se-l1", { autoAlpha: 0 }, bar * 2 + 0.05);
+          tl.fromTo(R + "#se-num", { yPercent: 100 }, { yPercent: 0, duration: 0.3, ease: "expo.out", immediateRender: false }, bar * 2);
+          tl.fromTo(R + "#se-h span", { yPercent: 110 }, { yPercent: 0, duration: 0.3, ease: "expo.out", stagger: beat, immediateRender: false }, bar * 2 + 0.04);
+          tl.fromTo(R + "#se-sub", { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out", immediateRender: false }, bar * 2 + beat * 3);
+          ORDER.forEach((i, k) => {
+            const t = bar * 2 + k * (beat / 4);
+            tl.fromTo(covers[i], { scaleY: 1 }, { scaleY: 0, duration: 0.2, ease: "power4.inOut", immediateRender: false }, t);
+            tl.fromTo(tags[i], { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.2, ease: "power2.out", immediateRender: false }, t + 0.5 + k * 0.03);
+          });
+          window.__timelines["se"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#e9ebe4">
+<title>DemoBench · Contact Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+:root{
+  --table:#eceee8; --glow:#fbfcf7; --ink:#1d1d1b; --soft:#6b6c66; --film:#141414; --edge:#e8c46a; --pencil:#d8261c;
+  --type:'Courier Prime',ui-monospace,monospace; --hand:'Permanent Marker',cursive;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--table:#1a0a08;--glow:#2a0f0b;--ink:#f2c9bf;--soft:#a0716a;--film:#050202;--edge:#ff6a4d;--pencil:#ff4b36;color-scheme:dark}}
+:root[data-theme=dark]{--table:#1a0a08;--glow:#2a0f0b;--ink:#f2c9bf;--soft:#a0716a;--film:#050202;--edge:#ff6a4d;--pencil:#ff4b36;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--ink);font-family:var(--type);background:radial-gradient(ellipse 80% 60% at 50% 30%,var(--glow),var(--table) 70%) fixed,var(--table)}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:1320px;margin:0 auto;padding:28px 24px 80px}
+
+/* glassine sleeve label */
+.sleeve{display:grid;grid-template-columns:auto 1fr auto;gap:28px;align-items:end;border:1.5px solid var(--ink);padding:14px 18px;background:color-mix(in srgb,var(--glow) 60%,transparent)}
+.sleeve h1{margin:0;font-family:var(--hand);font-weight:400;font-size:44px;line-height:.95;color:var(--pencil);transform:rotate(-2deg)}
+.form{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px 18px;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.form div{border-bottom:1px solid var(--ink);padding-bottom:2px;display:flex;justify-content:space-between;gap:8px}
+.form b{font-family:var(--hand);font-weight:400;font-size:17px;letter-spacing:0;text-transform:none;color:var(--ink)}
+.form .wide{grid-column:span 2}
+.light{border:1.5px solid var(--ink);background:none;padding:8px 12px;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.light:hover{background:var(--ink);color:var(--table)}
+.intro{max-width:760px;font-size:15px;line-height:1.5;margin:22px 0 8px}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 26px}
+.filters button{border:0;background:none;padding:4px 8px;font-size:13px}
+.filters button[aria-pressed=true]{font-family:var(--hand);color:var(--pencil);font-size:16px;text-decoration:underline wavy;text-underline-offset:5px}
+
+/* film strips */
+.strip{margin:0 0 30px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:18px;align-items:center}
+.label{transform:rotate(-1deg)}
+.label h2{margin:0;font-family:var(--hand);font-weight:400;font-size:28px;line-height:1}
+.label .sub{font-size:13px;color:var(--soft);margin:4px 0 8px}
+.label dl{margin:0;font-size:11.5px;line-height:1.55;display:grid;grid-template-columns:auto 1fr;gap:0 10px}
+.label dt{color:var(--soft)}.label dd{margin:0}
+.label .by{display:inline-block;font-family:var(--hand);color:var(--pencil);font-size:15px;margin-bottom:6px}
+.film{position:relative;overflow-x:auto;scrollbar-width:thin;padding:6px 0}
+.negs{background:var(--film);padding:32px 10px 36px;display:grid;grid-template-columns:repeat(8,minmax(118px,1fr));gap:8px;min-width:1000px;position:relative;box-shadow:0 8px 22px #0003;transform:rotate(var(--tilt,0deg))}
+.negs:before,.negs:after{content:"";position:absolute;left:6px;right:6px;height:9px;background:repeating-linear-gradient(90deg,transparent 0 9px,var(--table) 9px 19px,transparent 19px 26px);opacity:.9;border-radius:2px}
+.negs:before{top:6px}.negs:after{bottom:6px}
+.edge{position:absolute;left:14px;right:14px;font-size:9px;letter-spacing:.14em;color:var(--edge);display:flex;justify-content:space-between;pointer-events:none}
+.edge.top{top:18px}
+.frame{position:relative;border:0;padding:0;background:#000;display:block}
+.frame img{display:block;width:100%;height:auto;aspect-ratio:4/3;image-rendering:pixelated}
+.frame span{position:absolute;left:0;bottom:-17px;font-size:9px;color:var(--edge);letter-spacing:.1em}
+.frame:hover img{outline:2px solid var(--edge);outline-offset:2px}
+.frame.pick:after{content:"";position:absolute;inset:-14px -12px;border:3px solid var(--pencil);border-radius:48% 52% 45% 55% / 55% 45% 55% 45%;transform:rotate(-4deg);pointer-events:none;opacity:.9}
+.x{position:absolute;inset:8% 12%;pointer-events:none}
+.x:before,.x:after{content:"";position:absolute;left:0;right:0;top:50%;height:3px;background:var(--pencil);border-radius:2px;opacity:.85}
+.x:before{transform:rotate(30deg)}.x:after{transform:rotate(-30deg)}
+.note{font-family:var(--hand);color:var(--pencil);font-size:15px;position:absolute;right:8px;top:-22px;transform:rotate(-3deg);pointer-events:none;white-space:nowrap}
+.strip.hidden{display:none}
+.unexposed .negs{background:color-mix(in srgb,var(--film) 18%,transparent);box-shadow:none}
+.unexposed .frame{background:color-mix(in srgb,var(--film) 12%,transparent);aspect-ratio:4/3;cursor:default}
+.unexposed .edge{color:var(--soft)}
+
+/* enlargement */
+dialog{border:0;padding:0;background:transparent;max-width:min(980px,94vw);width:100%}
+dialog::backdrop{background:#0009}
+.print{background:#fafaf6;color:#1d1d1b;padding:22px 22px 18px;box-shadow:0 20px 50px #0008;transform:rotate(-.6deg);display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:22px;position:relative}
+.print:before{content:"";position:absolute;top:-12px;left:40%;width:120px;height:26px;background:#f3e7b8cc;transform:rotate(3deg);box-shadow:0 1px 3px #0002}
+.print img{width:100%;aspect-ratio:4/3;image-rendering:pixelated;display:block;background:#000}
+.print h3{font-family:var(--hand);font-weight:400;font-size:34px;margin:0;color:#1d1d1b}
+.print .sub{color:#6b6c66;font-size:13px;margin:2px 0 14px}
+.print dl{font-size:12px;line-height:1.7;display:grid;grid-template-columns:auto 1fr;gap:0 12px;margin:0}
+.print dt{color:#6b6c66}.print dd{margin:0;overflow-wrap:anywhere}
+.print p{font-size:13px;line-height:1.5}
+.print .scenes{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:10px}
+.print .scenes figure{margin:0;font-size:9px;color:#6b6c66}
+.print .scenes img{aspect-ratio:4/3}
+.stamp{display:inline-block;border:2px solid var(--pencil);color:var(--pencil);padding:3px 8px;font-weight:700;font-size:12px;letter-spacing:.12em;transform:rotate(-6deg);margin-top:8px}
+.print .close{position:absolute;right:10px;top:8px;border:0;background:none;font-size:22px;line-height:1;color:#6b6c66}
+.print .actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.print .actions a{color:#1d1d1b;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+
+@media (max-width:900px){
+  .sleeve{grid-template-columns:1fr}.form{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .strip{grid-template-columns:1fr;gap:10px}
+  .print{grid-template-columns:1fr}
+}
+@media (max-width:480px){.wrap{padding:18px 16px 70px}.sleeve h1{font-size:34px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="sleeve">
+    <h1>DemoBench<br>proofs</h1>
+    <div class="form">
+      <div class="wide">Subject <b>DB32 · 4K demos</b></div><div>Roll <b>01</b></div><div>Strips <b id="count"></b></div>
+      <div class="wide">Machine <b>reference WASM</b></div><div>Frame <b>160 × 120</b></div><div>Limit <b>4096 B</b></div>
+    </div>
+    <button class="light" type="button" id="theme" aria-pressed="false">Safelight</button>
+  </header>
+  <p class="intro">Every strip is a real run of a cartridge on the DB32 machine: eight frames sampled from the capture, printed edge-to-edge. The circled frame is the proof we'd hang on the wall. Click any frame for an enlargement.</p>
+  <nav class="filters" aria-label="Filter strips" id="filters"></nav>
+  <main id="strips"></main>
+</div>
+
+<dialog id="enlarge" aria-label="Enlargement"></dialog>
+
+<script src="previews/data.js"></script>
+<script>
+const ORDER = ['daybreak','aurora','rgb-study','ray-tracer','ray-tracer-r1','gpu-ray-tracer','gpu-ray-tracer-fast','signal-garden','neon-stadium'];
+const list = ORDER.map(id => DEMOS.find(d => d.id === id)).filter(Boolean);
+const $ = s => document.querySelector(s);
+const fmt = n => n.toLocaleString('en-US');
+// circled frame = the exporter's poster choice: first for Daybreak, the finished picture for halting demos, otherwise the middle
+const pick = d => d.id === 'daybreak' ? 0 : d.halted ? d.keyframes.length - 1 : d.keyframes.length >> 1;
+const FILTERS = { all: () => true, 'agent-made': d => d.author, cpu: d => d.engines.length === 1, gpu: d => d.engines.includes('GPU'), sound: d => d.engines.includes('SPU') };
+let filter = 'all';
+
+$('#count').textContent = list.length;
+$('#filters').innerHTML = Object.keys(FILTERS).map(f => `<button type="button" data-f="${f}" aria-pressed="${f === filter}">${f}</button>`).join('');
+$('#filters').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  filter = b.dataset.f;
+  document.querySelectorAll('#filters button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  document.querySelectorAll('.strip[data-id]').forEach(s => s.classList.toggle('hidden', !FILTERS[filter](list.find(d => d.id === s.dataset.id))));
+});
+
+const strips = $('#strips');
+list.forEach((d, i) => {
+  const s = document.createElement('section');
+  s.className = 'strip'; s.dataset.id = d.id;
+  const p = pick(d);
+  const blank = d.keyframes.findIndex(k => k.frame < (d.firstVisibleFrame ?? 0));
+  s.innerHTML = `<div class="label">
+      ${d.author ? `<span class="by">by ${d.author}</span>` : ''}
+      <h2>${d.title}</h2><div class="sub">${d.subtitle}</div>
+      <dl><dt>payload</dt><dd>${fmt(d.payloadBytes)} B of 4096</dd><dt>profile</dt><dd>${d.profile} · ${d.format}</dd><dt>engines</dt><dd>${d.engines.join(' + ')}</dd></dl>
+    </div>
+    <div class="film"><div class="negs" style="--tilt:${[-.4, .3, -.2, .5, -.3][i % 5]}deg">
+      <div class="edge top"><span>DB32 ▸ ${d.id.toUpperCase()}</span><span>${d.cartridgeSha256.slice(0, 12).toUpperCase()}</span><span>${fmt(d.payloadBytes)} B ▸ ${d.format}</span></div>
+      ${d.keyframes.map((k, j) => `<button class="frame${j === p ? ' pick' : ''}" type="button" data-j="${j}" aria-label="${d.title}, frame ${k.frame}">
+          <img src="previews/${k.file}" alt="" loading="lazy" width="160" height="120">${j === blank ? '<i class="x"></i>' : ''}
+          <span>▸${k.frame}${d.scenes ? ` · ${d.scenes[j].at}s` : ''}</span></button>`).join('')}
+      ${d.id === 'ray-tracer-r1' ? '<span class="note">earlier draft ↓</span>' : ''}
+    </div></div>`;
+  s.querySelector('.negs').addEventListener('click', e => { const f = e.target.closest('.frame'); if (f) enlarge(d); });
+  strips.append(s);
+});
+// the pilot roll: nothing exposed yet
+strips.insertAdjacentHTML('beforeend', `<section class="strip unexposed"><div class="label"><h2>Roll 02</h2><div class="sub">pilot benchmark · 12 tasks</div>
+  <dl><dt>status</dt><dd>unexposed</dd><dt>families</dt><dd>effects, compositions, repairs, optimizations</dd></dl></div>
+  <div class="film"><div class="negs"><div class="edge top"><span>DB32 ▸ PILOT</span><span>AWAITING AGENT RUNS</span></div>
+  ${'<div class="frame"></div>'.repeat(8)}</div></div></section>`);
+
+function enlarge(d) {
+  const dlg = $('#enlarge');
+  const rows = [['source', d.source], ['profile', `${d.profile} · ${d.engines.join(' + ')}`], ['video', `160×120 ${d.format}`],
+    ['payload', `${fmt(d.payloadBytes)} B (${(d.payloadBytes / 40.96).toFixed(1)}%)`], ['source size', `${d.lines} lines · ${d.instructions} instructions`],
+    ['cartridge', d.cartridgeSha256.slice(0, 24) + '…'], ['engine', d.wasmSha256.slice(0, 24) + '…']];
+  dlg.innerHTML = `<div class="print">
+    <button class="close" type="button" aria-label="Close">×</button>
+    <div><img src="previews/${d.gif}" alt="${d.title}, animated capture">
+      ${d.scenes ? `<div class="scenes">${d.scenes.map((sc, j) => `<figure><img src="previews/${d.keyframes[j].file}" alt="">${sc.at}s ${sc.name}</figure>`).join('')}</div>` : ''}</div>
+    <div><h3>${d.title}</h3><div class="sub">${d.subtitle}${d.author ? ` · by ${d.author}` : ''}</div>
+      <dl>${rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>
+      <p>${d.description ?? d.notes[0] ?? ''}</p>
+      <span class="stamp">${d.halted ? 'STILL · HALTS' : 'RUNS LIVE'}</span>
+      <div class="actions"><a href="https://demobench.janekm.com/" target="_blank" rel="noopener">Run in viewer ↗</a></div>
+    </div></div>`;
+  dlg.querySelector('.close').addEventListener('click', () => dlg.close());
+  dlg.showModal();
+}
+$('#enlarge').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.close(); });
+
+$('#theme').addEventListener('click', e => {
+  const on = e.currentTarget.getAttribute('aria-pressed') !== 'true';
+  e.currentTarget.setAttribute('aria-pressed', on);
+  document.documentElement.dataset.theme = on ? 'dark' : 'light';
+  e.currentTarget.textContent = on ? 'Light table' : 'Safelight';
+});
+</script>
+<script src="switcher.js"></script>
+</body>
+</html>

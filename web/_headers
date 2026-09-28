@@ -1,0 +1,15 @@
+/*
+  Cache-Control: no-cache
+  X-Content-Type-Options: nosniff
+
+/machine.wasm
+  Content-Type: application/wasm
+
+/examples/*.asm
+  Content-Type: text/plain; charset=utf-8
+
+/previews/src/*.asm
+  Content-Type: text/plain; charset=utf-8
+
+/previews/notes/*.md
+  Content-Type: text/markdown; charset=utf-8

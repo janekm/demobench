@@ -1,0 +1,25 @@
+/target/
+/web/machine.wasm
+/web/build.json
+/web/examples/
+/artifacts/
+node_modules/
+.DS_Store
+/.wrangler/
+/web/pack-fixtures/
+/tools/pack/linker.wasm
+
+# Local settings, credentials and media render output.
+/.claude/
+/.codex/
+/.agents/
+.env
+.env.*
+!.env.example
+.dev.vars*
+**/.hyperframes/
+**/.capture-engine/
+/video/renders/
+/video/snapshots/
+/video-social/renders/
+/video-social/snapshots/

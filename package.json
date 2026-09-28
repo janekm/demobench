@@ -1,0 +1,28 @@
+{
+  "name": "demo-bench",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Deterministic WASM fantasy computer bootstrap",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "predev": "npm run build",
+    "dev": "node scripts/serve.mjs",
+    "pretest": "npm run build",
+    "test": "cargo test --workspace && node scripts/test-wasm.mjs && node scripts/test-gpu-compiler.mjs && node scripts/test-audio.mjs && node scripts/test-linker.mjs && node tools/pack/test.mjs",
+    "test:browser": "node scripts/test-browser.mjs",
+    "capture": "node scripts/capture.mjs",
+    "capture:audio": "node scripts/capture-audio.mjs",
+    "bench:gpu": "node scripts/bench-gpu.mjs",
+    "validate:demo": "node scripts/validate-demo.mjs",
+    "skill:pack": "npm run build && node scripts/package-skill.mjs",
+    "deploy:check": "npm run build && wrangler deploy --dry-run",
+    "deploy": "npm run build && wrangler deploy",
+    "pack": "node tools/pack/pack.mjs",
+    "test:pack": "node tools/pack/test.mjs",
+    "bench:pack": "node tools/pack/benchmark.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "4.132.0"
+  }
+}

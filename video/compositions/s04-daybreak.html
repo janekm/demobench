@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Unbounded"; src: url("assets/fonts/unbounded.woff2") format("woff2"); font-weight: 200 900; font-display: block; }
+        @font-face { font-family: "Figtree"; src: url("assets/fonts/figtree.woff2") format("woff2"); font-weight: 300 900; font-display: block; }
+        @font-face { font-family: "Red Hat Mono"; src: url("assets/fonts/redhatmono.woff2") format("woff2"); font-weight: 300 700; font-display: block; }
+        #s04-root { position: absolute; inset: 0; overflow: hidden; background: #0c0d0f; color: #efeee9; font-family: "Figtree", sans-serif; }
+        #s04-root .cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1440px; will-change: transform; }
+        #s04-root .cam video { display: block; width: 1920px; height: 1440px; }
+        #s04-root .chip { position: absolute; top: 56px; display: flex; align-items: center; gap: 18px; height: 52px; padding: 0 20px; background: #151619; font-family: "Red Hat Mono", monospace; font-size: 20px; letter-spacing: 0.08em; color: #a3a19a; text-transform: uppercase; }
+        #s04-root .bug { left: 72px; font-family: "Unbounded", sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.02em; text-transform: none; color: #efeee9; }
+        #s04-root .bug em { font-style: normal; color: #ff5a36; }
+        #s04-root .hud { right: 72px; font-variant-numeric: tabular-nums; }
+        #s04-root .hud b { color: #efeee9; font-weight: 500; }
+        #s04-root .dots { display: flex; gap: 6px; }
+        #s04-root .dots i { display: block; width: 14px; height: 14px; background: #3a3b41; }
+        #s04-root .dots i.on { background: #ff5a36; }
+        #s04-root .dots i.done { background: #efeee9; }
+        #s04-root .panel { position: absolute; left: 72px; bottom: 72px; width: 780px; padding: 34px 42px 36px; background: #151619; display: flex; flex-direction: column; gap: 16px; }
+        #s04-root .arule { position: absolute; left: 0; top: 0; width: 100%; height: 5px; background: #ff5a36; transform-origin: 0 50%; }
+        #s04-root .meta { display: flex; gap: 14px; font-family: "Red Hat Mono", monospace; font-size: 22px; letter-spacing: 0.08em; color: #a3a19a; text-transform: uppercase; }
+        #s04-root .meta .idx { color: #ff5a36; font-weight: 500; }
+        #s04-root .meta .file { margin-left: auto; color: #efeee9; }
+        #s04-root .name { font-family: "Unbounded", sans-serif; font-weight: 800; font-size: 104px; line-height: 1.02; letter-spacing: -0.045em; overflow: hidden; display: flex; padding-bottom: 6px; }
+        #s04-root .name .ch { display: inline-block; }
+        #s04-root .desc { font-size: 32px; line-height: 1.3; font-weight: 500; color: #efeee9; max-width: 690px; }
+        #s04-root .gauge { display: flex; gap: 3px; margin-top: 6px; }
+        #s04-root .gauge i { display: block; width: 18px; height: 16px; background: #ff5a36; }
+        #s04-root .bytes { display: flex; gap: 12px; align-items: baseline; font-family: "Red Hat Mono", monospace; font-size: 22px; letter-spacing: 0.04em; color: #a3a19a; font-variant-numeric: tabular-nums; }
+        #s04-root .bytes b { color: #efeee9; font-weight: 500; }
+        #s04-root .bytes .free { margin-left: auto; color: #ff5a36; }
+      </style>
+
+      <div id="s04-root" data-composition-id="s04" data-width="1920" data-height="1080">
+        <div class="cam" id="s04-cam" data-layout-allow-overflow>
+          <video id="s04-video" data-start="0" data-duration="3.75" data-track-index="0" src="assets/footage/hero-daybreak.mp4" muted playsinline></video>
+        </div>
+        <div class="chip bug" id="s04-bug">Demo<em>/</em>Bench</div>
+        <div class="chip hud" id="s04-hud"><span>Frame <b id="s04-frame">0000</b></span><span class="dots"><i class="done"></i><i class="done"></i><i class="done"></i><i class="on"></i></span></div>
+        <div class="panel" id="s04-panel">
+          <div class="arule" id="s04-arule"></div>
+          <div class="meta" id="s04-meta"><span class="idx">04</span><span>/ 04</span><span class="file">daybreak.asm</span></div>
+          <h2 class="name" id="s04-name"><span class="ch">D</span><span class="ch">a</span><span class="ch">y</span><span class="ch">b</span><span class="ch">r</span><span class="ch">e</span><span class="ch">a</span><span class="ch">k</span></h2>
+          <p class="desc" id="s04-desc">Night to daylight in 60 seconds. You’re hearing its soundtrack.</p>
+          <div class="gauge" id="s04-gauge"></div>
+          <div class="bytes"><span><b id="s04-count">0</b> / 4,096 bytes</span><span class="free">64 bytes free</span></div>
+        </div>
+      </div>
+
+      <script>
+        (() => {
+          const R = "#s04-root ";
+          const SRC_FRAME = 2025; // first frame of this shot in the cartridge's own timeline
+          const BYTES = 4032;
+          const gauge = document.querySelector(R + "#s04-gauge");
+          for (let i = 0; i < 32; i++) gauge.appendChild(document.createElement("i"));
+          const frame = document.querySelector(R + "#s04-frame");
+          const count = document.querySelector(R + "#s04-count");
+          const tl = gsap.timeline({ paused: true });
+          // ambient: tilt up from the reflections to the sunrise (whole pixels only); in sync with the music
+          tl.fromTo(R + ".cam", { y: -300 }, { y: -120, duration: 3.75, ease: "sine.inOut", snap: { y: 1 } }, 0);
+          const clock = { t: 0 };
+          tl.fromTo(clock, { t: 0 }, { t: 3.75, duration: 3.75, ease: "none", onUpdate: () => {
+            frame.textContent = String(SRC_FRAME + Math.floor(clock.t * 60)).padStart(4, "0");
+          } }, 0);
+          tl.fromTo(R + "#s04-panel", { x: -80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "power4.out" }, 0.06);
+          tl.fromTo(R + "#s04-arule", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "expo.out" }, 0.14);
+          tl.fromTo(R + "#s04-meta span", { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out", stagger: 0.06 }, 0.2);
+          tl.fromTo(R + "#s04-name .ch", { yPercent: 110, rotation: 8 }, { yPercent: 0, rotation: 0, duration: 0.7, ease: "back.out(1.4)", stagger: 0.03 }, 0.24);
+          tl.fromTo(R + "#s04-desc", { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" }, 0.5);
+          tl.fromTo(R + "#s04-gauge i", { scaleY: 0 }, { scaleY: 1, duration: 0.25, ease: "power1.out", stagger: 0.012 }, 0.62);
+          const n = { v: 0 };
+          tl.fromTo(n, { v: 0 }, { v: BYTES, duration: 0.8, ease: "power2.out", immediateRender: false, onUpdate: () => {
+            count.textContent = Math.round(n.v).toLocaleString("en-US");
+          } }, 0.62);
+          tl.fromTo([R + "#s04-bug", R + "#s04-hud"], { y: -16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "sine.out", stagger: 0.08 }, 0.3);
+          window.__timelines["s04"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

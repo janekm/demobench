@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Archivo"; src: url("assets/fonts/archivo.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; font-display: block; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #f2f1ec; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: #f2f1ec; }
+      #wm { position: absolute; right: 0; top: 0; z-index: 40; height: 44px; padding: 0 18px; display: flex; align-items: center; background: #111; color: #f2f1ec; font-family: "Archivo", sans-serif; font-weight: 800; font-stretch: 87%; font-size: 24px; letter-spacing: -0.02em; }
+      #wm em { font-style: normal; color: #ff3d17; }
+      #progress { position: absolute; left: 0; bottom: 0; z-index: 40; width: 1920px; height: 8px; background: #ff3d17; transform-origin: 0 50%; }
+      .band { position: absolute; left: 0; z-index: 50; width: 1920px; height: 360px; }
+    </style>
+  </head>
+  <body>
+    <!-- 45 s on Daybreak's soundtrack: kick (7.5 s) through the drop, then the outro. 128 BPM, 7.5 s sections. -->
+    <div id="root" data-composition-id="main" data-start="0" data-duration="45" data-fps="60" data-width="1920" data-height="1080">
+      <div id="sa" class="clip" data-composition-id="sa" data-composition-src="compositions/sa-open.html" data-start="0" data-duration="7.5" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="sb" class="clip" data-composition-id="sb" data-composition-src="compositions/sb-machine.html" data-start="7.5" data-duration="7.5" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="sc" class="clip" data-composition-id="sc" data-composition-src="compositions/sc-limits.html" data-start="15" data-duration="7.5" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="sd" class="clip" data-composition-id="sd" data-composition-src="compositions/sd-sound.html" data-start="22.5" data-duration="7.5" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="se" class="clip" data-composition-id="se" data-composition-src="compositions/se-creative.html" data-start="30" data-duration="7.5" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="sf" class="clip" data-composition-id="sf" data-composition-src="compositions/sf-end.html" data-start="37.5" data-duration="7.5" data-track-index="1" data-width="1920" data-height="1080"></div>
+
+      <div id="wm" data-layout-allow-occlusion>Demo<em>/</em>Bench</div>
+      <div id="progress"></div>
+      <div class="band" id="band0" style="top: 0; background: #ff3d17"></div>
+      <div class="band" id="band1" style="top: 360px; background: #111"></div>
+      <div class="band" id="band2" style="top: 720px; background: #ff3d17"></div>
+
+      <audio id="music" data-start="0" data-duration="45" data-track-index="0" src="assets/audio/music.wav" data-volume="1"></audio>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#progress", { scaleX: 0 }, { scaleX: 1, duration: 45, ease: "none" }, 0);
+      tl.set(".band", { x: -1930 }, 0);
+      // Section changes: three bands sweep in (staggered), cover the cut on the downbeat, sweep out.
+      for (const T of [7.5, 15, 22.5, 30, 37.5]) {
+        [0, 1, 2].forEach((i) => {
+          tl.fromTo("#band" + i, { x: -1930 }, { x: 0, duration: 0.2 - i * 0.03, ease: "power3.in", immediateRender: false }, T - 0.22 + i * 0.03);
+          tl.fromTo("#band" + i, { x: 0 }, { x: 1930, duration: 0.22, ease: "power3.out", immediateRender: false }, T + i * 0.035);
+        });
+      }
+      tl.set("#wm", { autoAlpha: 1 }, 0);
+      tl.set("#wm", { autoAlpha: 0 }, 37.5);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

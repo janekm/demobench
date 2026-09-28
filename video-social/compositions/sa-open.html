@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Archivo"; src: url("assets/fonts/archivo.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; font-display: block; }
+        @font-face { font-family: "Red Hat Mono"; src: url("assets/fonts/redhatmono.woff2") format("woff2"); font-weight: 300 700; font-display: block; }
+        #sa-root { position: absolute; inset: 0; overflow: hidden; background: #f2f1ec; color: #111; font-family: "Archivo", sans-serif; }
+        #sa-root .layer { position: absolute; inset: 0; overflow: hidden; }
+        #sa-root .grid { position: absolute; inset: 0; background-image: linear-gradient(90deg, #d6d4cc 2px, rgba(214, 212, 204, 0) 2px), linear-gradient(#d6d4cc 2px, rgba(214, 212, 204, 0) 2px); background-size: 160px 120px; background-position: -1px -1px; }
+        #sa-root .mod { position: absolute; overflow: hidden; }
+        #sa-root .mod video { display: block; }
+        #sa-root .panel { position: absolute; top: 0; height: 1080px; width: 480px; }
+        #sa-root .stack { position: absolute; display: flex; flex-direction: column; }
+        #sa-root .ln { overflow: hidden; }
+        #sa-root .ln span { display: block; font-weight: 900; letter-spacing: -0.04em; }
+        #sa-root .tag { position: absolute; display: flex; gap: 14px; font-family: "Red Hat Mono", monospace; font-weight: 500; font-size: 24px; letter-spacing: 0.06em; text-transform: uppercase; font-variant-numeric: tabular-nums; }
+      </style>
+
+      <div id="sa-root" data-composition-id="sa" data-width="1920" data-height="1080">
+        <!-- bar 1: Pelican, 9x, right; black column with the first words -->
+        <div class="layer" id="sa-l1">
+          <div class="mod" id="sa-m1" style="left: 480px; top: 0; width: 1440px; height: 1080px">
+            <video id="sa-v1" data-start="0" data-duration="1.875" data-track-index="0" src="assets/footage/a1-pelican.mp4" muted playsinline style="width: 1440px; height: 1080px"></video>
+          </div>
+          <div class="panel" id="sa-p1" style="left: 0; background: #111"></div>
+          <div class="stack" style="left: 36px; top: 132px; color: #f2f1ec">
+            <div class="ln" data-layout-allow-overflow><span class="w1" style="font-size: 124px; font-stretch: 75%; line-height: 1.02">AI</span></div>
+            <div class="ln" data-layout-allow-overflow><span class="w1" style="font-size: 124px; font-stretch: 75%; line-height: 1.02">agents</span></div>
+            <div class="ln" data-layout-allow-overflow><span class="w1" style="font-size: 124px; font-stretch: 75%; line-height: 1.02">wrote</span></div>
+            <div class="ln" data-layout-allow-overflow><span class="w1" style="font-size: 124px; font-stretch: 75%; line-height: 1.02; color: #ff3d17">these.</span></div>
+          </div>
+          <div class="tag" id="sa-t1" style="left: 36px; top: 972px; color: #f2f1ec"><span style="color: #ff3d17">Pelican</span><span>4,088 B</span></div>
+        </div>
+
+        <!-- bar 2: Carpet, 12x full; red column -->
+        <div class="layer" id="sa-l2">
+          <div class="mod" style="left: 0; top: 0; width: 1920px; height: 1080px">
+            <video id="sa-v2" data-hf-media-start-basis="local" data-start="1.875" data-duration="1.875" data-track-index="0" src="assets/footage/a2-carpet.mp4" muted playsinline style="width: 1920px; height: 1080px"></video>
+          </div>
+          <div class="panel" id="sa-p2" style="left: 1440px; background: #ff3d17">
+            <div class="stack" style="left: 36px; top: 132px; color: #f2f1ec">
+              <div class="ln" data-layout-allow-overflow><span class="w2" id="sa-count" style="font-size: 190px; font-stretch: 62%; line-height: 0.95; font-variant-numeric: tabular-nums">0</span></div>
+              <div class="ln" data-layout-allow-overflow><span class="w2" style="font-size: 124px; font-stretch: 75%; line-height: 1.02">bytes</span></div>
+              <div class="ln" data-layout-allow-overflow><span class="w2" style="font-size: 124px; font-stretch: 75%; line-height: 1.02; color: #111">each.</span></div>
+            </div>
+            <div class="tag" style="left: 36px; top: 972px; color: #111"><span>Carpet</span><span>4,093 B</span></div>
+          </div>
+        </div>
+
+        <!-- bar 3: Limit Set, 12x full; paper band along the bottom two rows -->
+        <div class="layer" id="sa-l3">
+          <div class="mod" style="left: 0; top: 0; width: 1920px; height: 1080px">
+            <video id="sa-v3" data-hf-media-start-basis="local" data-start="3.75" data-duration="1.875" data-track-index="0" src="assets/footage/a3-limit.mp4" muted playsinline style="width: 1920px; height: 1080px"></video>
+          </div>
+          <div class="mod" id="sa-p3" style="left: 0; top: 840px; width: 1920px; height: 240px; background: #f2f1ec">
+            <div class="stack" style="left: 36px; top: 30px; flex-direction: row; gap: 0.25em; font-size: 160px">
+              <div class="ln" data-layout-allow-overflow><span class="w3" style="font-stretch: 87%; line-height: 1.05">For</span></div>
+              <div class="ln" data-layout-allow-overflow><span class="w3" style="font-stretch: 87%; line-height: 1.05">a</span></div>
+              <div class="ln" data-layout-allow-overflow><span class="w3" style="font-stretch: 87%; line-height: 1.05">computer</span></div>
+            </div>
+            <div class="tag" style="left: 1476px; top: 96px"><span style="color: #ff3d17">Limit Set</span><span>4,074 B</span></div>
+          </div>
+        </div>
+
+        <!-- bar 4: paper, grid, Daybreak 6x in cols 6-11 rows 1-6 -->
+        <div class="layer" id="sa-l4" style="background: #f2f1ec">
+          <div class="grid"></div>
+          <div class="mod" id="sa-m4" style="left: 960px; top: 120px; width: 960px; height: 720px">
+            <video id="sa-v4" data-hf-media-start-basis="local" data-start="5.625" data-duration="1.875" data-track-index="0" src="assets/footage/a4-daybreak.mp4" muted playsinline style="width: 960px; height: 720px"></video>
+          </div>
+          <div class="stack" style="left: 36px; top: 96px">
+            <div class="ln" data-layout-allow-overflow><span class="w4" style="font-size: 216px; font-stretch: 75%; line-height: 0.96">they’d</span></div>
+            <div class="ln" data-layout-allow-overflow><span class="w4" style="font-size: 216px; font-stretch: 75%; line-height: 0.96">never</span></div>
+            <div class="ln" data-layout-allow-overflow><span class="w4" style="font-size: 216px; font-stretch: 75%; line-height: 0.96; color: #ff3d17">seen.</span></div>
+          </div>
+          <div class="tag" id="sa-t4" style="left: 36px; top: 900px"><span style="color: #ff3d17">Daybreak</span><span>4,032 B</span></div>
+          <div class="tag" style="left: 996px; top: 900px; color: #8a8983"><span>160×120 · shown at 6×</span></div>
+        </div>
+      </div>
+
+      <script>
+        (() => {
+          const R = "#sa-root ";
+          const beat = 60 / 128, bar = beat * 4;
+          const tl = gsap.timeline({ paused: true });
+          // each bar's layer sits on top of the previous one from its downbeat
+          ["#sa-l2", "#sa-l3", "#sa-l4"].forEach((l, i) => {
+            tl.set(R + l, { autoAlpha: 0 }, 0);
+            tl.set(R + l, { autoAlpha: 1 }, bar * (i + 1));
+          });
+          ["#sa-l1", "#sa-l2", "#sa-l3"].forEach((l, i) => tl.set(R + l, { autoAlpha: 0 }, bar * (i + 1)));
+          // one word per beat
+          const words = (sel, t0, from) => document.querySelectorAll(R + sel).forEach((w, i) => {
+            tl.fromTo(w, from, { yPercent: 0, xPercent: 0, duration: 0.28, ease: "expo.out", immediateRender: false }, t0 + i * beat);
+          });
+          tl.set(R + ".w1, " + R + ".w2, " + R + ".w3, " + R + ".w4", { yPercent: 110 }, 0);
+          words(".w1", 0.02, { yPercent: 110 });
+          tl.fromTo(R + "#sa-t1", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "expo.out" }, 0.25);
+
+          tl.fromTo(R + "#sa-p2", { x: 480 }, { x: 0, duration: 0.32, ease: "expo.out", immediateRender: false }, bar);
+          words(".w2", bar + 0.06, { yPercent: 110 });
+          const n = { v: 0 }, count = document.querySelector(R + "#sa-count");
+          tl.fromTo(n, { v: 0 }, { v: 4096, duration: 0.7, ease: "power3.out", immediateRender: false,
+            onUpdate: () => { count.textContent = Math.round(n.v).toLocaleString("en-US"); } }, bar + 0.06);
+
+          tl.fromTo(R + "#sa-p3", { y: 240 }, { y: 0, duration: 0.3, ease: "expo.out", immediateRender: false }, bar * 2);
+          words(".w3", bar * 2 + 0.08, { yPercent: 110 });
+
+          tl.fromTo(R + "#sa-m4", { x: 960 }, { x: 0, duration: 0.34, ease: "expo.out", immediateRender: false, snap: { x: 1 } }, bar * 3);
+          words(".w4", bar * 3 + 0.04, { yPercent: 110 });
+          tl.fromTo(R + "#sa-t4", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "expo.out", immediateRender: false }, bar * 3 + beat * 3);
+          window.__timelines["sa"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

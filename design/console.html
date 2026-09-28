@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ecebe6">
+<title>DemoBench · Cartridges</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Red+Hat+Mono:wght@400;500&family=Unbounded:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --room:#ecebe6; --ink:#1c1c1e; --mid:#6d6b65; --line:#d3d0c8;
+  --accent:#ff5a36;
+  --display:'Unbounded',system-ui,sans-serif; --ui:'Figtree',system-ui,sans-serif; --mono:'Red Hat Mono',ui-monospace,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--room:#151619;--ink:#efeee9;--mid:#9a9891;--line:#2c2d31;color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--room);color:var(--ink);font-family:var(--ui);min-height:100vh}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+.top{display:flex;align-items:stretch;justify-content:space-between;border-bottom:1px solid var(--ink);height:52px}
+.logo{display:flex;align-items:center;padding:0 24px;font-family:var(--display);font-weight:800;font-size:18px;letter-spacing:-.02em;text-decoration:none}
+.logo span{color:var(--accent)}
+.top nav{display:flex}
+.top nav a{display:flex;align-items:center;padding:0 20px;border-left:1px solid var(--line);text-decoration:none;font-weight:600;font-size:14px;color:var(--mid)}
+.top nav a:hover{color:var(--ink)}.top nav a[aria-current]{color:var(--ink);box-shadow:inset 0 -3px var(--ink)}
+
+.wrap{max-width:1320px;margin:0 auto;padding:0 24px 90px}
+.intro{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;padding:44px 0 14px;border-bottom:1px solid var(--line)}
+.intro h1{margin:0;font-family:var(--display);font-weight:800;font-size:clamp(34px,5vw,60px);line-height:.95;letter-spacing:-.04em}
+.intro p{margin:14px 0 0;max-width:640px;font-size:17px;line-height:1.45;color:var(--mid)}
+.intro p b{color:var(--ink);font-weight:600}
+.tabs{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:-15px}
+.tabs button{border:0;border-bottom:2px solid transparent;background:none;padding:6px 0 12px;font-weight:600;font-size:14px;color:var(--mid)}
+.tabs button:hover{color:var(--ink)}
+.tabs button[aria-pressed=true]{color:var(--ink);border-bottom-color:var(--ink)}
+
+/* ── shelf ── */
+.carts{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:40px 20px;padding-top:44px}
+.slot{border:0;background:none;padding:0;display:grid;justify-items:center;text-align:center;perspective:1100px}
+.slot.hidden{display:none}
+.shadow{width:150px;height:18px;margin-top:6px;border-radius:50%;background:radial-gradient(closest-side,#00000030,transparent);transition:transform .4s,opacity .4s}
+.cap{margin-top:8px;font-weight:700;font-size:14px}
+.cap small{display:block;font-weight:500;color:var(--mid);font-size:12.5px;margin-top:1px}
+.slot:hover .shadow,.slot:focus-visible .shadow{transform:scale(.86);opacity:.7}
+
+/* the cartridge: an extruded rounded rectangle, built from a front and back plate plus lit side strips */
+.cart{--c:#3b3e45}
+.cart.gpu{--c:#1f8b86}.cart.spu{--c:#6a4bd0}.cart.agent{--c:#ef6a30}.cart.blank{--c:#cfcbc2}
+.model{position:relative;width:var(--w);height:var(--h);transform-style:preserve-3d;transform:rotateX(-9deg) rotateY(-20deg);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.slot:hover .model,.slot:focus-visible .model{transform:translateY(-12px) rotateX(-4deg) rotateY(-5deg)}
+.model>i{position:absolute;left:50%;top:50%;display:block;backface-visibility:hidden}
+.plate{width:var(--w);height:var(--h);margin:calc(var(--h) / -2) 0 0 calc(var(--w) / -2);border-radius:var(--rt) var(--rt) var(--rb) var(--rb)}
+.plate.front{transform:translateZ(calc(var(--d) / 2));background:linear-gradient(170deg,color-mix(in srgb,var(--c),#fff 10%),var(--c) 45%,color-mix(in srgb,var(--c),#000 8%));padding:22px 12px 0}
+.plate.back{transform:rotateY(180deg) translateZ(calc(var(--d) / 2));background:color-mix(in srgb,var(--c),#000 30%)}
+.plate.front:before{content:"";position:absolute;left:22px;right:22px;top:7px;height:10px;border-radius:3px;background:repeating-linear-gradient(90deg,#00000030 0 2px,#ffffff14 2px 3px,transparent 3px 7px)}
+.plate.front:after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 1px #ffffff55,inset 0 -1px #00000025;pointer-events:none}
+.sticker{position:relative;background:#fbfaf6;border-radius:4px;padding:7px 7px 8px;color:#1c1c1e;box-shadow:inset 0 0 0 1px #0000000f,0 1px 1px #00000030}
+.sticker img{display:block;width:100%;height:auto;aspect-ratio:4/3;image-rendering:pixelated;background:#000}
+.sticker h3{margin:7px 0 4px;font-family:var(--display);font-weight:800;font-size:11px;line-height:1.1;letter-spacing:-.01em;text-transform:uppercase;min-height:2.2em;text-align:left}
+.sticker .row{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:#6d6b65}
+.plate .brand{display:flex;justify-content:center;margin-top:7px;font:800 7.5px var(--display);letter-spacing:.22em;color:#ffffffa8}
+.blank .sticker{min-height:158px;display:grid;place-items:center;text-align:center;border:1.5px dashed #b3afa6;background:#f3f1ec;box-shadow:none}
+.blank .sticker p{margin:0;font-family:var(--display);font-weight:700;font-size:10px;line-height:1.35;text-transform:uppercase;color:#8a867d}
+.blank .plate .brand{color:#00000040}
+
+/* ── detail ── */
+dialog{border:0;padding:0;background:var(--room);color:var(--ink);width:min(1040px,94vw);max-height:92vh;border-top:3px solid var(--ink)}
+dialog::backdrop{background:#000000a0}
+.sheet{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:0}
+.sheet .pic{background:#0b0b0d;padding:18px}
+.screen{position:relative;aspect-ratio:4/3;background:#000}
+.screen img,.screen canvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated}
+.screen canvas{opacity:0}.screen.live canvas{opacity:1}.screen.live img{opacity:0}
+.boot{position:absolute;left:10px;bottom:10px;font-family:var(--mono);font-size:11px;color:#fff;background:#000000b0;padding:4px 8px}
+.screen.live .boot{display:none}
+.deck{display:flex;flex-wrap:wrap;align-items:stretch;margin-top:10px;color:#e6e6ea;font-size:13px}
+.deck button{border:1px solid #ffffff40;background:none;color:inherit;padding:0 14px;min-height:36px;font-weight:600}
+.deck button+button{border-left:0}
+.deck button:hover:not(:disabled){background:#fff;color:#111}
+.deck button:disabled{opacity:.4;cursor:not-allowed}
+.deck button[aria-pressed=true]{background:#fff;color:#111}
+.deck input[type=range]{width:90px;margin:0 12px;accent-color:var(--accent)}.deck input:disabled{opacity:.3}
+.vm-status{margin-left:auto;align-self:center;font-family:var(--mono);font-size:11px;color:#9a9aa0;white-space:nowrap}
+.scenes{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin-top:10px}
+.scenes img{display:block;width:100%;aspect-ratio:4/3;image-rendering:pixelated;opacity:.8}
+.scenes figcaption{font-family:var(--mono);font-size:9px;color:#8b8b91;margin-top:3px}
+.scenes figure{margin:0}
+.info{padding:22px 24px 24px;position:relative}
+.info .cat{font-family:var(--mono);font-size:12px;color:var(--mid)}.info .cat b{color:var(--accent);font-weight:500}
+.info h2{font-family:var(--display);font-weight:800;font-size:34px;line-height:1;letter-spacing:-.03em;margin:10px 0 4px}
+.info .sub{color:var(--mid);font-weight:500;margin:0 0 14px}
+.info p{margin:0 0 16px;line-height:1.5}
+.gauge{display:grid;grid-template-columns:repeat(32,1fr);gap:2px;height:12px}
+.gauge i{background:var(--line)}.gauge i.on{background:var(--ink)}.agent-sheet .gauge i.on{background:var(--accent)}
+.gauge-cap{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--mid);margin:6px 0 16px}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px;margin:0 0 20px}
+.facts div{border-top:1px solid var(--line);padding:7px 0}
+.facts dt{font-size:12px;color:var(--mid)}
+.facts dd{margin:1px 0 0;font-weight:600;font-size:14px}
+.actions{display:flex;align-items:center;gap:22px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;font-weight:700;font-size:14px;text-decoration:none;background:var(--ink);color:var(--room);border:0}
+.btn:hover{background:var(--accent);color:#fff}
+.link{border:0;background:none;padding:0;font-weight:600;text-decoration:underline;text-underline-offset:4px}
+.close{position:absolute;right:16px;top:12px;border:0;background:none;font-size:26px;line-height:1;color:var(--mid)}
+
+@media (max-width:760px){
+  .intro{grid-template-columns:minmax(0,1fr)}.tabs{margin-bottom:-15px}
+  .carts{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 6px}
+  .slot .model{scale:.82;margin:-16px 0}
+  .sheet{grid-template-columns:minmax(0,1fr)}
+  .sheet .pic{padding:12px}.vm-status{flex-basis:100%;margin:8px 0 0}.deck input[type=range]{flex:1}
+  .logo{padding:0 16px}.top nav a{padding:0 14px}.wrap{padding:0 16px 80px}
+}
+@media (prefers-reduced-motion:reduce){.model,.shadow{transition:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="console.html">Demo<span>/</span>Bench</a>
+  <nav><a href="console.html" aria-current="page">Cartridges</a><a href="studio.html">Studio</a></nav>
+</header>
+
+<div class="wrap">
+  <section class="intro">
+    <div>
+      <h1>Cartridges</h1>
+      <p>Programs for <b>DB32</b>, a tiny machine agents learn from its manual. <b>4,096 bytes</b> each, 160×120 pixels, and nothing drawn by the host. Hover to preview, click to run it on the real machine.</p>
+    </div>
+    <div class="tabs" role="group" aria-label="Filter cartridges" id="tabs"></div>
+  </section>
+  <main class="carts" id="carts"></main>
+</div>
+
+<dialog id="detail" aria-label="Cartridge details"></dialog>
+
+<script src="previews/data.js"></script>
+<script type="module">
+import { PcmAudioPlayer } from '../web/audio-player.js';
+
+const ORDER = ['daybreak','pelican','limit-set','elsewhere','lightcone','astra','supersaw','carpet','aurora','rgb-study','ray-tracer','ray-tracer-r1','gpu-ray-tracer','gpu-ray-tracer-fast','signal-garden','neon-stadium'];
+const list = ORDER.map(id => DEMOS.find(d => d.id === id)).filter(Boolean);
+list.forEach((d, i) => d.no = `DB-${201 + i}`);
+const byId = Object.fromEntries(list.map(d => [d.id, d]));
+const $ = s => document.querySelector(s);
+const fmt = n => n.toLocaleString('en-US');
+const poster = d => `previews/${d.poster ?? d.keyframes[0].file}`;
+const kind = d => d.author ? 'agent' : d.engines.includes('SPU') ? 'spu' : d.engines.includes('GPU') ? 'gpu' : 'cpu';
+const title = d => /revision|rays/.test(d.subtitle) ? `${d.title} ${d.subtitle}` : d.title;
+
+/* ── cartridge geometry ──
+   The outline is a rounded rectangle (top corners RT, bottom corners RB), traced clockwise in screen space.
+   Each straight edge and each of STEPS facets per corner becomes a strip of depth D, turned to face outward
+   and shaded by how directly it faces the light. */
+const W = 164, H = 206, D = 22, RT = 16, RB = 7, STEPS = 5;
+const LIGHT = (() => { const v = [0.35, -0.8, 0.5], m = Math.hypot(...v); return v.map(x => x / m); })();
+function outline() {
+  const pts = [], arc = (cx, cy, r, a0, a1) => { for (let k = 0; k <= STEPS; k++) { const a = a0 + (a1 - a0) * k / STEPS; pts.push([cx + r * Math.cos(a), cy + r * Math.sin(a)]); } };
+  const x = W / 2, y = H / 2, q = Math.PI / 2;
+  arc(x - RT, -y + RT, RT, -q, 0);         // top right
+  arc(x - RB, y - RB, RB, 0, q);           // bottom right
+  arc(-x + RB, y - RB, RB, q, 2 * q);      // bottom left
+  arc(-x + RT, -y + RT, RT, 2 * q, 3 * q); // top left
+  return pts;
+}
+const OUTLINE = outline();
+function sides() {
+  let html = '';
+  for (let i = 0; i < OUTLINE.length; i++) {
+    const [x0, y0] = OUTLINE[i], [x1, y1] = OUTLINE[(i + 1) % OUTLINE.length];
+    const len = Math.hypot(x1 - x0, y1 - y0);
+    if (len < .01) continue;
+    const phi = Math.atan2(y1 - y0, x1 - x0);
+    const n = [Math.sin(phi), -Math.cos(phi)];
+    const lit = .6 + .55 * Math.max(0, n[0] * LIGHT[0] + n[1] * LIGHT[1]);
+    const shade = lit < 1 ? `color-mix(in srgb,var(--c) ${Math.round(lit * 100)}%,#000)` : `color-mix(in srgb,var(--c),#fff ${Math.round((lit - 1) * 100)}%)`;
+    const bottom = Math.abs(y0 - H / 2) < .5 && Math.abs(y1 - H / 2) < .5;
+    const w = len + .9; // overlap neighbours slightly so no hairline seams show
+    html += `<i style="width:${w.toFixed(2)}px;height:${D}px;margin:${-D / 2}px 0 0 ${(-w / 2).toFixed(2)}px;background:${bottom ? 'repeating-linear-gradient(90deg,#c9a443 0 5px,#5a4a24 5px 7px)' : shade};transform:translate3d(${((x0 + x1) / 2).toFixed(2)}px,${((y0 + y1) / 2).toFixed(2)}px,0) rotateZ(${phi.toFixed(4)}rad) rotateX(90deg)"></i>`;
+  }
+  return html;
+}
+const SIDES = sides();
+const model = (front) => `<div class="model" style="--w:${W}px;--h:${H}px;--d:${D}px;--rt:${RT}px;--rb:${RB}px">
+  <i class="plate back"></i>${SIDES}<i class="plate front">${front}</i></div>`;
+const label = d => `<div class="sticker"><img src="${poster(d)}" alt="" width="160" height="120"><h3>${title(d)}</h3>
+  <div class="row"><span>${d.no}</span><span>${fmt(d.payloadBytes)} B</span></div></div><div class="brand">DB32</div>`;
+
+/* ── shelf ── */
+const FILTERS = { All: () => true, 'Agent-made': d => d.author, 'CPU only': d => d.engines.length === 1, GPU: d => d.engines.includes('GPU'), Sound: d => d.engines.includes('SPU') };
+$('#tabs').innerHTML = Object.keys(FILTERS).map((f, i) => `<button type="button" aria-pressed="${!i}">${f}</button>`).join('');
+$('#tabs').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  document.querySelectorAll('#tabs button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  document.querySelectorAll('.slot[data-id]').forEach(s => s.classList.toggle('hidden', !FILTERS[b.textContent](byId[s.dataset.id])));
+});
+$('#carts').innerHTML = list.map(d => `<button class="slot cart ${kind(d)}" type="button" data-id="${d.id}" aria-label="${title(d)}, ${fmt(d.payloadBytes)} bytes. Show details.">
+    ${model(label(d))}<div class="shadow"></div>
+    <div class="cap">${title(d)}<small>${d.author ? `by ${d.author} · ` : ''}${fmt(d.payloadBytes)} B · ${d.engines.join('+')}</small></div></button>`).join('')
+  + `<div class="slot cart blank">${model('<div class="sticker"><p>Your agent’s<br>demo here<br><br>pilot · 12 tasks</p></div><div class="brand">DB32</div>')}
+    <div class="shadow"></div><div class="cap">Blank cartridge<small>pilot benchmark opens soon</small></div></div>`;
+
+// hover plays the demo on the label; the static poster returns afterwards
+document.querySelectorAll('.slot[data-id]').forEach(slot => {
+  const d = byId[slot.dataset.id], img = slot.querySelector('.sticker img');
+  const live = on => { img.src = on ? `previews/${d.gif}` : poster(d); };
+  slot.addEventListener('mouseenter', () => live(true)); slot.addEventListener('mouseleave', () => live(false));
+  slot.addEventListener('focus', () => live(true)); slot.addEventListener('blur', () => live(false));
+  slot.addEventListener('click', () => open(d, true));
+  slot.addEventListener('pointerenter', () => source(d).catch(() => {}), { once: true });
+});
+
+/* ── the real machine ──
+   Booted once the page has loaded, before any click: the worker fetches and compiles machine.wasm and sets up
+   WebGPU, the audio output is created (suspended) with its worklet loaded, and cartridge sources are prefetched.
+   A click then only resumes audio inside its gesture and assembles the cartridge. */
+const audio = new PcmAudioPlayer();
+const vm = { worker: null, ready: null, failed: null, current: null, loading: false, state: null, sources: new Map() };
+let soundWanted = true;
+function boot() {
+  if (vm.ready) return vm.ready;
+  vm.ready = new Promise((resolve, reject) => {
+    vm.worker = new Worker(new URL('../web/machine-worker.js', import.meta.url), { type: 'module' });
+    vm.worker.onmessage = ({ data }) => {
+      switch (data.type) {
+        case 'ready': resolve(); break;
+        case 'init-error': vm.failed = data.message; reject(new Error(data.message)); fail(data.message); break;
+        case 'assembled': vm.loading = false; break;
+        case 'state': render(data); break;
+        case 'audio': audio.push(data.samples, data.rate, data.epoch); break;
+        case 'audio-reset': audio.reset(data.epoch); break;
+        case 'error': fail(data.message); break;
+      }
+    };
+  });
+  vm.ready.catch(() => {});
+  audio.prepare().catch(() => {}); // no audio output: the picture still runs
+  return vm.ready;
+}
+function source(d) {
+  if (!vm.sources.has(d.id)) vm.sources.set(d.id, fetch(`previews/src/${d.id}.asm`).then(r => {
+    if (!r.ok) throw new Error(`Could not load ${d.id}.asm (HTTP ${r.status})`);
+    return r.text();
+  }).catch(error => { vm.sources.delete(d.id); throw error; }));
+  return vm.sources.get(d.id);
+}
+const idle = fn => 'requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 1200 }) : setTimeout(fn, 200);
+addEventListener('load', () => idle(() => { boot(); setTimeout(() => list.forEach(d => source(d).catch(() => {})), 800); }));
+
+async function run(d, gesture) {
+  vm.current = d; vm.loading = true;
+  audio.invalidate();
+  // Sound must start inside the click's user activation, so resume audio before any await.
+  if (gesture && d.audio && soundWanted) { audio.setAvailable(true); audio.enableFromGesture().then(deck, deck); }
+  try {
+    const [text] = await Promise.all([source(d), boot()]);
+    if (vm.current !== d) return;
+    vm.worker.postMessage({ type: 'assemble', source: text, autoPlay: true });
+  } catch (error) { if (vm.current === d) fail(error.message); }
+}
+function render(state) {
+  vm.state = state;
+  if (vm.loading) return; // ignore frames from the previous cartridge until the new one is assembled
+  const spu = state.profileCode >= 3 && state.audio.available;
+  audio.setAvailable(spu);
+  audio.setPlaying(spu && state.playing);
+  const screen = $('#screen');
+  if (!screen || !vm.current) return;
+  if (state.frame) {
+    const pixels = state.frame instanceof Uint8Array ? state.frame : new Uint8Array(state.frame);
+    screen.querySelector('canvas').getContext('2d').putImageData(new ImageData(new Uint8ClampedArray(pixels), 160, 120), 0, 0);
+    screen.classList.add('live');
+  }
+  deck();
+}
+function deck() {
+  const s = vm.state, playBtn = $('#vm-play'), soundBtn = $('#vm-sound');
+  if (!playBtn || !vm.current) return;
+  playBtn.textContent = s?.playing ? 'Pause' : 'Play';
+  playBtn.disabled = !s || vm.loading;
+  soundBtn.disabled = !vm.current.audio;
+  $('#vm-vol').disabled = !vm.current.audio;
+  soundBtn.setAttribute('aria-pressed', audio.enabled);
+  soundBtn.textContent = !vm.current.audio ? 'Silent' : audio.enabled ? 'Sound on' : 'Sound off';
+  if (s && !vm.loading) $('#vm-status').textContent = `${s.status === 'fault' ? 'fault' : s.playing ? 'live' : 'paused'} · ${s.backend.active === 'webgpu' ? 'WebGPU' : 'WASM'} · ${s.playing && Number.isFinite(s.backend.fps) && s.backend.fps > 0 ? `${Math.round(s.backend.fps)} fps` : `frame ${s.frameCount}`}`;
+}
+function fail(message) {
+  const boot = $('#screen .boot');
+  if (!boot) return;
+  $('#screen img').src = `previews/${vm.current.gif}`; // fall back to the captured reel
+  boot.textContent = `Capture shown · ${message}`;
+}
+Object.defineProperty(window, '__cartPlayer', { get: () => ({
+  booted: !!vm.worker, failed: vm.failed, current: vm.current?.id ?? null, loading: vm.loading, playing: !!vm.state?.playing,
+  frameCount: vm.state?.frameCount ?? 0, sound: audio.enabled, audioContext: audio.context?.state ?? null,
+  audioFramesPlayed: audio.metrics().playedFrames,
+}) });
+
+/* ── detail ── */
+function open(d, gesture = false) {
+  const dlg = $('#detail'), on = Math.round(d.payloadBytes / 4096 * 32);
+  dlg.innerHTML = `<div class="sheet${d.author ? ' agent-sheet' : ''}">
+    <div class="pic">
+      <div class="screen" id="screen"><img src="${poster(d)}" alt=""><canvas width="160" height="120" aria-label="${title(d)}, running live on the DB32 machine"></canvas><span class="boot">Starting the machine…</span></div>
+      <div class="deck"><button type="button" id="vm-play" disabled>Pause</button><button type="button" id="vm-restart">Restart</button><button type="button" id="vm-sound" aria-pressed="false">Sound</button>
+        <input type="range" id="vm-vol" min="0" max="100" value="${Math.round(audio.volume * 100)}" aria-label="Volume"><span class="vm-status" id="vm-status">loading…</span></div>
+      ${d.scenes ? `<div class="scenes">${d.scenes.map((s, i) => `<figure><img src="previews/${d.keyframes[i].file}" alt=""><figcaption>${s.at}s</figcaption></figure>`).join('')}</div>` : ''}</div>
+    <div class="info"><button class="close" type="button" aria-label="Close">×</button>
+      <div class="cat">${d.no} · ${d.author ? `<b>by ${d.author}</b>` : 'reference cartridge'}</div>
+      <h2>${title(d)}</h2><p class="sub">${d.subtitle}</p>
+      <p>${d.description ?? d.notes[0] ?? ''}</p>
+      <div class="gauge" aria-hidden="true">${Array.from({ length: 32 }, (_, i) => `<i class="${i < on ? 'on' : ''}"></i>`).join('')}</div>
+      <div class="gauge-cap"><span>${fmt(d.payloadBytes)} of 4,096 bytes</span><span>${fmt(4096 - d.payloadBytes)} free</span></div>
+      <dl class="facts">
+        <div><dt>Hardware</dt><dd>${d.engines.join(' + ')}</dd></div><div><dt>Profile</dt><dd>${d.profile}</dd></div>
+        <div><dt>Picture</dt><dd>160×120 ${d.format}</dd></div><div><dt>Source</dt><dd>${fmt(d.lines)} lines</dd></div>
+        ${d.scenes ? `<div><dt>Length</dt><dd>${d.seconds} s · ${d.scenes.length} scenes</dd></div>` : ''}
+        ${d.audio ? `<div><dt>Sound</dt><dd>48 kHz stereo</dd></div>` : ''}
+      </dl>
+      <div class="actions"><a class="btn" href="studio.html?demo=${d.id}">Open in Studio →</a>${d.readme ? `<a class="link" href="notes.html?demo=${d.id}">How it works</a>` : ''}<button class="link" type="button" data-close>Close</button></div>
+    </div></div>`;
+  dlg.querySelectorAll('.close,[data-close]').forEach(b => b.addEventListener('click', () => dlg.close()));
+  $('#vm-play').addEventListener('click', () => { if (vm.state?.playing) audio.setPlaying(false); vm.worker.postMessage({ type: vm.state?.playing ? 'pause' : 'play' }); });
+  $('#vm-restart').addEventListener('click', () => { audio.invalidate(); vm.worker?.postMessage({ type: 'reset' }); vm.worker?.postMessage({ type: 'play' }); });
+  $('#vm-sound').addEventListener('click', () => {
+    if (audio.enabled) { soundWanted = false; audio.disable(); deck(); return; }
+    soundWanted = true; audio.setAvailable(true); audio.enableFromGesture().then(deck, deck);
+  });
+  $('#vm-vol').addEventListener('input', e => audio.setVolume(e.target.value / 100));
+  dlg.showModal();
+  deck();
+  run(d, gesture);
+}
+$('#detail').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.close(); });
+$('#detail').addEventListener('close', () => { vm.current = null; audio.setPlaying(false); vm.worker?.postMessage({ type: 'pause' }); });
+const want = byId[new URLSearchParams(location.search).get('demo')];
+if (want) open(want); // no gesture on page load: the picture runs, sound waits for the Sound button
+</script>
+<script src="switcher.js"></script>
+</body>
+</html>

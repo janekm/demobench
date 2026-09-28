@@ -1,0 +1,15 @@
+[workspace]
+members = ["crates/db-contracts", "crates/db-core", "crates/db-video", "crates/db-asm", "crates/db-gpu", "crates/db-spu", "crates/db-wasm", "crates/db-linker"]
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
+license = "MIT"
+version = "0.1.0"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
