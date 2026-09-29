@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>DB32 WebGPU regression checks</title>
+<h1>WebGPU regression checks</h1>
+<pre id="result">Running…</pre>
+<script type="module">
+import {runGpuChecks} from './gpu-checks.js';
+try {
+  const result = await runGpuChecks();
+  document.querySelector('#result').textContent = JSON.stringify(result, null, 2);
+  document.title = `PASS: ${result.passed} WebGPU checks`;
+} catch (error) {
+  document.querySelector('#result').textContent = error.stack || String(error);
+  document.title = 'FAIL: WebGPU checks';
+}
+</script>
+</html>

@@ -39,4 +39,23 @@ The structured [validation record](../artifacts/webgpu-validation.json) also pin
 
 Kernels loading writable bindings use WASM. Overlapping writes to identical guest bytes have unspecified hardware order. Floating-point results and arithmetic faults intentionally differ from the reference. Byte stores retain neighbouring bytes through bounded atomic masked updates. A hardware error flag discards all pending output before WASM fallback.
 
-Hardware execution is bounded by an 8,192-instruction per-invocation budget, a 4,096-attempt byte-store retry cap, and a worker cap of 64 accelerated submissions per virtual frame. Adapter/device requests each have a three-second deadline, shader compilation a 15-second deadline, and dispatch readback a two-second deadline. Compile/readback timeout destroys the accelerator and resumes the pending job in WASM. The cache holds at most eight pipelines. These host limits complement the browser's WebGPU validation; they do not claim canonical GPU timing.
+Hardware execution uses per-invocation termination guards of 1,048,576 instructions for GPU jobs and 65,536 for SPU jobs, conservatively derived from their reference tick budgets. The earlier 8,192-instruction cap is removed. A 4,096-attempt byte-store retry cap and a worker cap of 64 accelerated submissions per virtual frame remain. Adapter/device requests each have a three-second deadline, shader compilation a 15-second deadline, and dispatch readback a two-second deadline. Compile/readback timeout destroys the accelerator and resumes the pending job in WASM. The cache holds at most eight pipelines. These host limits complement the browser's WebGPU validation; they do not claim canonical GPU timing.
+
+## Work-budget regressions
+
+`npm test` executes GPU and SPU kernels one tick below their canonical work limits,
+checks that one extra loop iteration faults in WASM, and verifies that the
+compiler's guards cover the passing execution paths. It also checks a dynamic
+RAM basic block longer than 8,192 instructions.
+
+With `npm run dev` serving locally, open `/gpu-checks.html` to run the optional
+real-WebGPU suite. It executes the same near-limit kernels, exercises both
+workers with paths above the former cap, checks processor-specific pipeline
+caching, and verifies runaway-loop termination and existing bounds/fallback
+behavior. The test page and fixtures are excluded from production deployment.
+
+On 2026-09-29, all 19 checks passed in the local Chromium WebGPU runtime,
+including GPU and SPU paths using 1,048,554 and 65,514 instructions respectively
+(1,048,575 and 65,535 reference ticks). Both GPU and SPU worker regressions
+completed 10,004-instruction paths without falling back to WASM. The full
+engine tests and both the distributed and installed skill-kit tests also passed.

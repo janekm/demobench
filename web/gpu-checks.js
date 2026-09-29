@@ -1,6 +1,7 @@
 // Optional real-hardware checks. Run runGpuChecks() from this module in a
 // secure browser context; the normal application never imports this file.
 import { WebGpuBackend } from './gpu-webgpu.js';
+import { budgetFixture } from './gpu-budget-fixtures.js';
 
 export async function runGpuChecks() {
   const created = await WebGpuBackend.create();
@@ -17,12 +18,12 @@ export async function runGpuChecks() {
     if (w.db_assemble(bytes.length) !== 0) throw new Error(new TextDecoder().decode(new Uint8Array(w.memory.buffer, w.db_error_ptr(), w.db_error_len())));
     return new Uint8Array(w.memory.buffer, w.db_assembled_ptr() + 32, w.db_assembled_len() - 32).slice();
   };
-  const dispatch = async (source, width, len, readRom = false) => {
+  const dispatch = async (source, width, len, readRom = false, processor = 'gpu') => {
     const rom = assemble(source);
     const bindings = [{ base: 0x10000, len, flags: 3 },
       readRom ? { base: 0, len: 4, flags: 1 } : { base: 0, len: 0, flags: 0 },
       { base: 0, len: 0, flags: 0 }, { base: 0, len: 0, flags: 0 }];
-    return gpu.dispatch({ rom, codeBase: 4, codeLength: rom.length - 4, width, height: 1, bindings }, new Uint8Array(0x20000), new Uint32Array(16));
+    return gpu.dispatch({ rom, codeBase: 4, codeLength: rom.length - 4, width, height: 1, bindings, processor }, new Uint8Array(0x20000), new Uint32Array(16));
   };
   const test = async (name, fn) => { await fn(); results.push({ name, passed: true }); };
   try {
@@ -56,6 +57,48 @@ export async function runGpuChecks() {
       try { await dispatch('loop: g.jmp loop', 1, 4); }
       catch (error) { failed = /flag 2/.test(error.message); }
       assert(failed, 'Missing budget failure');
+    });
+    for (const [processor, iterations] of [['gpu', 524275], ['spu', 32755]]) {
+      await test(`${processor.toUpperCase()} reference-valid thread near its work limit stays on hardware`, async () => {
+        const result = await dispatch(budgetFixture(processor, iterations).kernel, 1, 2048, false, processor);
+        assert(new DataView(result.writes[0].bytes.buffer).getUint32(0, true) === 1, 'Long kernel did not finish');
+      });
+      await test(`${processor.toUpperCase()} runaway thread still terminates`, async () => {
+        let failed = false;
+        try { await dispatch('loop: g.jmp loop', 1, 4, false, processor); }
+        catch (error) { failed = /flag 2/.test(error.message); }
+        assert(failed, `${processor} termination guard did not fire`);
+      });
+      await test(`${processor.toUpperCase()} worker executes a validated thread above 8,192 instructions without fallback`, async () => {
+        const worker = new Worker(new URL('./machine-worker.js', import.meta.url), {type: 'module'});
+        let timer;
+        try {
+          await new Promise((resolve, reject) => {
+            timer = setTimeout(() => reject(new Error('Long-kernel worker timed out')), 10000);
+            worker.onerror = event => reject(new Error(event.message));
+            worker.onmessage = ({data}) => {
+              if (data.type === 'ready') worker.postMessage({type: 'assemble', source: budgetFixture(processor, 5000).source});
+              if (data.type === 'error' || data.type === 'init-error') reject(new Error(data.message));
+              if (data.type === 'state' && data.frameCount >= 2) {
+                const active = processor === 'gpu' ? data.backend.active : data.audio.backend;
+                const completed = processor === 'gpu' ? data.gpu.dispatches : data.audio.blocks;
+                if (active === 'webgpu' && completed > 0) resolve();
+                else reject(new Error(`Unexpected ${processor} fallback: ${data.backend.reason || data.audio.reason}`));
+              }
+            };
+          });
+        } finally { clearTimeout(timer); worker.terminate(); }
+      });
+    }
+    await test('Pipeline cache separates GPU and SPU termination guards', async () => {
+      const rom = assemble('g.end');
+      const descriptor = {rom, codeBase: 4, codeLength: rom.length - 4, width: 1, height: 1,
+        bindings: Array.from({length: 4}, () => ({base: 0, len: 0, flags: 0}))};
+      const graphics = await gpu.pipeline(descriptor);
+      const signal = await gpu.pipeline({...descriptor, processor: 'spu'});
+      assert(graphics !== signal, 'SPU reused the GPU pipeline');
+      assert(graphics.compiled.invocationStepLimit === 1048576 && signal.compiled.invocationStepLimit === 65536, 'Wrong guard');
+      assert(await gpu.pipeline({...descriptor, processor: 'gpu'}) === graphics, 'Default GPU cache identity changed');
     });
     await test('SPU read/write state persists and observes earlier stores within an invocation', async () => {
       const rom = assemble('g.id g1, 2\ng.li g2, 4\ng.mul g1, g1, g2\ng.ld g3, g1, 0\ng.li g4, 1\ng.add g3, g3, g4\ng.st g3, g1, 0\ng.ld g3, g1, 0\ng.add g3, g3, g4\ng.st g3, g1, 0\ng.end');

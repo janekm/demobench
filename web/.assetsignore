@@ -1,4 +1,6 @@
 gpu-checks.js
+gpu-checks.html
+gpu-budget-fixtures.js
 pack-checks.js
 pack-checks.html
 pack-fixtures/

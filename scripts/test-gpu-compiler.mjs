@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createMachine } from './wasm-host.mjs';
 import { compileKernel } from '../web/gpu-compiler.js';
+import { budgetFixture } from '../web/gpu-budget-fixtures.js';
 
 const tests = [];
 const test = (name, run) => tests.push([name, run]);
@@ -156,6 +157,45 @@ test('dynamic RAM code compiles with absolute branches and content changes', () 
   assert.throws(() => compileKernel({ ...descriptor, allowRamCode: true, codeLength: 65540 }), /aligned/);
   assert.throws(() => compileKernel({ ...descriptor, allowRamCode: true,
     bindings: [{ base: 0x8000, len: 4, flags: 1 }, ...descriptor.bindings.slice(1)] }), /ROM\/RAM/);
+});
+
+test('WebGPU termination guards cover the reference GPU and SPU work budgets', () => {
+  for (const [processor, limit, iterations] of [['gpu', 1048576, 524275], ['spu', 65536, 32755]]) {
+    const fixture = budgetFixture(processor, iterations);
+    const machine = createMachine();
+    machine.load(machine.assemble(fixture.source));
+    machine.runFrames(processor === 'gpu' ? 6 : 1);
+    const info = machine.info();
+    assert.equal(processor === 'gpu' ? info.gpu.lastTicks : info.audio.lastTicks, limit - 1);
+    const ram = new DataView(machine.exports.memory.buffer, machine.exports.db_ram_ptr());
+    assert.equal(ram.getUint32(0, true), 1, `${processor} reference completed its store`);
+    assert.ok(fixture.invocationInstructions > 8192);
+    const rom = machine.assemble(`.profile gpu-1\nhalt\n${fixture.kernel}`).slice(32);
+    const result = compileKernel({ rom, codeBase: 4, codeLength: rom.length - 4,
+      width: 1, height: 1, processor, bindings: descriptors.map((b, i) =>
+        i === 0 ? {base: 0x10000, len: 2048, flags: 3} : {base: 0, len: 0, flags: 0}) });
+    assert.equal(result.invocationStepLimit, limit);
+    assert.ok(result.invocationStepLimit >= fixture.invocationInstructions);
+    // One more iteration exceeds the actual reference budget. This also catches
+    // drift between the Rust work limits and their conservative WebGPU guards.
+    const over = createMachine();
+    over.load(over.assemble(budgetFixture(processor, iterations + 1).source));
+    assert.throws(() => over.runFrames(6), /exceeded.*(?:1048576|65536).*ticks/);
+  }
+});
+
+test('large straight-line RAM blocks cannot underflow the termination guard', () => {
+  const ram = new Uint8Array(131072);
+  const code = payload([...Array(9000).fill(word(2)), word(0)]);
+  ram.set(code);
+  const descriptor = {rom: payload([32]), ram, allowRamCode: true, codeBase: 0x10000,
+    codeLength: code.length, width: 1, height: 1, processor: 'spu',
+    bindings: Array.from({length: 4}, () => ({base: 0, len: 0, flags: 0}))};
+  const result = compileKernel(descriptor);
+  assert.equal(result.instructionCount, 9001);
+  assert.equal(result.blockCount, 1);
+  assert.match(result.code, /steps > 56535u/);
+  assert.throws(() => compileKernel({...descriptor, processor: 'unknown'}), /processor must be gpu or spu/);
 });
 
 let passed = 0;

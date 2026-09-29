@@ -101,6 +101,8 @@ The renderer selector defaults to **Auto · WebGPU preferred**. Actual cartridge
 
 The [GPU contract](spec/gpu-1.md) defines reference instruction encodings, MMIO, timing, numerical behavior and faults. The [architecture](docs/gpu-kernels.md) describes the implemented WebGPU compiler and its buffer restrictions. The ISA is independent of WGSL and WebGPU resource APIs.
 
+WebGPU has no separate 8,192-instruction authoring limit. Its per-thread termination guards cover the reference work budgets: 1,048,576 instructions for GPU jobs and 65,536 for SPU jobs. These conservative guards preserve bounded execution without rejecting longer reference-valid paths. The canonical limits remain whole-job virtual ticks; accelerated float behavior and device/host failures can still differ.
+
 ## Programmable audio
 
 The [spu-1 contract](spec/spu-1.md) adds an audio-clocked compute job without fixed oscillator, voice, envelope, filter, instrument, or mixer registers. At each 65,536-tick block boundary, the SPU executes guest `g.*` instructions over checked bindings and uniforms. The kernel writes 256 interleaved stereo binary32 frames (2,048 bytes) to RAM at 48 kHz. DSP state persists in ordinary guest RAM, so a kernel can implement recurrence, synthesis, sample playback, effects, and mixing itself. Reference work is limited to 65,536 virtual compute ticks per block.
