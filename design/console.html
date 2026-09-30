@@ -28,7 +28,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 code,pre,kbd{font-family:var(--mono)}
 
 /* ── the tiling backdrop: backdrop.asm running on its own machine in a worker ── */
-#backdrop{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;image-rendering:pixelated;opacity:var(--bd,1);transition:opacity .25s linear;pointer-events:none}
+#backdrop{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;image-rendering:pixelated;opacity:0;transition:opacity .8s ease;pointer-events:none}
+#backdrop.on{opacity:var(--bd,1);transition:opacity .25s linear}
 
 .top{display:flex;align-items:stretch;justify-content:space-between;border-bottom:1px solid var(--ink);height:52px;background:var(--room);position:relative;z-index:2}
 .logo{display:flex;align-items:center;padding:0 24px;font-family:var(--display);font-weight:800;font-size:18px;letter-spacing:-.02em;text-decoration:none}
@@ -425,7 +426,7 @@ npm run viewer</code><button type="button" data-copy>Copy</button></div></li>
       <nav><a href="https://github.com/janekm/demobench-agent-kit">Agent kit</a><a href="https://github.com/janekm/demobench">Engine &amp; site on GitHub</a><a href="studio.html">Studio</a></nav>
       <p>DemoBench is an open benchmark. The machine, tools and demos are on GitHub.</p>
     </div>
-    <div class="bd" id="bd-credit">Background: <b>backdrop.asm</b>, a Truchet pattern<br><span id="bd-status">drawn by the CPU, animated by palette</span> · <a href="studio.html?demo=backdrop">open in Studio</a></div>
+    <div class="bd" id="bd-credit">Background: <b>backdrop.asm</b>, tumbling cubes that tile<br><span id="bd-status">ray traced per pixel by the machine’s GPU</span> · <a href="studio.html?demo=backdrop">open in Studio</a></div>
   </div>
 </footer>
 
@@ -462,13 +463,16 @@ const onQuietChange = fns => { document.addEventListener('visibilitychange', fns
     const css = getComputedStyle(document.documentElement);
     const room = css.getPropertyValue('--room').trim().replace('#', '');
     const dark = css.getPropertyValue('color-scheme').trim() === 'dark';
-    return { dark, room: [0, 2, 4].map(i => parseInt(room.slice(i, i + 2), 16)), line: dark ? .32 : 1.5, glow: dark ? .28 : .32 };
+    return { room: [0, 2, 4].map(i => parseInt(room.slice(i, i + 2), 16)), strength: dark ? .24 : .22 };
   };
   const off = canvas.transferControlToOffscreen();
   const running = () => !reduced.matches && !quiet();
   worker.postMessage({ type: 'init', canvas: off, ...size(), scale: SCALE, theme: theme(), running: running() }, [off]);
   worker.onmessage = ({ data }) => {
-    if (data.type === 'ready') $('#bd-status').textContent = `${fmt(data.payloadBytes)} bytes, running live on DB32 in your browser`;
+    if (data.type === 'ready') canvas.classList.add('on');
+    if (data.type === 'ready') $('#bd-status').textContent = data.live
+      ? `${fmt(data.payloadBytes)} bytes, ray traced live on DB32’s GPU in your browser`
+      : `${fmt(data.payloadBytes)} bytes, one frame shown (animating it needs WebGPU)`;
   };
   let pending = 0;
   addEventListener('resize', () => { cancelAnimationFrame(pending); pending = requestAnimationFrame(() => worker.postMessage({ type: 'resize', ...size() })); });
