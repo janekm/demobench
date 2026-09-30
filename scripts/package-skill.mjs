@@ -22,7 +22,8 @@ for (const file of ['machine.wasm', 'build.json', 'app.js', 'style.css', 'machin
 for (const file of ['wasm-host.mjs', 'png.mjs', 'validate-demo.mjs', 'serve.mjs']) {
   copy(`scripts/${file}`, resolve(engine, 'scripts', file));
 }
-for (const file of ['pack.mjs', 'codec.mjs', 'range.mjs', 'stub.mjs', 'linker.mjs', 'linker.wasm']) {
+for (const file of ['pack.mjs', 'codec.mjs', 'range.mjs', 'stub.mjs', 'linker.mjs', 'linker.wasm',
+  'research.mjs', 'research-range.mjs', 'research-lzrange.mjs', 'research-pack.mjs', 'research-tests.mjs']) {
   copy(`tools/pack/${file}`, resolve(engine, 'tools/pack', file));
 }
 const wasm = readFileSync(resolve(engine, 'web/machine.wasm'));

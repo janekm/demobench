@@ -1,0 +1,2701 @@
+{
+  "date": "2026-09-30",
+  "records": [
+    {
+      "name": "koi",
+      "sourceSha256": "882a9602f507688a3dcc513f5c23c5ded5833cd3f3eaa5f9485fa2ec211a896a",
+      "imageSha256": "2cfbac727c4a760ff2a377c98916029b828be81eb87dfabeec7e97ea032ef8c5",
+      "imageBytes": 6980,
+      "baselineBytes": 4061,
+      "candidateCount": 211,
+      "bests": [
+        {
+          "family": "compact-prev-zero",
+          "options": {
+            "context": "prev-zero",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 368,
+          "compressedBytes": 3623,
+          "payloadBytes": 3991,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1470787,
+            "virtualMilliseconds": 119.69295247395833,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "f2ea1f7fb0799ddb06821505c94b448d9782fa3b6fa1d9243f3bf22c7593b175"
+        },
+        {
+          "family": "prev-zero",
+          "options": {
+            "context": "prev-zero",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 388,
+          "compressedBytes": 3623,
+          "payloadBytes": 4011,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1474409,
+            "virtualMilliseconds": 119.98771158854167,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "f1b7b4c6cf16c3c7cae8e14039221a9c1291eda4ffdad8ca738fe87189983db0"
+        },
+        {
+          "family": "compact-prev-byte",
+          "options": {
+            "context": "prev-byte",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 372,
+          "compressedBytes": 3645,
+          "payloadBytes": 4017,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1478066,
+            "virtualMilliseconds": 120.28531901041667,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "6c3b4b9e3ea474c6e9d5bc3f3f13f5dd234b5d2daf8e1b7446cf4cf5b81fc6ed"
+        },
+        {
+          "family": "prev-byte",
+          "options": {
+            "context": "prev-byte",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 392,
+          "compressedBytes": 3645,
+          "payloadBytes": 4037,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1481710,
+            "virtualMilliseconds": 120.58186848958333,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "1f08f9d51f74804549f7bd83e17a6f7813679c22340e2dcf6db6a0da0a96f623"
+        },
+        {
+          "family": "compact-range-rate",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "compact": true
+          },
+          "decoderBytes": 336,
+          "compressedBytes": 3709,
+          "payloadBytes": 4045,
+          "scratchBytes": 2048,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1399520,
+            "virtualMilliseconds": 113.89322916666667,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "da52077ccd2a0a3401cbcd6265fc68d67d08b499f83b8f5c162e56c984cf48b0"
+        },
+        {
+          "family": "range-rate",
+          "options": {
+            "rate": 3,
+            "lanes": 4
+          },
+          "decoderBytes": 352,
+          "compressedBytes": 3709,
+          "payloadBytes": 4061,
+          "scratchBytes": 2048,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1403227,
+            "virtualMilliseconds": 114.19490559895833,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "bf2fa8b5d102e89a8f75ca6dbd13051f149dbe7e57740a767fed1dd57c363852"
+        },
+        {
+          "family": "opcode-high",
+          "options": {
+            "context": "opcode-high",
+            "bits": 4,
+            "rate": 3
+          },
+          "decoderBytes": 408,
+          "compressedBytes": 3656,
+          "payloadBytes": 4064,
+          "scratchBytes": 32768,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1534641,
+            "virtualMilliseconds": 124.889404296875,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "f1e9db8b756f13911fd0e19dff5705aa7f674ff3eb62d1984fb57954ebf1be0f"
+        },
+        {
+          "family": "lane-rates",
+          "options": {
+            "rates": [
+              4,
+              3,
+              4,
+              3
+            ]
+          },
+          "decoderBytes": 376,
+          "compressedBytes": 3702,
+          "payloadBytes": 4078,
+          "scratchBytes": 2048,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1452009,
+            "virtualMilliseconds": 118.164794921875,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "f979492713cfd7dc48ec00239eec28f8725e9a7b31030a24ed7a3f5ea8686ad4"
+        },
+        {
+          "family": "opcode-low",
+          "options": {
+            "context": "opcode-low",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 404,
+          "compressedBytes": 3692,
+          "payloadBytes": 4096,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1498072,
+            "virtualMilliseconds": 121.91341145833333,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "65fe8a6e917d0dedf2ec81254dbfd97f85005152c7887126b65c64ec7f9043e3"
+        },
+        {
+          "family": "compact-prev-low",
+          "options": {
+            "context": "prev-low",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 368,
+          "compressedBytes": 3733,
+          "payloadBytes": 4101,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "prev-low",
+          "options": {
+            "context": "prev-low",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 388,
+          "compressedBytes": 3733,
+          "payloadBytes": 4121,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "prev-lane",
+          "options": {
+            "context": "prev-lane",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 392,
+          "compressedBytes": 3758,
+          "payloadBytes": 4150,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "compact-decoder-seed",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "seeded": true,
+            "compact": true
+          },
+          "decoderBytes": 472,
+          "compressedBytes": 3701,
+          "payloadBytes": 4173,
+          "scratchBytes": 2048,
+          "seedBytes": 432,
+          "seedSha256": "c1bd1e7340c7604621d9006556865deab7aa6bb7a4b5bca0f0176a628246c5c1"
+        },
+        {
+          "family": "decoder-seed",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "seeded": true
+          },
+          "decoderBytes": 500,
+          "compressedBytes": 3700,
+          "payloadBytes": 4200,
+          "scratchBytes": 2048,
+          "seedBytes": 456,
+          "seedSha256": "3a233954bf38dc9787d8d964b6368970dd8e02f0335cc030b6695b6be1fa3346"
+        },
+        {
+          "family": "lz-range",
+          "options": {
+            "k": 4,
+            "rate": 4,
+            "chainLimit": 4096,
+            "compact": true
+          },
+          "decoderBytes": 528,
+          "compressedBytes": 3719,
+          "payloadBytes": 4247,
+          "scratchBytes": 2404
+        },
+        {
+          "family": "deep-lz",
+          "options": {
+            "k": 5,
+            "chainLimit": 4096
+          },
+          "decoderBytes": 308,
+          "compressedBytes": 4151,
+          "payloadBytes": 4459,
+          "scratchBytes": 0
+        },
+        {
+          "family": "xor4",
+          "options": {
+            "filter": "xor4",
+            "rate": 4
+          },
+          "decoderBytes": 400,
+          "compressedBytes": 4430,
+          "payloadBytes": 4830,
+          "scratchBytes": 2048
+        },
+        {
+          "family": "sub4",
+          "options": {
+            "filter": "sub4",
+            "rate": 4
+          },
+          "decoderBytes": 400,
+          "compressedBytes": 4717,
+          "payloadBytes": 5117,
+          "scratchBytes": 2048
+        }
+      ],
+      "runtime": {
+        "name": "koi",
+        "candidate": "compact-prev-zero",
+        "baselineBytes": 4061,
+        "packedBytes": 3991,
+        "frames": 120,
+        "seconds": 2,
+        "alignedStartTick": 1843200,
+        "exactRgba": true,
+        "exactPcm": true,
+        "nonBlackFrames": 110,
+        "nonzeroAudioSamples": 0,
+        "peak": 0,
+        "rgbaSha256": "d7e446e8b036f908d612d858c7d954fad7119a2ad01950e7405b17743377a084",
+        "pcmSha256": "351a8054b23144894668c6a51d5dbba82f56523ef43cc45b6f4d7060a969c31a",
+        "candidateSha256": "f2ea1f7fb0799ddb06821505c94b448d9782fa3b6fa1d9243f3bf22c7593b175",
+        "baselineSha256": "bf2fa8b5d102e89a8f75ca6dbd13051f149dbe7e57740a767fed1dd57c363852",
+        "imageSha256": "2cfbac727c4a760ff2a377c98916029b828be81eb87dfabeec7e97ea032ef8c5",
+        "final": {
+          "profile": "dynamic-1",
+          "profileCode": 4,
+          "audio": {
+            "rate": 48000,
+            "samples": 103168,
+            "blocks": 403,
+            "peak": 0,
+            "overruns": 0,
+            "lastTicks": 0
+          },
+          "gpu": {
+            "statusCode": 1,
+            "status": "busy",
+            "ticks": 6975,
+            "dispatches": 73,
+            "invocations": 64,
+            "pc": 189984,
+            "lastTicks": 4061,
+            "frameBudgetPercent": 1.98291015625
+          },
+          "wasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8",
+          "frames": 129,
+          "ticks": 26419200,
+          "pc": 187564,
+          "status": 4,
+          "format": 4,
+          "payloadBytes": 3991,
+          "rgbaSha256": "1e5c978c71330854bd898017360a02c3f68520770dbc9458b0542cb03ab8bb08"
+        }
+      }
+    },
+    {
+      "name": "pelican-2026-09-30",
+      "sourceSha256": "8a0567ee200ea48c52bdc3167f8f48408224440e048df745fce778a60621426d",
+      "imageSha256": "197aa482e7cfeaddffb5d22f8f36ff1feb25d4b4d918226a56cd2a28130bda26",
+      "imageBytes": 8588,
+      "baselineBytes": 4045,
+      "candidateCount": 211,
+      "bests": [
+        {
+          "family": "lz-range",
+          "options": {
+            "k": 5,
+            "rate": 4,
+            "chainLimit": 4096,
+            "compact": true
+          },
+          "decoderBytes": 520,
+          "compressedBytes": 3367,
+          "payloadBytes": 3887,
+          "scratchBytes": 2404,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 925911,
+            "virtualMilliseconds": 75.350830078125,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "bc5bae6da54e21da19f00f6e499e7a1de2364439ce094336443a20ec085f1cdb"
+        },
+        {
+          "family": "deep-lz",
+          "options": {
+            "k": 5,
+            "chainLimit": 4096
+          },
+          "decoderBytes": 308,
+          "compressedBytes": 3733,
+          "payloadBytes": 4041,
+          "scratchBytes": 0,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 350796,
+            "virtualMilliseconds": 28.5478515625,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "b6554563c13b3477ac4b6b8176cd49395a482bd534d9f12df445c2a2769785f0"
+        },
+        {
+          "family": "compact-prev-byte",
+          "options": {
+            "context": "prev-byte",
+            "bits": 4,
+            "rate": 2,
+            "compact": true
+          },
+          "decoderBytes": 368,
+          "compressedBytes": 4146,
+          "payloadBytes": 4514,
+          "scratchBytes": 32768
+        },
+        {
+          "family": "opcode-low",
+          "options": {
+            "context": "opcode-low",
+            "bits": 4,
+            "rate": 2
+          },
+          "decoderBytes": 404,
+          "compressedBytes": 4119,
+          "payloadBytes": 4523,
+          "scratchBytes": 32768
+        },
+        {
+          "family": "prev-byte",
+          "options": {
+            "context": "prev-byte",
+            "bits": 4,
+            "rate": 2
+          },
+          "decoderBytes": 392,
+          "compressedBytes": 4146,
+          "payloadBytes": 4538,
+          "scratchBytes": 32768
+        },
+        {
+          "family": "compact-prev-zero",
+          "options": {
+            "context": "prev-zero",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 364,
+          "compressedBytes": 4178,
+          "payloadBytes": 4542,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "prev-zero",
+          "options": {
+            "context": "prev-zero",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 388,
+          "compressedBytes": 4178,
+          "payloadBytes": 4566,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "opcode-high",
+          "options": {
+            "context": "opcode-high",
+            "bits": 4,
+            "rate": 3
+          },
+          "decoderBytes": 408,
+          "compressedBytes": 4171,
+          "payloadBytes": 4579,
+          "scratchBytes": 32768
+        },
+        {
+          "family": "compact-range-rate",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "compact": true
+          },
+          "decoderBytes": 332,
+          "compressedBytes": 4393,
+          "payloadBytes": 4725,
+          "scratchBytes": 2048
+        },
+        {
+          "family": "compact-prev-low",
+          "options": {
+            "context": "prev-low",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 364,
+          "compressedBytes": 4361,
+          "payloadBytes": 4725,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "range-rate",
+          "options": {
+            "rate": 3,
+            "lanes": 4
+          },
+          "decoderBytes": 352,
+          "compressedBytes": 4393,
+          "payloadBytes": 4745,
+          "scratchBytes": 2048
+        },
+        {
+          "family": "prev-low",
+          "options": {
+            "context": "prev-low",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 388,
+          "compressedBytes": 4361,
+          "payloadBytes": 4749,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "lane-rates",
+          "options": {
+            "rates": [
+              3,
+              3,
+              3,
+              3
+            ]
+          },
+          "decoderBytes": 376,
+          "compressedBytes": 4393,
+          "payloadBytes": 4769,
+          "scratchBytes": 2048
+        },
+        {
+          "family": "prev-lane",
+          "options": {
+            "context": "prev-lane",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 392,
+          "compressedBytes": 4432,
+          "payloadBytes": 4824,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "compact-decoder-seed",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "seeded": true,
+            "compact": true
+          },
+          "decoderBytes": 468,
+          "compressedBytes": 4385,
+          "payloadBytes": 4853,
+          "scratchBytes": 2048,
+          "seedBytes": 428,
+          "seedSha256": "5888a8ba8e5812b5e41bfdd378428c3e2136ce060c318dde5cc82b3aef6543a7"
+        },
+        {
+          "family": "decoder-seed",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "seeded": true
+          },
+          "decoderBytes": 500,
+          "compressedBytes": 4384,
+          "payloadBytes": 4884,
+          "scratchBytes": 2048,
+          "seedBytes": 456,
+          "seedSha256": "dc179b2613b007a86a31792fced9a8f94c2892702fc2093e8668a484513d364b"
+        },
+        {
+          "family": "xor4",
+          "options": {
+            "filter": "xor4",
+            "rate": 3
+          },
+          "decoderBytes": 400,
+          "compressedBytes": 5299,
+          "payloadBytes": 5699,
+          "scratchBytes": 2048
+        },
+        {
+          "family": "sub4",
+          "options": {
+            "filter": "sub4",
+            "rate": 4
+          },
+          "decoderBytes": 400,
+          "compressedBytes": 5666,
+          "payloadBytes": 6066,
+          "scratchBytes": 2048
+        }
+      ],
+      "runtime": {
+        "name": "pelican-2026-09-30",
+        "candidate": "lz-range",
+        "baselineBytes": 4045,
+        "packedBytes": 3887,
+        "frames": 120,
+        "seconds": 2,
+        "alignedStartTick": 1228800,
+        "exactRgba": true,
+        "exactPcm": true,
+        "nonBlackFrames": 119,
+        "nonzeroAudioSamples": 192000,
+        "peak": 0.6401036977767944,
+        "rgbaSha256": "6e182a87775b264d8da868921766b1e069a1aa7cda74bb8c6fa0e9cff14a1321",
+        "pcmSha256": "6aa91a8d1546d2409a812b143a5237ed6bb47d789da2c9761a5a9e707c96cada",
+        "candidateSha256": "bc5bae6da54e21da19f00f6e499e7a1de2364439ce094336443a20ec085f1cdb",
+        "baselineSha256": "0a5627a28d4b80e2e8743853ac11564b87a98b6a166cc4145a56cbe42d36a31f",
+        "imageSha256": "197aa482e7cfeaddffb5d22f8f36ff1feb25d4b4d918226a56cd2a28130bda26",
+        "final": {
+          "profile": "dynamic-1",
+          "profileCode": 4,
+          "audio": {
+            "rate": 48000,
+            "samples": 100608,
+            "blocks": 393,
+            "peak": 0.13159014284610748,
+            "overruns": 0,
+            "lastTicks": 1096
+          },
+          "gpu": {
+            "statusCode": 1,
+            "status": "busy",
+            "ticks": 12192,
+            "dispatches": 49,
+            "invocations": 256,
+            "pc": 151816,
+            "lastTicks": 467,
+            "frameBudgetPercent": 0.22802734375
+          },
+          "wasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8",
+          "frames": 126,
+          "ticks": 25804800,
+          "pc": 148056,
+          "status": 4,
+          "format": 3,
+          "payloadBytes": 3887,
+          "rgbaSha256": "3e0716015b4b03737c130c653cfcd5ee540e1234477b21a02afbe8bec5fb8fd7"
+        }
+      }
+    },
+    {
+      "name": "pelican-bicycle",
+      "sourceSha256": "22b2c33f3e0f5f90b724afe33f1c7e12988b6bbafc116c2e5439d1f8b57a13fe",
+      "imageSha256": "0dac64e941058c45d8585ae72e791a396f8d1c594d9234d97b7062980c6ef6aa",
+      "imageBytes": 6840,
+      "baselineBytes": 4094,
+      "candidateCount": 211,
+      "bests": [
+        {
+          "family": "compact-prev-zero",
+          "options": {
+            "context": "prev-zero",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 368,
+          "compressedBytes": 3664,
+          "payloadBytes": 4032,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1443825,
+            "virtualMilliseconds": 117.498779296875,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "b5d8d16d34f89660747f2a09027d46863d215fd6990f645b714492ee04cd7e61"
+        },
+        {
+          "family": "prev-zero",
+          "options": {
+            "context": "prev-zero",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 388,
+          "compressedBytes": 3664,
+          "payloadBytes": 4052,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1447488,
+            "virtualMilliseconds": 117.796875,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "292f0bc0d0a55f23f4f12d6de858d5b680a52f091cc209d19c3b23950e73f28d"
+        },
+        {
+          "family": "compact-prev-byte",
+          "options": {
+            "context": "prev-byte",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 372,
+          "compressedBytes": 3694,
+          "payloadBytes": 4066,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1451013,
+            "virtualMilliseconds": 118.083740234375,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "74753f0a575185425033f9eaadea7deabc42f326b75f83d26e0164604fdd1975"
+        },
+        {
+          "family": "compact-range-rate",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "compact": true
+          },
+          "decoderBytes": 336,
+          "compressedBytes": 3742,
+          "payloadBytes": 4078,
+          "scratchBytes": 2048,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1373848,
+            "virtualMilliseconds": 111.80403645833333,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "76094e141be2fe3adda60b19075b32d6ed1f5d2514ca23a41f3e8179fd5741d7"
+        },
+        {
+          "family": "prev-byte",
+          "options": {
+            "context": "prev-byte",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 392,
+          "compressedBytes": 3694,
+          "payloadBytes": 4086,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1454706,
+            "virtualMilliseconds": 118.38427734375,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "2da5f8d6a71d36077e2d884cdaa942c6adc88954d322b0ac3ea731db11421ebd"
+        },
+        {
+          "family": "range-rate",
+          "options": {
+            "rate": 3,
+            "lanes": 4
+          },
+          "decoderBytes": 352,
+          "compressedBytes": 3742,
+          "payloadBytes": 4094,
+          "scratchBytes": 2048,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1377588,
+            "virtualMilliseconds": 112.1083984375,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "a70ac2d44fdd38a13eda74c50c7e716ff761ba6cf9cb1499783cfc169e72fc1a"
+        },
+        {
+          "family": "opcode-low",
+          "options": {
+            "context": "opcode-low",
+            "bits": 3,
+            "rate": 3
+          },
+          "decoderBytes": 404,
+          "compressedBytes": 3696,
+          "payloadBytes": 4100,
+          "scratchBytes": 16384
+        },
+        {
+          "family": "lane-rates",
+          "options": {
+            "rates": [
+              3,
+              3,
+              3,
+              3
+            ]
+          },
+          "decoderBytes": 376,
+          "compressedBytes": 3742,
+          "payloadBytes": 4118,
+          "scratchBytes": 2048
+        },
+        {
+          "family": "opcode-high",
+          "options": {
+            "context": "opcode-high",
+            "bits": 4,
+            "rate": 3
+          },
+          "decoderBytes": 408,
+          "compressedBytes": 3711,
+          "payloadBytes": 4119,
+          "scratchBytes": 32768
+        },
+        {
+          "family": "compact-prev-low",
+          "options": {
+            "context": "prev-low",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 368,
+          "compressedBytes": 3798,
+          "payloadBytes": 4166,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "lz-range",
+          "options": {
+            "k": 3,
+            "rate": 4,
+            "chainLimit": 4096,
+            "compact": true
+          },
+          "decoderBytes": 528,
+          "compressedBytes": 3649,
+          "payloadBytes": 4177,
+          "scratchBytes": 2404
+        },
+        {
+          "family": "prev-low",
+          "options": {
+            "context": "prev-low",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 388,
+          "compressedBytes": 3798,
+          "payloadBytes": 4186,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "prev-lane",
+          "options": {
+            "context": "prev-lane",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 392,
+          "compressedBytes": 3796,
+          "payloadBytes": 4188,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "compact-decoder-seed",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "seeded": true,
+            "compact": true
+          },
+          "decoderBytes": 472,
+          "compressedBytes": 3741,
+          "payloadBytes": 4213,
+          "scratchBytes": 2048,
+          "seedBytes": 432,
+          "seedSha256": "f75173f1c6c2df2da854aa5509b2265235fb74d3b1f6ef01a281e323d6b3fb70"
+        },
+        {
+          "family": "decoder-seed",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "seeded": true
+          },
+          "decoderBytes": 500,
+          "compressedBytes": 3741,
+          "payloadBytes": 4241,
+          "scratchBytes": 2048,
+          "seedBytes": 456,
+          "seedSha256": "6966b1de12597952c276688a5b7d7ee3cb1b26d9212a4c28f9cceb8967b719c2"
+        },
+        {
+          "family": "deep-lz",
+          "options": {
+            "k": 5,
+            "chainLimit": 4096
+          },
+          "decoderBytes": 308,
+          "compressedBytes": 4074,
+          "payloadBytes": 4382,
+          "scratchBytes": 0
+        },
+        {
+          "family": "xor4",
+          "options": {
+            "filter": "xor4",
+            "rate": 3
+          },
+          "decoderBytes": 400,
+          "compressedBytes": 4324,
+          "payloadBytes": 4724,
+          "scratchBytes": 2048
+        },
+        {
+          "family": "sub4",
+          "options": {
+            "filter": "sub4",
+            "rate": 4
+          },
+          "decoderBytes": 400,
+          "compressedBytes": 4632,
+          "payloadBytes": 5032,
+          "scratchBytes": 2048
+        }
+      ],
+      "runtime": {
+        "name": "pelican-bicycle",
+        "candidate": "compact-prev-zero",
+        "baselineBytes": 4094,
+        "packedBytes": 4032,
+        "frames": 120,
+        "seconds": 2,
+        "alignedStartTick": 1843200,
+        "exactRgba": true,
+        "exactPcm": true,
+        "nonBlackFrames": 117,
+        "nonzeroAudioSamples": 191974,
+        "peak": 0.14417582750320435,
+        "rgbaSha256": "8e00e6861c0d93e892aaec8f7d7fee1b3c80a348d5679dfdc1e21c830bcb4f11",
+        "pcmSha256": "953f73804c58c0d41d43a8f6eba441ef1aa32f8733145e17c9e8cad57cdae94c",
+        "candidateSha256": "b5d8d16d34f89660747f2a09027d46863d215fd6990f645b714492ee04cd7e61",
+        "baselineSha256": "a70ac2d44fdd38a13eda74c50c7e716ff761ba6cf9cb1499783cfc169e72fc1a",
+        "imageSha256": "0dac64e941058c45d8585ae72e791a396f8d1c594d9234d97b7062980c6ef6aa",
+        "final": {
+          "profile": "dynamic-1",
+          "profileCode": 4,
+          "audio": {
+            "rate": 48000,
+            "samples": 103168,
+            "blocks": 403,
+            "peak": 0.03458521515130997,
+            "overruns": 0,
+            "lastTicks": 2460
+          },
+          "gpu": {
+            "statusCode": 1,
+            "status": "busy",
+            "ticks": 11513,
+            "dispatches": 203,
+            "invocations": 1472,
+            "pc": 184732,
+            "lastTicks": 98,
+            "frameBudgetPercent": 0.0478515625
+          },
+          "wasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8",
+          "frames": 129,
+          "ticks": 26419200,
+          "pc": 181148,
+          "status": 1,
+          "format": 4,
+          "payloadBytes": 4032,
+          "rgbaSha256": "9ae1977ddb1116f8ea91b45a5648305007f9372c30aa08e7f4dcfa10185846a5"
+        }
+      }
+    },
+    {
+      "name": "lightcone",
+      "sourceSha256": "751d6be11fff4c22be7016a6df2763619ce299c50da68fc4b45c9bc938c54f25",
+      "imageSha256": "51828e4d0f1bb42cc1865af9ee60adf182d0cb653293950dd160ad823b2bd5cb",
+      "imageBytes": 6672,
+      "baselineBytes": 4071,
+      "candidateCount": 211,
+      "bests": [
+        {
+          "family": "compact-range-rate",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "compact": true
+          },
+          "decoderBytes": 336,
+          "compressedBytes": 3719,
+          "payloadBytes": 4055,
+          "scratchBytes": 2048,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1339852,
+            "virtualMilliseconds": 109.03743489583333,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "56c5ac6cb1dd434031d8f9710e8ff5874e44b380a5251bbd6a973093652821b6"
+        },
+        {
+          "family": "compact-prev-zero",
+          "options": {
+            "context": "prev-zero",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 368,
+          "compressedBytes": 3689,
+          "payloadBytes": 4057,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1408770,
+            "virtualMilliseconds": 114.64599609375,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "c64a4b70d295fb913157cae8bb4b4b5c19544a0f6161e361d62622671d122825"
+        },
+        {
+          "family": "compact-prev-byte",
+          "options": {
+            "context": "prev-byte",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 372,
+          "compressedBytes": 3698,
+          "payloadBytes": 4070,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1415504,
+            "virtualMilliseconds": 115.19401041666667,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "4287186555c0e6e334b48353e3b2a5ee38101bd6a79fdc56be9a7aa9c10c7b65"
+        },
+        {
+          "family": "range-rate",
+          "options": {
+            "rate": 3,
+            "lanes": 4
+          },
+          "decoderBytes": 352,
+          "compressedBytes": 3719,
+          "payloadBytes": 4071,
+          "scratchBytes": 2048,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1343569,
+            "virtualMilliseconds": 109.33992513020833,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "a5ee1d994e183a8aa89af37fe66681eaa18974940afc3c9aa8c8010b19adcf99"
+        },
+        {
+          "family": "prev-zero",
+          "options": {
+            "context": "prev-zero",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 388,
+          "compressedBytes": 3689,
+          "payloadBytes": 4077,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1412458,
+            "virtualMilliseconds": 114.94612630208333,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "95548acb9dd3e32cd9c20210cd0b9a841c96e245337838d0e0df759d1ba0470b"
+        },
+        {
+          "family": "prev-byte",
+          "options": {
+            "context": "prev-byte",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 392,
+          "compressedBytes": 3698,
+          "payloadBytes": 4090,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1419201,
+            "virtualMilliseconds": 115.494873046875,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "e2ee4d2dbce6a0d375b4774b6f204837073d592903774421d271b53417557f37"
+        },
+        {
+          "family": "lane-rates",
+          "options": {
+            "rates": [
+              3,
+              3,
+              4,
+              3
+            ]
+          },
+          "decoderBytes": 376,
+          "compressedBytes": 3718,
+          "payloadBytes": 4094,
+          "scratchBytes": 2048,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1390261,
+            "virtualMilliseconds": 113.13972981770833,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "b25b19e39f6c4cab1dc122e22dd3289d0143e5e572b561e99a84d63583e33155"
+        },
+        {
+          "family": "opcode-high",
+          "options": {
+            "context": "opcode-high",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 408,
+          "compressedBytes": 3733,
+          "payloadBytes": 4141,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "opcode-low",
+          "options": {
+            "context": "opcode-low",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 404,
+          "compressedBytes": 3741,
+          "payloadBytes": 4145,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "compact-prev-low",
+          "options": {
+            "context": "prev-low",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 368,
+          "compressedBytes": 3790,
+          "payloadBytes": 4158,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "prev-lane",
+          "options": {
+            "context": "prev-lane",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 392,
+          "compressedBytes": 3772,
+          "payloadBytes": 4164,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "prev-low",
+          "options": {
+            "context": "prev-low",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 388,
+          "compressedBytes": 3790,
+          "payloadBytes": 4178,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "compact-decoder-seed",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "seeded": true,
+            "compact": true
+          },
+          "decoderBytes": 472,
+          "compressedBytes": 3716,
+          "payloadBytes": 4188,
+          "scratchBytes": 2048,
+          "seedBytes": 432,
+          "seedSha256": "061893da634cdba89cc9a854eca27397227f0f3ddfa5a8cbd9711955e2b2fb1c"
+        },
+        {
+          "family": "decoder-seed",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "seeded": true
+          },
+          "decoderBytes": 500,
+          "compressedBytes": 3715,
+          "payloadBytes": 4215,
+          "scratchBytes": 2048,
+          "seedBytes": 456,
+          "seedSha256": "ea086b0e52253972742d82039ec0e7776bd68f005cc0e5032cd336fd3639b388"
+        },
+        {
+          "family": "lz-range",
+          "options": {
+            "k": 3,
+            "rate": 4,
+            "chainLimit": 4096,
+            "compact": true
+          },
+          "decoderBytes": 528,
+          "compressedBytes": 3811,
+          "payloadBytes": 4339,
+          "scratchBytes": 2404
+        },
+        {
+          "family": "deep-lz",
+          "options": {
+            "k": 5,
+            "chainLimit": 4096
+          },
+          "decoderBytes": 308,
+          "compressedBytes": 4228,
+          "payloadBytes": 4536,
+          "scratchBytes": 0
+        },
+        {
+          "family": "xor4",
+          "options": {
+            "filter": "xor4",
+            "rate": 4
+          },
+          "decoderBytes": 400,
+          "compressedBytes": 4356,
+          "payloadBytes": 4756,
+          "scratchBytes": 2048
+        },
+        {
+          "family": "sub4",
+          "options": {
+            "filter": "sub4",
+            "rate": 4
+          },
+          "decoderBytes": 400,
+          "compressedBytes": 4620,
+          "payloadBytes": 5020,
+          "scratchBytes": 2048
+        }
+      ],
+      "runtime": {
+        "name": "lightcone",
+        "candidate": "compact-range-rate",
+        "baselineBytes": 4071,
+        "packedBytes": 4055,
+        "frames": 120,
+        "seconds": 2,
+        "alignedStartTick": 1638400,
+        "exactRgba": true,
+        "exactPcm": true,
+        "nonBlackFrames": 119,
+        "nonzeroAudioSamples": 191998,
+        "peak": 0.6358515620231628,
+        "rgbaSha256": "7694c61a7a8bdc2313578acc9894834ab8a5c88d1f8c571b43043b3d3305145c",
+        "pcmSha256": "b31a092bd3dd2bf380bff3448c4bc93f1f86a6efaa2c1fa638b1f16cb6ca8968",
+        "candidateSha256": "56c5ac6cb1dd434031d8f9710e8ff5874e44b380a5251bbd6a973093652821b6",
+        "baselineSha256": "a5ee1d994e183a8aa89af37fe66681eaa18974940afc3c9aa8c8010b19adcf99",
+        "imageSha256": "51828e4d0f1bb42cc1865af9ee60adf182d0cb653293950dd160ad823b2bd5cb",
+        "final": {
+          "profile": "dynamic-1",
+          "profileCode": 4,
+          "audio": {
+            "rate": 48000,
+            "samples": 102400,
+            "blocks": 400,
+            "peak": 0.3355939984321594,
+            "overruns": 0,
+            "lastTicks": 2948
+          },
+          "gpu": {
+            "statusCode": 1,
+            "status": "busy",
+            "ticks": 11676,
+            "dispatches": 97,
+            "invocations": 1088,
+            "pc": 185860,
+            "lastTicks": 152791,
+            "frameBudgetPercent": 74.60498046875
+          },
+          "wasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8",
+          "frames": 128,
+          "ticks": 26214400,
+          "pc": 184232,
+          "status": 4,
+          "format": 4,
+          "payloadBytes": 4055,
+          "rgbaSha256": "4eb2bec7926ca667c14cf10ebe6f6db1ec5e1ac8afabc454f1c2171b5ee4a05e"
+        }
+      }
+    },
+    {
+      "name": "elsewhere",
+      "sourceSha256": "98d401a6ea2c0ea38bf7201b4ea46597cf345bd61446c222a64ac2097b324da2",
+      "imageSha256": "8b0703300fd1152567cc7d6d68ed898390ed84d1374a0af48d91efdcca34580c",
+      "imageBytes": 6852,
+      "baselineBytes": 4084,
+      "candidateCount": 211,
+      "bests": [
+        {
+          "family": "compact-range-rate",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "compact": true
+          },
+          "decoderBytes": 336,
+          "compressedBytes": 3732,
+          "payloadBytes": 4068,
+          "scratchBytes": 2048,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1374892,
+            "virtualMilliseconds": 111.88899739583333,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "dac64da9fabe827875e566f0874c592ca3030cc01659911c98e8c46ceedb1f71"
+        },
+        {
+          "family": "compact-prev-zero",
+          "options": {
+            "context": "prev-zero",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 368,
+          "compressedBytes": 3715,
+          "payloadBytes": 4083,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1445698,
+            "virtualMilliseconds": 117.65120442708333,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "f8e6ae53b7436322488983890fe8391e9f4d8848694e4b548d07ecc9f3742dd7"
+        },
+        {
+          "family": "range-rate",
+          "options": {
+            "rate": 3,
+            "lanes": 4
+          },
+          "decoderBytes": 352,
+          "compressedBytes": 3732,
+          "payloadBytes": 4084,
+          "scratchBytes": 2048,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1378622,
+            "virtualMilliseconds": 112.19254557291667,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "6afa2000581b3bcb6b10c8fe599ce6218e87356f4cb85382883af0337c670c43"
+        },
+        {
+          "family": "compact-prev-byte",
+          "options": {
+            "context": "prev-byte",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 372,
+          "compressedBytes": 3728,
+          "payloadBytes": 4100,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "prev-zero",
+          "options": {
+            "context": "prev-zero",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 388,
+          "compressedBytes": 3715,
+          "payloadBytes": 4103,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "lane-rates",
+          "options": {
+            "rates": [
+              3,
+              3,
+              3,
+              3
+            ]
+          },
+          "decoderBytes": 376,
+          "compressedBytes": 3732,
+          "payloadBytes": 4108,
+          "scratchBytes": 2048
+        },
+        {
+          "family": "prev-byte",
+          "options": {
+            "context": "prev-byte",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 392,
+          "compressedBytes": 3728,
+          "payloadBytes": 4120,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "compact-prev-low",
+          "options": {
+            "context": "prev-low",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 368,
+          "compressedBytes": 3815,
+          "payloadBytes": 4183,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "opcode-high",
+          "options": {
+            "context": "opcode-high",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 408,
+          "compressedBytes": 3789,
+          "payloadBytes": 4197,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "compact-decoder-seed",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "seeded": true,
+            "compact": true
+          },
+          "decoderBytes": 472,
+          "compressedBytes": 3726,
+          "payloadBytes": 4198,
+          "scratchBytes": 2048,
+          "seedBytes": 432,
+          "seedSha256": "42e192145a4f77ef73420a014534f91b0fdc3161a93a85970fcefde007866125"
+        },
+        {
+          "family": "prev-lane",
+          "options": {
+            "context": "prev-lane",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 392,
+          "compressedBytes": 3808,
+          "payloadBytes": 4200,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "opcode-low",
+          "options": {
+            "context": "opcode-low",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 404,
+          "compressedBytes": 3798,
+          "payloadBytes": 4202,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "prev-low",
+          "options": {
+            "context": "prev-low",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 388,
+          "compressedBytes": 3815,
+          "payloadBytes": 4203,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "decoder-seed",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "seeded": true
+          },
+          "decoderBytes": 500,
+          "compressedBytes": 3726,
+          "payloadBytes": 4226,
+          "scratchBytes": 2048,
+          "seedBytes": 456,
+          "seedSha256": "3b86411b3c959154d3d7c3067f292c6acd80cb1f39af4a564752ae302a28505b"
+        },
+        {
+          "family": "lz-range",
+          "options": {
+            "k": 3,
+            "rate": 4,
+            "chainLimit": 4096,
+            "compact": true
+          },
+          "decoderBytes": 528,
+          "compressedBytes": 3826,
+          "payloadBytes": 4354,
+          "scratchBytes": 2404
+        },
+        {
+          "family": "deep-lz",
+          "options": {
+            "k": 5,
+            "chainLimit": 4096
+          },
+          "decoderBytes": 308,
+          "compressedBytes": 4262,
+          "payloadBytes": 4570,
+          "scratchBytes": 0
+        },
+        {
+          "family": "xor4",
+          "options": {
+            "filter": "xor4",
+            "rate": 3
+          },
+          "decoderBytes": 400,
+          "compressedBytes": 4403,
+          "payloadBytes": 4803,
+          "scratchBytes": 2048
+        },
+        {
+          "family": "sub4",
+          "options": {
+            "filter": "sub4",
+            "rate": 4
+          },
+          "decoderBytes": 400,
+          "compressedBytes": 4703,
+          "payloadBytes": 5103,
+          "scratchBytes": 2048
+        }
+      ],
+      "runtime": {
+        "name": "elsewhere",
+        "candidate": "compact-range-rate",
+        "baselineBytes": 4084,
+        "packedBytes": 4068,
+        "frames": 120,
+        "seconds": 2,
+        "alignedStartTick": 1638400,
+        "exactRgba": true,
+        "exactPcm": true,
+        "nonBlackFrames": 114,
+        "nonzeroAudioSamples": 192000,
+        "peak": 0.24532990157604218,
+        "rgbaSha256": "81de68d85702dbe0b0927aaf3751a37e31ef37fb72208982599800779b3b642d",
+        "pcmSha256": "ee9e15d060792aeee122e3e0454b5fa26d3e1f5b777c64893905f61833f75288",
+        "candidateSha256": "dac64da9fabe827875e566f0874c592ca3030cc01659911c98e8c46ceedb1f71",
+        "baselineSha256": "6afa2000581b3bcb6b10c8fe599ce6218e87356f4cb85382883af0337c670c43",
+        "imageSha256": "8b0703300fd1152567cc7d6d68ed898390ed84d1374a0af48d91efdcca34580c",
+        "final": {
+          "profile": "dynamic-1",
+          "profileCode": 4,
+          "audio": {
+            "rate": 48000,
+            "samples": 102400,
+            "blocks": 400,
+            "peak": 0.12318295240402222,
+            "overruns": 0,
+            "lastTicks": 10500
+          },
+          "gpu": {
+            "statusCode": 1,
+            "status": "busy",
+            "ticks": 12645,
+            "dispatches": 80,
+            "invocations": 1600,
+            "pc": 186492,
+            "lastTicks": 351256,
+            "frameBudgetPercent": 171.51171875
+          },
+          "wasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8",
+          "frames": 128,
+          "ticks": 26214400,
+          "pc": 186136,
+          "status": 4,
+          "format": 3,
+          "payloadBytes": 4068,
+          "rgbaSha256": "2b43f985eab297c1d862afc2570378a69b603c1272b9252c7f1d216d5eeda773"
+        }
+      }
+    },
+    {
+      "name": "limit-set",
+      "sourceSha256": "869a6e6769f68cbc2fb9e9459ea52c2f62711651a33fa4e3584067f605b96354",
+      "imageSha256": "e88a71d4b7e80fd7df257f0f9ffb5670657548bc6aaa410393306fa672522313",
+      "imageBytes": 6968,
+      "baselineBytes": 4074,
+      "candidateCount": 211,
+      "bests": [
+        {
+          "family": "compact-prev-zero",
+          "options": {
+            "context": "prev-zero",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 368,
+          "compressedBytes": 3672,
+          "payloadBytes": 4040,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1469213,
+            "virtualMilliseconds": 119.56486002604167,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "f687339fa4aeef0475196c826efd645f9454c9a2282f5134d4caf75731a929c0"
+        },
+        {
+          "family": "compact-prev-byte",
+          "options": {
+            "context": "prev-byte",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 372,
+          "compressedBytes": 3674,
+          "payloadBytes": 4046,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1476220,
+            "virtualMilliseconds": 120.13509114583333,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "441bffc3824b94696a221cc2cb2a998ca767a3f67cd784e5e25a5806647ac5f3"
+        },
+        {
+          "family": "compact-range-rate",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "compact": true
+          },
+          "decoderBytes": 336,
+          "compressedBytes": 3722,
+          "payloadBytes": 4058,
+          "scratchBytes": 2048,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1397633,
+            "virtualMilliseconds": 113.73966471354167,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "b6243a8da12ac6233b88b14b20c063c5d31e3f8cd22db6be85fe72f3231c95d6"
+        },
+        {
+          "family": "prev-zero",
+          "options": {
+            "context": "prev-zero",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 388,
+          "compressedBytes": 3672,
+          "payloadBytes": 4060,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1472884,
+            "virtualMilliseconds": 119.86360677083333,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "5f174774b4287a4f87b22baf2c85302fc306ff8fe39a9ffc351d7d20b32cf644"
+        },
+        {
+          "family": "prev-byte",
+          "options": {
+            "context": "prev-byte",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 392,
+          "compressedBytes": 3674,
+          "payloadBytes": 4066,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1479893,
+            "virtualMilliseconds": 120.43400065104167,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "93a164d68d7cfab082a61d35d6e07dc2fa7027d507bd698ab967f9274264bc94"
+        },
+        {
+          "family": "range-rate",
+          "options": {
+            "rate": 3,
+            "lanes": 4
+          },
+          "decoderBytes": 352,
+          "compressedBytes": 3722,
+          "payloadBytes": 4074,
+          "scratchBytes": 2048,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1401353,
+            "virtualMilliseconds": 114.04239908854167,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "ca0b60a7296080cd172fd17852b86bc35d66144ffefa1711856966e23ec51203"
+        },
+        {
+          "family": "lane-rates",
+          "options": {
+            "rates": [
+              3,
+              3,
+              3,
+              3
+            ]
+          },
+          "decoderBytes": 376,
+          "compressedBytes": 3722,
+          "payloadBytes": 4098,
+          "scratchBytes": 2048
+        },
+        {
+          "family": "opcode-high",
+          "options": {
+            "context": "opcode-high",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 408,
+          "compressedBytes": 3737,
+          "payloadBytes": 4145,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "opcode-low",
+          "options": {
+            "context": "opcode-low",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 404,
+          "compressedBytes": 3747,
+          "payloadBytes": 4151,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "lz-range",
+          "options": {
+            "k": 3,
+            "rate": 4,
+            "chainLimit": 4096,
+            "compact": true
+          },
+          "decoderBytes": 528,
+          "compressedBytes": 3639,
+          "payloadBytes": 4167,
+          "scratchBytes": 2404
+        },
+        {
+          "family": "compact-prev-low",
+          "options": {
+            "context": "prev-low",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 368,
+          "compressedBytes": 3800,
+          "payloadBytes": 4168,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "prev-low",
+          "options": {
+            "context": "prev-low",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 388,
+          "compressedBytes": 3800,
+          "payloadBytes": 4188,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "compact-decoder-seed",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "seeded": true,
+            "compact": true
+          },
+          "decoderBytes": 472,
+          "compressedBytes": 3717,
+          "payloadBytes": 4189,
+          "scratchBytes": 2048,
+          "seedBytes": 432,
+          "seedSha256": "59646085b0df07a3f2248e2e233ceae9ff05860ef7ed31a15a629b6e410710b2"
+        },
+        {
+          "family": "prev-lane",
+          "options": {
+            "context": "prev-lane",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 392,
+          "compressedBytes": 3803,
+          "payloadBytes": 4195,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "decoder-seed",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "seeded": true
+          },
+          "decoderBytes": 500,
+          "compressedBytes": 3717,
+          "payloadBytes": 4217,
+          "scratchBytes": 2048,
+          "seedBytes": 456,
+          "seedSha256": "a0b5f3c7dc22069caf7829b74a3435abdab52ab24dfd440fb31167fb7761d4f6"
+        },
+        {
+          "family": "deep-lz",
+          "options": {
+            "k": 5,
+            "chainLimit": 4096
+          },
+          "decoderBytes": 308,
+          "compressedBytes": 4006,
+          "payloadBytes": 4314,
+          "scratchBytes": 0
+        },
+        {
+          "family": "xor4",
+          "options": {
+            "filter": "xor4",
+            "rate": 3
+          },
+          "decoderBytes": 400,
+          "compressedBytes": 4389,
+          "payloadBytes": 4789,
+          "scratchBytes": 2048
+        },
+        {
+          "family": "sub4",
+          "options": {
+            "filter": "sub4",
+            "rate": 4
+          },
+          "decoderBytes": 400,
+          "compressedBytes": 4694,
+          "payloadBytes": 5094,
+          "scratchBytes": 2048
+        }
+      ],
+      "runtime": {
+        "name": "limit-set",
+        "candidate": "compact-prev-zero",
+        "baselineBytes": 4074,
+        "packedBytes": 4040,
+        "frames": 120,
+        "seconds": 2,
+        "alignedStartTick": 1843200,
+        "exactRgba": true,
+        "exactPcm": true,
+        "nonBlackFrames": 116,
+        "nonzeroAudioSamples": 192000,
+        "peak": 0.2075543999671936,
+        "rgbaSha256": "44c08a4237bb4ab0c792969b2e5b5fea78f8025932d72419a68d53e599770430",
+        "pcmSha256": "94ca09eaadf0373a03c544a972500a5d99799ca77d3732a1ad8a7956066abee8",
+        "candidateSha256": "f687339fa4aeef0475196c826efd645f9454c9a2282f5134d4caf75731a929c0",
+        "baselineSha256": "ca0b60a7296080cd172fd17852b86bc35d66144ffefa1711856966e23ec51203",
+        "imageSha256": "e88a71d4b7e80fd7df257f0f9ffb5670657548bc6aaa410393306fa672522313",
+        "final": {
+          "profile": "dynamic-1",
+          "profileCode": 4,
+          "audio": {
+            "rate": 48000,
+            "samples": 103168,
+            "blocks": 403,
+            "peak": 0.050015054643154144,
+            "overruns": 0,
+            "lastTicks": 10088
+          },
+          "gpu": {
+            "statusCode": 1,
+            "status": "busy",
+            "ticks": 12511,
+            "dispatches": 120,
+            "invocations": 256,
+            "pc": 184304,
+            "lastTicks": 5703,
+            "frameBudgetPercent": 2.78466796875
+          },
+          "wasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8",
+          "frames": 129,
+          "ticks": 26419200,
+          "pc": 183156,
+          "status": 4,
+          "format": 4,
+          "payloadBytes": 4040,
+          "rgbaSha256": "6a4a53528b18eb43ebf60e2b48fb01e84b209c3b9b496164d98bec747113cf78"
+        }
+      }
+    },
+    {
+      "name": "mega",
+      "sourceSha256": "3ffb079343609dc1f9a24c9eac75985137be0ada44af285fdd272ace12e16bc5",
+      "imageSha256": "7d2f0ec2c1806f1fab87dd7ef58934814c8f4682ba108bf16817f46de153ce02",
+      "imageBytes": 6752,
+      "baselineBytes": 4070,
+      "candidateCount": 211,
+      "bests": [
+        {
+          "family": "compact-prev-zero",
+          "options": {
+            "context": "prev-zero",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 364,
+          "compressedBytes": 3649,
+          "payloadBytes": 4013,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1423982,
+            "virtualMilliseconds": 115.88395182291667,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "6f05b45b8c37a7a7965a1ba73d4e5f0cf17b42668aed14eb81caa52b0c29dd6c"
+        },
+        {
+          "family": "prev-zero",
+          "options": {
+            "context": "prev-zero",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 388,
+          "compressedBytes": 3649,
+          "payloadBytes": 4037,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1427631,
+            "virtualMilliseconds": 116.180908203125,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "fa1599baac91bc5b9b7cb7e2c4d1201b314304e06528f5ba48bc3d4334c7f04e"
+        },
+        {
+          "family": "compact-prev-byte",
+          "options": {
+            "context": "prev-byte",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 368,
+          "compressedBytes": 3675,
+          "payloadBytes": 4043,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1430997,
+            "virtualMilliseconds": 116.454833984375,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "60667cb952015df1f4ec36ea7814fc2ca4d5ab6a218a313a8da5ab1468bc1d6f"
+        },
+        {
+          "family": "compact-range-rate",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "compact": true
+          },
+          "decoderBytes": 332,
+          "compressedBytes": 3718,
+          "payloadBytes": 4050,
+          "scratchBytes": 2048,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1354775,
+            "virtualMilliseconds": 110.25187174479167,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "d62076ef132bb6501db81be3aea0f600c003caf2a16b842822b6e8b930ce5ef3"
+        },
+        {
+          "family": "prev-byte",
+          "options": {
+            "context": "prev-byte",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 392,
+          "compressedBytes": 3675,
+          "payloadBytes": 4067,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1434672,
+            "virtualMilliseconds": 116.75390625,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "1d9018f5485675d00a296344487ccc0ef84b13798a1256e84e0db87b5d23cb50"
+        },
+        {
+          "family": "range-rate",
+          "options": {
+            "rate": 3,
+            "lanes": 4
+          },
+          "decoderBytes": 352,
+          "compressedBytes": 3718,
+          "payloadBytes": 4070,
+          "scratchBytes": 2048,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1358492,
+            "virtualMilliseconds": 110.55436197916667,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "4e55ddc1666aebedefe8f1b068163aada22e4ed68fb760e2ff53d3778368c717"
+        },
+        {
+          "family": "lane-rates",
+          "options": {
+            "rates": [
+              4,
+              3,
+              3,
+              3
+            ]
+          },
+          "decoderBytes": 376,
+          "compressedBytes": 3713,
+          "payloadBytes": 4089,
+          "scratchBytes": 2048,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1405700,
+            "virtualMilliseconds": 114.39615885416667,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "22cf92ecb9aaa70dc980068d1277ce6d08ba6b2c8cc69d2283b3b317896efa89"
+        },
+        {
+          "family": "compact-prev-low",
+          "options": {
+            "context": "prev-low",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 364,
+          "compressedBytes": 3767,
+          "payloadBytes": 4131,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "opcode-low",
+          "options": {
+            "context": "opcode-low",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 404,
+          "compressedBytes": 3734,
+          "payloadBytes": 4138,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "opcode-high",
+          "options": {
+            "context": "opcode-high",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 408,
+          "compressedBytes": 3731,
+          "payloadBytes": 4139,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "prev-low",
+          "options": {
+            "context": "prev-low",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 388,
+          "compressedBytes": 3767,
+          "payloadBytes": 4155,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "prev-lane",
+          "options": {
+            "context": "prev-lane",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 392,
+          "compressedBytes": 3778,
+          "payloadBytes": 4170,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "compact-decoder-seed",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "seeded": true,
+            "compact": true
+          },
+          "decoderBytes": 468,
+          "compressedBytes": 3714,
+          "payloadBytes": 4182,
+          "scratchBytes": 2048,
+          "seedBytes": 428,
+          "seedSha256": "63dd6139e9be07dec6c6785b7826ccb64040abddf5557a457a37b7b778367b11"
+        },
+        {
+          "family": "decoder-seed",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "seeded": true
+          },
+          "decoderBytes": 500,
+          "compressedBytes": 3714,
+          "payloadBytes": 4214,
+          "scratchBytes": 2048,
+          "seedBytes": 456,
+          "seedSha256": "a4d0862fb1e525d5ca8ec05fbe2197519c3265c2b8c7059c21e39439ea41790e"
+        },
+        {
+          "family": "lz-range",
+          "options": {
+            "k": 5,
+            "rate": 4,
+            "chainLimit": 4096,
+            "compact": true
+          },
+          "decoderBytes": 520,
+          "compressedBytes": 3802,
+          "payloadBytes": 4322,
+          "scratchBytes": 2404
+        },
+        {
+          "family": "deep-lz",
+          "options": {
+            "k": 5,
+            "chainLimit": 4096
+          },
+          "decoderBytes": 308,
+          "compressedBytes": 4239,
+          "payloadBytes": 4547,
+          "scratchBytes": 0
+        },
+        {
+          "family": "xor4",
+          "options": {
+            "filter": "xor4",
+            "rate": 4
+          },
+          "decoderBytes": 400,
+          "compressedBytes": 4447,
+          "payloadBytes": 4847,
+          "scratchBytes": 2048
+        },
+        {
+          "family": "sub4",
+          "options": {
+            "filter": "sub4",
+            "rate": 4
+          },
+          "decoderBytes": 400,
+          "compressedBytes": 4730,
+          "payloadBytes": 5130,
+          "scratchBytes": 2048
+        }
+      ],
+      "runtime": {
+        "name": "mega",
+        "candidate": "compact-prev-zero",
+        "baselineBytes": 4070,
+        "packedBytes": 4013,
+        "frames": 120,
+        "seconds": 2,
+        "alignedStartTick": 1638400,
+        "exactRgba": true,
+        "exactPcm": true,
+        "nonBlackFrames": 119,
+        "nonzeroAudioSamples": 192000,
+        "peak": 0.30576854944229126,
+        "rgbaSha256": "59b96a8cfb3deada9f5e64d6dfde6e4c0374cbdd002b8b9f9c8f5baafc8bf62b",
+        "pcmSha256": "69c7168567b595aa29151c1732824b439879d856c50011056059e93198d26fc2",
+        "candidateSha256": "6f05b45b8c37a7a7965a1ba73d4e5f0cf17b42668aed14eb81caa52b0c29dd6c",
+        "baselineSha256": "4e55ddc1666aebedefe8f1b068163aada22e4ed68fb760e2ff53d3778368c717",
+        "imageSha256": "7d2f0ec2c1806f1fab87dd7ef58934814c8f4682ba108bf16817f46de153ce02",
+        "final": {
+          "profile": "dynamic-1",
+          "profileCode": 4,
+          "audio": {
+            "rate": 48000,
+            "samples": 102400,
+            "blocks": 400,
+            "peak": 0.14181487262248993,
+            "overruns": 0,
+            "lastTicks": 16028
+          },
+          "gpu": {
+            "statusCode": 1,
+            "status": "busy",
+            "ticks": 12532,
+            "dispatches": 481,
+            "invocations": 1600,
+            "pc": 189076,
+            "lastTicks": 29,
+            "frameBudgetPercent": 0.014160156249999998
+          },
+          "wasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8",
+          "frames": 128,
+          "ticks": 26214400,
+          "pc": 188692,
+          "status": 4,
+          "format": 4,
+          "payloadBytes": 4013,
+          "rgbaSha256": "ffb625cabd082239b081f6108d368fb6963415554c77a302b556825a8a750ecf"
+        }
+      }
+    },
+    {
+      "name": "carpet",
+      "sourceSha256": "d2cd8b05111eb4902912a2ff845f7e817fe14fcf56e305d9f3658a00affbeddd",
+      "imageSha256": "de63bc73557d9270ab76c648b1a345597ef7312bfe2faf98f7d8c224356ed6cb",
+      "imageBytes": 6612,
+      "baselineBytes": 4093,
+      "candidateCount": 211,
+      "bests": [
+        {
+          "family": "compact-prev-zero",
+          "options": {
+            "context": "prev-zero",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 368,
+          "compressedBytes": 3622,
+          "payloadBytes": 3990,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1396589,
+            "virtualMilliseconds": 113.65470377604167,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "b947b3166663aa87b0619d1bfdb5459ba44998205e206574b0338145947a85fa"
+        },
+        {
+          "family": "compact-prev-byte",
+          "options": {
+            "context": "prev-byte",
+            "bits": 2,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 372,
+          "compressedBytes": 3634,
+          "payloadBytes": 4006,
+          "scratchBytes": 8192,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1407955,
+            "virtualMilliseconds": 114.57967122395833,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "b6ad34caaee246363d6d2342160bac3d0ec397396b79ba8f0b5d9efedcc51cb2"
+        },
+        {
+          "family": "prev-zero",
+          "options": {
+            "context": "prev-zero",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 388,
+          "compressedBytes": 3622,
+          "payloadBytes": 4010,
+          "scratchBytes": 4096,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1400210,
+            "virtualMilliseconds": 113.94938151041667,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "9503bdd880a67342502f6bd604259eadbd728fa1b0c01d5aacd73e2c56cbc80d"
+        },
+        {
+          "family": "prev-byte",
+          "options": {
+            "context": "prev-byte",
+            "bits": 2,
+            "rate": 3
+          },
+          "decoderBytes": 392,
+          "compressedBytes": 3634,
+          "payloadBytes": 4026,
+          "scratchBytes": 8192,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1411588,
+            "virtualMilliseconds": 114.87532552083333,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "605c5706324a885ee3e780cd45d62e46c2dda4f166ac0ab80254cb668fc0d154"
+        },
+        {
+          "family": "opcode-high",
+          "options": {
+            "context": "opcode-high",
+            "bits": 4,
+            "rate": 3
+          },
+          "decoderBytes": 408,
+          "compressedBytes": 3643,
+          "payloadBytes": 4051,
+          "scratchBytes": 32768,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1458975,
+            "virtualMilliseconds": 118.731689453125,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "dc3b57d9772e24e42ebbfc88b3c92c3694fe1bcb0a41a8e7699c4fe8d21cb62b"
+        },
+        {
+          "family": "opcode-low",
+          "options": {
+            "context": "opcode-low",
+            "bits": 3,
+            "rate": 3
+          },
+          "decoderBytes": 404,
+          "compressedBytes": 3660,
+          "payloadBytes": 4064,
+          "scratchBytes": 16384,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1436459,
+            "virtualMilliseconds": 116.89933268229167,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "047ddb653511b7f14e4f89aac0a0eb1d45816d3712d17bfaf9dab6932f188fa2"
+        },
+        {
+          "family": "compact-range-rate",
+          "options": {
+            "rate": 3,
+            "lanes": 4,
+            "compact": true
+          },
+          "decoderBytes": 336,
+          "compressedBytes": 3741,
+          "payloadBytes": 4077,
+          "scratchBytes": 2048,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1329340,
+            "virtualMilliseconds": 108.18196614583333,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "87c8fcfaccaf0affcdb38c76e93647dddb65655becbe299be7cd619dd0dea0ef"
+        },
+        {
+          "family": "range-rate",
+          "options": {
+            "rate": 3,
+            "lanes": 4
+          },
+          "decoderBytes": 352,
+          "compressedBytes": 3741,
+          "payloadBytes": 4093,
+          "scratchBytes": 2048,
+          "verification": {
+            "exactRamImage": true,
+            "resetRegisters": true,
+            "otherRamZero": true,
+            "extractionTicks": 1333079,
+            "virtualMilliseconds": 108.48624674479167,
+            "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8"
+          },
+          "cartridgeSha256": "b7c1a4d7c9e450724635746fa2c53f041337752365a61466ec07b841992943d3"
+        },
+        {
+          "family": "lane-rates",
+          "options": {
+            "rates": [
+              4,
+              3,
+              4,
+              3
+            ]
+          },
+          "decoderBytes": 376,
+          "compressedBytes": 3730,
+          "payloadBytes": 4106,
+          "scratchBytes": 2048
+        },
+        {
+          "family": "compact-prev-low",
+          "options": {
+            "context": "prev-low",
+            "bits": 1,
+            "rate": 3,
+            "compact": true
+          },
+          "decoderBytes": 368,
+          "compressedBytes": 3745,
+          "payloadBytes": 4113,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "lz-range",
+          "options": {
+            "k": 5,
+            "rate": 4,
+            "chainLimit": 4096,
+            "compact": true
+          },
+          "decoderBytes": 528,
+          "compressedBytes": 3602,
+          "payloadBytes": 4130,
+          "scratchBytes": 2404
+        },
+        {
+          "family": "prev-low",
+          "options": {
+            "context": "prev-low",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 388,
+          "compressedBytes": 3745,
+          "payloadBytes": 4133,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "prev-lane",
+          "options": {
+            "context": "prev-lane",
+            "bits": 1,
+            "rate": 3
+          },
+          "decoderBytes": 392,
+          "compressedBytes": 3782,
+          "payloadBytes": 4174,
+          "scratchBytes": 4096
+        },
+        {
+          "family": "compact-decoder-seed",
+          "options": {
+            "rate": 4,
+            "lanes": 4,
+            "seeded": true,
+            "compact": true
+          },
+          "decoderBytes": 472,
+          "compressedBytes": 3734,
+          "payloadBytes": 4206,
+          "scratchBytes": 2048,
+          "seedBytes": 432,
+          "seedSha256": "4ab3c4d1bbb097a72ca0a2adeed4fea968227672d8b9feafd0b10e7eae93234b"
+        },
+        {
+          "family": "decoder-seed",
+          "options": {
+            "rate": 4,
+            "lanes": 4,
+            "seeded": true
+          },
+          "decoderBytes": 500,
+          "compressedBytes": 3733,
+          "payloadBytes": 4233,
+          "scratchBytes": 2048,
+          "seedBytes": 456,
+          "seedSha256": "3ed25004b435748d634092a2883256e995166fab57f80bf321e54be43ac5f779"
+        },
+        {
+          "family": "deep-lz",
+          "options": {
+            "k": 5,
+            "chainLimit": 4096
+          },
+          "decoderBytes": 308,
+          "compressedBytes": 4026,
+          "payloadBytes": 4334,
+          "scratchBytes": 0
+        },
+        {
+          "family": "xor4",
+          "options": {
+            "filter": "xor4",
+            "rate": 4
+          },
+          "decoderBytes": 400,
+          "compressedBytes": 4411,
+          "payloadBytes": 4811,
+          "scratchBytes": 2048
+        },
+        {
+          "family": "sub4",
+          "options": {
+            "filter": "sub4",
+            "rate": 4
+          },
+          "decoderBytes": 400,
+          "compressedBytes": 4700,
+          "payloadBytes": 5100,
+          "scratchBytes": 2048
+        }
+      ],
+      "runtime": {
+        "name": "carpet",
+        "candidate": "compact-prev-zero",
+        "baselineBytes": 4093,
+        "packedBytes": 3990,
+        "frames": 120,
+        "seconds": 2,
+        "alignedStartTick": 1638400,
+        "exactRgba": true,
+        "exactPcm": true,
+        "nonBlackFrames": 116,
+        "nonzeroAudioSamples": 192000,
+        "peak": 0.2703198194503784,
+        "rgbaSha256": "44c854efb85adbbd5ba428e00a0bcb2e0f3281991ac58bda41cd98749b5da6f2",
+        "pcmSha256": "5b412075213f1f2c36df11a7ec4f33bddbe2dadf6bd67a848be2196f99c9d9d5",
+        "candidateSha256": "b947b3166663aa87b0619d1bfdb5459ba44998205e206574b0338145947a85fa",
+        "baselineSha256": "b7c1a4d7c9e450724635746fa2c53f041337752365a61466ec07b841992943d3",
+        "imageSha256": "de63bc73557d9270ab76c648b1a345597ef7312bfe2faf98f7d8c224356ed6cb",
+        "final": {
+          "profile": "dynamic-1",
+          "profileCode": 4,
+          "audio": {
+            "rate": 48000,
+            "samples": 102400,
+            "blocks": 400,
+            "peak": 0.17191608250141144,
+            "overruns": 0,
+            "lastTicks": 1596
+          },
+          "gpu": {
+            "statusCode": 1,
+            "status": "busy",
+            "ticks": 12715,
+            "dispatches": 60,
+            "invocations": 1600,
+            "pc": 189680,
+            "lastTicks": 615226,
+            "frameBudgetPercent": 300.4033203125
+          },
+          "wasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8",
+          "frames": 128,
+          "ticks": 26214400,
+          "pc": 189508,
+          "status": 4,
+          "format": 4,
+          "payloadBytes": 3990,
+          "rgbaSha256": "02ac77aacf8d13421aef5b31db97a37ff4479a3b9c77a1950a73676d0ca113d2"
+        }
+      }
+    }
+  ]
+}

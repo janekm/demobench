@@ -20,7 +20,11 @@
     "deploy": "npm run build && wrangler deploy",
     "pack": "node tools/pack/pack.mjs",
     "test:pack": "node tools/pack/test.mjs",
-    "bench:pack": "node tools/pack/benchmark.mjs"
+    "bench:pack": "node tools/pack/benchmark.mjs",
+    "research:pack": "node tools/pack/research.mjs",
+    "pack:research": "node tools/pack/research-pack.mjs",
+    "test:pack:research": "node tools/pack/research-tests.mjs",
+    "bench:pack:research": "node tools/pack/research-runtime.mjs"
   },
   "devDependencies": {
     "wrangler": "4.132.0"

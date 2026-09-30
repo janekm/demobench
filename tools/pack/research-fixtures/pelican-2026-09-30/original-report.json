@@ -1,0 +1,311 @@
+{
+  "format": "db32-self-extract-v1",
+  "profile": "dynamic-1",
+  "codec": "dblz",
+  "filter": "none",
+  "distanceLowBits": 5,
+  "sourceBytes": 8588,
+  "ramImageBytes": 8588,
+  "decodedBytes": 8588,
+  "romBytes": 0,
+  "decoderBytes": 308,
+  "compressedBytes": 3737,
+  "payloadBytes": 4045,
+  "freeBytes": 51,
+  "savedBytes": 4543,
+  "loadAddress": 147456,
+  "entryAddress": 147456,
+  "scratchAddress": null,
+  "scratchBytes": 0,
+  "rangeLanes": null,
+  "rangeAdaptationRate": null,
+  "ramImageSha256": "197aa482e7cfeaddffb5d22f8f36ff1feb25d4b4d918226a56cd2a28130bda26",
+  "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8",
+  "linkerWasmSha256": "c780d39473a971e3cd2084204b233ff56b7015e54f0938f5483c31f807552eb1",
+  "chainLimit": 256,
+  "candidates": [
+    {
+      "codec": "dblz",
+      "filter": "none",
+      "k": 5,
+      "compressedBytes": 3737,
+      "decoderBytes": 308,
+      "payloadBytes": 4045
+    },
+    {
+      "codec": "dblz",
+      "filter": "none",
+      "k": 6,
+      "compressedBytes": 3742,
+      "decoderBytes": 308,
+      "payloadBytes": 4050
+    },
+    {
+      "codec": "dblz",
+      "filter": "none",
+      "k": 4,
+      "compressedBytes": 3745,
+      "decoderBytes": 308,
+      "payloadBytes": 4053
+    },
+    {
+      "codec": "dblz",
+      "filter": "none",
+      "k": 7,
+      "compressedBytes": 3774,
+      "decoderBytes": 308,
+      "payloadBytes": 4082
+    },
+    {
+      "codec": "dblz",
+      "filter": "shuffle4",
+      "k": 4,
+      "compressedBytes": 3712,
+      "decoderBytes": 392,
+      "payloadBytes": 4104
+    },
+    {
+      "codec": "dblz",
+      "filter": "none",
+      "k": 3,
+      "compressedBytes": 3815,
+      "decoderBytes": 308,
+      "payloadBytes": 4123
+    },
+    {
+      "codec": "dblz",
+      "filter": "shuffle4",
+      "k": 5,
+      "compressedBytes": 3732,
+      "decoderBytes": 392,
+      "payloadBytes": 4124
+    },
+    {
+      "codec": "dblz",
+      "filter": "shuffle4",
+      "k": 3,
+      "compressedBytes": 3745,
+      "decoderBytes": 392,
+      "payloadBytes": 4137
+    },
+    {
+      "codec": "dblz",
+      "filter": "none",
+      "k": 8,
+      "compressedBytes": 3845,
+      "decoderBytes": 308,
+      "payloadBytes": 4153
+    },
+    {
+      "codec": "dblz",
+      "filter": "shuffle4",
+      "k": 2,
+      "compressedBytes": 3773,
+      "decoderBytes": 392,
+      "payloadBytes": 4165
+    },
+    {
+      "codec": "dblz",
+      "filter": "shuffle4",
+      "k": 6,
+      "compressedBytes": 3785,
+      "decoderBytes": 392,
+      "payloadBytes": 4177
+    },
+    {
+      "codec": "dblz",
+      "filter": "none",
+      "k": 2,
+      "compressedBytes": 3884,
+      "decoderBytes": 308,
+      "payloadBytes": 4192
+    },
+    {
+      "codec": "dblz",
+      "filter": "shuffle4",
+      "k": 7,
+      "compressedBytes": 3855,
+      "decoderBytes": 392,
+      "payloadBytes": 4247
+    },
+    {
+      "codec": "dblz",
+      "filter": "shuffle4",
+      "k": 1,
+      "compressedBytes": 3862,
+      "decoderBytes": 392,
+      "payloadBytes": 4254
+    },
+    {
+      "codec": "dblz",
+      "filter": "shuffle4",
+      "k": 0,
+      "compressedBytes": 3946,
+      "decoderBytes": 384,
+      "payloadBytes": 4330
+    },
+    {
+      "codec": "dblz",
+      "filter": "none",
+      "k": 1,
+      "compressedBytes": 4027,
+      "decoderBytes": 308,
+      "payloadBytes": 4335
+    },
+    {
+      "codec": "dblz",
+      "filter": "shuffle4",
+      "k": 8,
+      "compressedBytes": 3945,
+      "decoderBytes": 392,
+      "payloadBytes": 4337
+    },
+    {
+      "codec": "dblz",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 4165,
+      "decoderBytes": 300,
+      "payloadBytes": 4465
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 4393,
+      "decoderBytes": 352,
+      "payloadBytes": 4745,
+      "lanes": 4,
+      "rate": 3
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 4436,
+      "decoderBytes": 352,
+      "payloadBytes": 4788,
+      "lanes": 4,
+      "rate": 4
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 4605,
+      "decoderBytes": 352,
+      "payloadBytes": 4957,
+      "lanes": 4,
+      "rate": 5
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 4853,
+      "decoderBytes": 352,
+      "payloadBytes": 5205,
+      "lanes": 4,
+      "rate": 6
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 4960,
+      "decoderBytes": 352,
+      "payloadBytes": 5312,
+      "lanes": 2,
+      "rate": 4
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 5026,
+      "decoderBytes": 352,
+      "payloadBytes": 5378,
+      "lanes": 2,
+      "rate": 3
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 5041,
+      "decoderBytes": 352,
+      "payloadBytes": 5393,
+      "lanes": 2,
+      "rate": 5
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 5191,
+      "decoderBytes": 352,
+      "payloadBytes": 5543,
+      "lanes": 2,
+      "rate": 6
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 5283,
+      "decoderBytes": 340,
+      "payloadBytes": 5623,
+      "lanes": 1,
+      "rate": 4
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 5298,
+      "decoderBytes": 340,
+      "payloadBytes": 5638,
+      "lanes": 1,
+      "rate": 5
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 5380,
+      "decoderBytes": 340,
+      "payloadBytes": 5720,
+      "lanes": 1,
+      "rate": 6
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 5430,
+      "decoderBytes": 340,
+      "payloadBytes": 5770,
+      "lanes": 1,
+      "rate": 3
+    },
+    {
+      "codec": "store",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 8588,
+      "decoderBytes": 108,
+      "payloadBytes": 8696
+    }
+  ],
+  "cartridgeSha256": "0a5627a28d4b80e2e8743853ac11564b87a98b6a166cc4145a56cbe42d36a31f",
+  "verification": {
+    "backend": "canonical-wasm",
+    "exactRamImage": true,
+    "resetRegisters": true,
+    "otherRamZero": true,
+    "extractionTicks": 351224,
+    "extractionFrames": 1.7149609375,
+    "virtualMilliseconds": 28.582682291666668,
+    "note": "The machine clock advances during guest extraction. This is not a host performance measurement."
+  }
+}

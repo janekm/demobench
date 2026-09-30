@@ -1,0 +1,159 @@
+{
+  "format": "db32-self-extract-v1",
+  "profile": "dynamic-1",
+  "codec": "range",
+  "filter": "none",
+  "distanceLowBits": 0,
+  "sourceBytes": 6672,
+  "ramImageBytes": 6672,
+  "decodedBytes": 6672,
+  "romBytes": 0,
+  "decoderBytes": 352,
+  "compressedBytes": 3719,
+  "payloadBytes": 4071,
+  "freeBytes": 25,
+  "savedBytes": 2601,
+  "loadAddress": 183808,
+  "entryAddress": 183808,
+  "scratchAddress": 65536,
+  "scratchBytes": 2048,
+  "rangeLanes": 4,
+  "rangeAdaptationRate": 3,
+  "ramImageSha256": "51828e4d0f1bb42cc1865af9ee60adf182d0cb653293950dd160ad823b2bd5cb",
+  "canonicalWasmSha256": "fd523f43234209258eff3adc50873f136271f08a5ead5f2908e4aee7ee742ef8",
+  "linkerWasmSha256": "c780d39473a971e3cd2084204b233ff56b7015e54f0938f5483c31f807552eb1",
+  "chainLimit": 256,
+  "candidates": [
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 3719,
+      "decoderBytes": 352,
+      "payloadBytes": 4071,
+      "lanes": 4,
+      "rate": 3
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 3741,
+      "decoderBytes": 352,
+      "payloadBytes": 4093,
+      "lanes": 4,
+      "rate": 4
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 3862,
+      "decoderBytes": 352,
+      "payloadBytes": 4214,
+      "lanes": 4,
+      "rate": 5
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 4038,
+      "decoderBytes": 352,
+      "payloadBytes": 4390,
+      "lanes": 4,
+      "rate": 6
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 4087,
+      "decoderBytes": 352,
+      "payloadBytes": 4439,
+      "lanes": 2,
+      "rate": 4
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 4142,
+      "decoderBytes": 352,
+      "payloadBytes": 4494,
+      "lanes": 2,
+      "rate": 3
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 4150,
+      "decoderBytes": 352,
+      "payloadBytes": 4502,
+      "lanes": 2,
+      "rate": 5
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 4265,
+      "decoderBytes": 352,
+      "payloadBytes": 4617,
+      "lanes": 2,
+      "rate": 6
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 4336,
+      "decoderBytes": 340,
+      "payloadBytes": 4676,
+      "lanes": 1,
+      "rate": 4
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 4349,
+      "decoderBytes": 340,
+      "payloadBytes": 4689,
+      "lanes": 1,
+      "rate": 5
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 4413,
+      "decoderBytes": 340,
+      "payloadBytes": 4753,
+      "lanes": 1,
+      "rate": 6
+    },
+    {
+      "codec": "range",
+      "filter": "none",
+      "k": 0,
+      "compressedBytes": 4453,
+      "decoderBytes": 340,
+      "payloadBytes": 4793,
+      "lanes": 1,
+      "rate": 3
+    }
+  ],
+  "cartridgeSha256": "a5ee1d994e183a8aa89af37fe66681eaa18974940afc3c9aa8c8010b19adcf99",
+  "verification": {
+    "backend": "canonical-wasm",
+    "exactRamImage": true,
+    "resetRegisters": true,
+    "otherRamZero": true,
+    "extractionTicks": 1343569,
+    "extractionFrames": 6.5603955078125,
+    "virtualMilliseconds": 109.33992513020833,
+    "note": "The machine clock advances during guest extraction. This is not a host performance measurement."
+  }
+}

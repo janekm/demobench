@@ -1,0 +1,42 @@
+[
+  {
+    "name": "koi",
+    "source": "research-fixtures/koi/input.asm",
+    "report": "research-fixtures/koi/original-report.json"
+  },
+  {
+    "name": "pelican-2026-09-30",
+    "source": "research-fixtures/pelican-2026-09-30/input.asm",
+    "report": "research-fixtures/pelican-2026-09-30/original-report.json"
+  },
+  {
+    "name": "pelican-bicycle",
+    "source": "research-fixtures/pelican-bicycle/input.asm",
+    "report": "research-fixtures/pelican-bicycle/original-report.json"
+  },
+  {
+    "name": "lightcone",
+    "source": "research-fixtures/lightcone/input.asm",
+    "report": "research-fixtures/lightcone/original-report.json"
+  },
+  {
+    "name": "elsewhere",
+    "source": "research-fixtures/elsewhere/input.asm",
+    "report": "research-fixtures/elsewhere/original-report.json"
+  },
+  {
+    "name": "limit-set",
+    "source": "research-fixtures/limit-set/input.asm",
+    "report": "research-fixtures/limit-set/original-report.json"
+  },
+  {
+    "name": "mega",
+    "source": "research-fixtures/mega/input.asm",
+    "report": "research-fixtures/mega/original-report.json"
+  },
+  {
+    "name": "carpet",
+    "source": "research-fixtures/carpet/input.asm",
+    "report": "research-fixtures/carpet/original-report.json"
+  }
+]

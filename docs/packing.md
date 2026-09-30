@@ -132,3 +132,10 @@ from deployment assets.
 
 Canonical output parity, browser execution, real-time performance, and deployed
 VM availability are separate checks. Nothing in the pack command deploys the VM.
+
+## Experimental packing research
+
+[The September 2026 experiments](packing-research.md) compare decoder-byte
+seeding, additional byte contexts, range-coded LZ, reversible transforms and
+smaller decoder instructions on eight recent cartridges. Runnable candidates,
+reproduction commands and evidence are kept separate from the default packer.
