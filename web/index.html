@@ -4,43 +4,177 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#ecebe6">
-<title>DemoBench · Cartridges</title>
+<title>DemoBench · Demos by AI agents</title>
+<meta name="description" content="A benchmark in which AI agents learn an unfamiliar fantasy computer from its manual and write audiovisual demos in 4,096 bytes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Red+Hat+Mono:wght@400;500&family=Unbounded:wght@600;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --room:#ecebe6; --ink:#1c1c1e; --mid:#6d6b65; --line:#d3d0c8;
-  --accent:#ff5a36;
+  --room:#ecebe6; --ink:#1c1c1e; --mid:#6d6b65; --line:#d3d0c8; --panel:#f7f6f2; --well:#dedbd3;
+  --accent:#ff5a36; --gpu:#1f8b86; --spu:#6a4bd0;
   --display:'Unbounded',system-ui,sans-serif; --ui:'Figtree',system-ui,sans-serif; --mono:'Red Hat Mono',ui-monospace,monospace;
   color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--room:#151619;--ink:#efeee9;--mid:#9a9891;--line:#2c2d31;color-scheme:dark}}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--room:#151619;--ink:#efeee9;--mid:#9a9891;--line:#2c2d31;--panel:#1b1c20;--well:#232429;--gpu:#2fb3ab;--spu:#8d74f0;color-scheme:dark}}
+:root[data-theme=dark]{--room:#151619;--ink:#efeee9;--mid:#9a9891;--line:#2c2d31;--panel:#1b1c20;--well:#232429;--gpu:#2fb3ab;--spu:#8d74f0;color-scheme:dark}
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--room);color:var(--ink);font-family:var(--ui);min-height:100vh}
+html{scroll-behavior:smooth;scroll-padding-top:20px}
+body{background:var(--room);color:var(--ink);font-family:var(--ui);min-height:100vh;overflow-x:hidden}
 a{color:inherit}
 button{font:inherit;color:inherit;cursor:pointer}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+code,pre,kbd{font-family:var(--mono)}
 
-.top{display:flex;align-items:stretch;justify-content:space-between;border-bottom:1px solid var(--ink);height:52px}
+/* ── the tiling backdrop: backdrop.asm running on its own machine in a worker ── */
+#backdrop{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;image-rendering:pixelated;opacity:var(--bd,1);transition:opacity .25s linear;pointer-events:none}
+
+.top{display:flex;align-items:stretch;justify-content:space-between;border-bottom:1px solid var(--ink);height:52px;background:var(--room);position:relative;z-index:2}
 .logo{display:flex;align-items:center;padding:0 24px;font-family:var(--display);font-weight:800;font-size:18px;letter-spacing:-.02em;text-decoration:none}
 .logo span{color:var(--accent)}
 .top nav{display:flex}
-.top nav a{display:flex;align-items:center;padding:0 20px;border-left:1px solid var(--line);text-decoration:none;font-weight:600;font-size:14px;color:var(--mid)}
+.top nav a{display:flex;align-items:center;gap:6px;padding:0 20px;border-left:1px solid var(--line);text-decoration:none;font-weight:600;font-size:14px;color:var(--mid)}
 .top nav a:hover{color:var(--ink)}.top nav a[aria-current]{color:var(--ink);box-shadow:inset 0 -3px var(--ink)}
+.top nav a.kit{background:var(--ink);color:var(--room);border-left-color:var(--ink)}
+.top nav a.kit:hover{background:var(--accent);color:#fff}
 
-.wrap{max-width:1320px;margin:0 auto;padding:0 24px 90px}
-.intro{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;padding:44px 0 14px;border-bottom:1px solid var(--line)}
-.intro h1{margin:0;font-family:var(--display);font-weight:800;font-size:clamp(34px,5vw,60px);line-height:.95;letter-spacing:-.04em}
-.intro p{margin:14px 0 0;max-width:640px;font-size:17px;line-height:1.45;color:var(--mid)}
-.intro p b{color:var(--ink);font-weight:600}
-.tabs{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:-15px}
+.wrap{max-width:1320px;margin:0 auto;padding:0 24px}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mid)}
+.kicker b{color:var(--accent);font-weight:500}
+h2.title{margin:8px 0 0;font-family:var(--display);font-weight:800;font-size:clamp(26px,3.2vw,40px);line-height:1.02;letter-spacing:-.035em}
+.lead{margin:14px 0 0;max-width:680px;font-size:17px;line-height:1.5;color:var(--mid)}
+.lead b{color:var(--ink);font-weight:600}
+section.band{padding:88px 0 0}
+.band-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;padding-bottom:22px;border-bottom:1px solid var(--line)}
+
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;font-weight:700;font-size:15px;text-decoration:none;background:var(--ink);color:var(--room);border:1px solid var(--ink)}
+.btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);border-color:var(--ink);color:var(--room)}
+.btn.hot{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.hot:hover{background:var(--ink);border-color:var(--ink);color:var(--room)}
+.btn svg{width:16px;height:16px;flex:none}
+.link{border:0;background:none;padding:0;font-weight:600;text-decoration:underline;text-underline-offset:4px}
+
+/* ── hero ── */
+.hero{display:grid;grid-template-columns:minmax(0,3.6fr) minmax(0,8.4fr);grid-template-areas:"head head" "copy fig";gap:36px 44px;align-items:start;padding:52px 0 8px}
+.hero-head{grid-area:head}.hero-copy{grid-area:copy}.machine{grid-area:fig}
+.hero h1{margin:14px 0 0;max-width:1080px;font-family:var(--display);font-weight:800;font-size:clamp(34px,4.6vw,66px);line-height:.98;letter-spacing:-.045em}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .lead{margin-top:4px;font-size:18px}
+.ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.ctas .btn{padding:15px 22px}
+.facts-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px;margin-top:34px}
+.facts-row div{border-top:1px solid var(--ink)}
+.facts-row div{padding:10px 0 14px}
+.facts-row b{display:block;font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:-.03em}
+.facts-row span{display:block;font-size:12.5px;color:var(--mid);margin-top:2px;line-height:1.3}
+
+/* ── the machine diagram ── */
+.machine{position:relative;margin:0;border:1px solid var(--ink);background:var(--panel);box-shadow:8px 8px 0 color-mix(in srgb,var(--ink) 10%,transparent)}
+.mhead{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:9px 14px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11.5px;color:var(--mid)}
+.mhead b{color:var(--ink);font-weight:500}
+.mstep{display:flex;align-items:center;gap:8px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mstep i{width:7px;height:7px;background:var(--accent);flex:none}
+.mbody{position:relative;padding:16px}
+.mgrid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(118px,.8fr) repeat(3,minmax(0,1fr));grid-template-rows:auto 34px auto;gap:0 14px}
+.blk{position:relative;background:var(--panel);border:1px solid color-mix(in srgb,var(--ink) 35%,var(--line));padding:10px 12px 12px;display:flex;flex-direction:column;gap:8px;min-width:0;transition:border-color .3s}
+.blk.on{border-color:var(--ink)}
+.blk header{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.blk header b{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:-.02em}
+.blk header span{font-family:var(--mono);font-size:10.5px;color:var(--mid);white-space:nowrap}
+.blk p{margin:auto 0 0;font-size:12.5px;line-height:1.35;color:var(--mid)}
+.k-rom{grid-row:1/4;grid-column:1}.k-cpu{grid-row:1;grid-column:2}.k-gpu{grid-row:1;grid-column:3}.k-spu{grid-row:1;grid-column:4}
+.k-ram{grid-row:3;grid-column:2/4}.k-vid{grid-row:3;grid-column:4}
+.k-rom .big{font-family:var(--display);font-weight:800;font-size:30px;letter-spacing:-.04em;line-height:1}
+.k-rom .big small{display:block;font-family:var(--ui);font-weight:500;font-size:12px;letter-spacing:0;color:var(--mid);margin-top:4px;line-height:1.3}
+.hex{margin:0;font-size:10px;line-height:1.55;color:var(--mid);word-break:break-all;white-space:normal}
+.hex span{padding:0 1px}.hex span.pc{background:var(--ink);color:var(--room)}
+.code{list-style:none;margin:0;padding:0;height:calc(5 * 17px);overflow:hidden;font-family:var(--mono);font-size:10.5px;line-height:17px;position:relative}
+.code ol{list-style:none;margin:0;padding:0;transition:transform .25s ease}
+.code li{white-space:pre;padding:0 4px;color:var(--mid);overflow:hidden;text-overflow:ellipsis}
+.code li.pc{background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--ink);box-shadow:inset 2px 0 var(--accent)}
+.lanes{display:grid;grid-template-columns:repeat(16,1fr);gap:2px}
+.lanes i{aspect-ratio:1;background:var(--well);transition:background .12s}
+.lanes i.on{background:var(--gpu)}
+.op{font-size:10.5px;color:var(--mid);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.op b{color:var(--gpu);font-weight:500}
+.scope{display:block;width:100%;height:58px;background:var(--well)}
+.map{display:flex;height:34px;font-family:var(--mono);font-size:10px}
+.map i{position:relative;font-style:normal;display:flex;align-items:center;padding:0 8px;overflow:hidden;white-space:nowrap;border:1px solid var(--panel);background:var(--well);color:var(--mid)}
+.map i.fr{flex:57600}.map i.rest{flex:15872;background:transparent;border:1px dashed var(--line);justify-content:center;padding:0 2px}
+.map i.fr u{position:absolute;inset:0;width:0;background:color-mix(in srgb,var(--gpu) 30%,transparent);text-decoration:none}
+.map i.fr.shown{background:color-mix(in srgb,var(--accent) 22%,var(--well));color:var(--ink)}
+.map i span{position:relative}
+.maplegend{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--mid)}
+.scr{position:relative;aspect-ratio:4/3;background:#000;overflow:hidden}
+.scr img{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;display:block}
+.scr .next{clip-path:inset(0 0 100% 0)}
+.scr .beam{position:absolute;left:0;right:0;height:2px;top:0;background:#fff;box-shadow:0 0 8px #fff;opacity:0}
+.wires{position:absolute;inset:0;width:100%;height:100%;z-index:0;overflow:visible;pointer-events:none}
+.wires path{fill:none;stroke:color-mix(in srgb,var(--ink) 40%,var(--line));stroke-width:1.5}
+.wires path.bus{stroke:var(--ink);stroke-width:2}
+.wires text{font-family:var(--mono);font-size:10px;fill:var(--mid)}
+.wires rect{transition:none}
+.mcap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line)}
+.mcap li{list-style:none;padding:10px 14px 12px;font-size:12.5px;line-height:1.35;color:var(--mid);border-left:1px solid var(--line);transition:color .3s,background .3s}
+.mcap li:first-child{border-left:0}
+.mcap li b{display:block;font-family:var(--mono);font-weight:500;font-size:10.5px;color:var(--mid);margin-bottom:2px}
+.mcap li.on{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.mcap li.on b{color:var(--accent)}
+.mcap{margin:0;padding:0}
+
+/* ── why it is hard ── */
+.why{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 28px;margin-top:8px}
+.why article{border-top:1px solid var(--line);padding:22px 0 26px}
+.why .n{font-family:var(--mono);font-size:12px;color:var(--accent)}
+.why h3{margin:10px 0 8px;font-family:var(--display);font-weight:800;font-size:18px;line-height:1.15;letter-spacing:-.025em}
+.why p{margin:0;font-size:15px;line-height:1.5;color:var(--mid)}
+.why p b{color:var(--ink);font-weight:600}
+
+/* ── featured demos ── */
+.feat{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;margin-top:28px}
+.tile{display:flex;flex-direction:column;border:0;padding:0;background:none;text-align:left;color:inherit}
+.tile .pic{position:relative;display:block;width:100%;aspect-ratio:4/3;background:#000;border:1px solid var(--ink)}
+.tile .pic img{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;display:block}
+.tile .play{position:absolute;left:0;bottom:0;display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--ink);color:var(--room);font-weight:700;font-size:13px;transition:background .2s}
+.tile .play svg{width:11px;height:11px}
+.tile:hover .play,.tile:focus-visible .play{background:var(--accent);color:#fff}
+.tile .by{margin-top:12px;font-family:var(--mono);font-size:11.5px;color:var(--mid)}
+.tile .by b{color:var(--accent);font-weight:500}
+.tile h3{margin:4px 0 6px;font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:-.03em}
+.tile p{margin:0;font-size:14px;line-height:1.45;color:var(--mid);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.tile .gauge{margin-top:12px}
+.gauge{display:grid;grid-template-columns:repeat(32,1fr);gap:2px;height:10px}
+.gauge i{background:var(--line)}.gauge i.on{background:var(--ink)}.agent-sheet .gauge i.on,.tile .gauge i.on{background:var(--accent)}
+.gauge-cap{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--mid);margin:6px 0 0}
+
+/* ── agent kit ── */
+.kitband{margin-top:88px;border:1px solid var(--ink);background:var(--panel);display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
+.kitband .pitch{padding:36px 36px 36px;border-right:1px solid var(--line)}
+.kitband .pitch .ctas{margin-top:26px}
+.kitband ul{margin:18px 0 0;padding:0;list-style:none;font-size:14.5px;line-height:1.45;color:var(--mid)}
+.kitband ul li{padding:6px 0 6px 20px;border-top:1px solid var(--line);position:relative}
+.kitband ul li:before{content:"";position:absolute;left:2px;top:13px;width:7px;height:7px;background:var(--accent)}
+.steps{margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;padding:24px 36px 24px 84px;position:relative;border-top:1px solid var(--line)}
+.steps li:first-child{border-top:0}
+.steps li:before{content:counter(s,decimal-leading-zero);position:absolute;left:36px;top:24px;font-family:var(--mono);font-size:13px;color:var(--accent)}
+.steps h3{margin:0 0 4px;font-size:16px;font-weight:700}
+.steps p{margin:0 0 10px;font-size:14px;line-height:1.45;color:var(--mid)}
+.cmd{display:flex;align-items:stretch;border:1px solid var(--line);background:var(--room);min-width:0}
+.cmd code{flex:1;min-width:0;padding:10px 12px;font-size:12.5px;line-height:1.5;overflow-x:auto;white-space:pre}
+.cmd code .c{color:var(--mid)}
+.cmd button{border:0;border-left:1px solid var(--line);background:none;padding:0 14px;font-size:12px;font-weight:700;color:var(--mid)}
+.cmd button:hover{color:var(--ink);background:var(--well)}
+.cmd.prompt code{font-family:var(--ui);font-size:14px;white-space:normal}
+
+/* ── shelf ── */
+.tabs{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:-23px}
 .tabs button{border:0;border-bottom:2px solid transparent;background:none;padding:6px 0 12px;font-weight:600;font-size:14px;color:var(--mid)}
 .tabs button:hover{color:var(--ink)}
 .tabs button[aria-pressed=true]{color:var(--ink);border-bottom-color:var(--ink)}
-
-/* ── shelf ── */
 .carts{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:40px 20px;padding-top:44px}
 .slot{border:0;background:none;padding:0;display:grid;justify-items:center;text-align:center;perspective:1100px}
 .slot.hidden{display:none}
@@ -68,6 +202,15 @@ button{font:inherit;color:inherit;cursor:pointer}
 .blank .sticker{min-height:158px;display:grid;place-items:center;text-align:center;border:1.5px dashed #b3afa6;background:#f3f1ec;box-shadow:none}
 .blank .sticker p{margin:0;font-family:var(--display);font-weight:700;font-size:10px;line-height:1.35;text-transform:uppercase;color:#8a867d}
 .blank .plate .brand{color:#00000040}
+a.slot{text-decoration:none}
+
+/* ── footer ── */
+.foot{margin-top:100px;border-top:1px solid var(--ink);background:var(--room)}
+.foot .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;padding-top:22px;padding-bottom:40px;font-size:13.5px;color:var(--mid)}
+.foot nav{display:flex;flex-wrap:wrap;gap:6px 22px}
+.foot a{font-weight:600;color:var(--ink);text-underline-offset:3px}
+.foot .bd{font-family:var(--mono);font-size:11.5px;text-align:right;line-height:1.6}
+.foot .bd b{color:var(--ink);font-weight:500}
 
 /* ── detail ── */
 dialog{border:0;padding:0;background:var(--room);color:var(--ink);width:min(1040px,94vw);max-height:92vh;border-top:3px solid var(--ink)}
@@ -96,46 +239,195 @@ dialog::backdrop{background:#000000a0}
 .info h2{font-family:var(--display);font-weight:800;font-size:34px;line-height:1;letter-spacing:-.03em;margin:10px 0 4px}
 .info .sub{color:var(--mid);font-weight:500;margin:0 0 14px}
 .info p{margin:0 0 16px;line-height:1.5}
-.gauge{display:grid;grid-template-columns:repeat(32,1fr);gap:2px;height:12px}
-.gauge i{background:var(--line)}.gauge i.on{background:var(--ink)}.agent-sheet .gauge i.on{background:var(--accent)}
-.gauge-cap{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--mid);margin:6px 0 16px}
+.info .gauge{height:12px}
+.info .gauge-cap{margin:6px 0 16px}
 .facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px;margin:0 0 20px}
 .facts div{border-top:1px solid var(--line);padding:7px 0}
 .facts dt{font-size:12px;color:var(--mid)}
 .facts dd{margin:1px 0 0;font-weight:600;font-size:14px}
 .actions{display:flex;align-items:center;gap:22px}
-.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;font-weight:700;font-size:14px;text-decoration:none;background:var(--ink);color:var(--room);border:0}
-.btn:hover{background:var(--accent);color:#fff}
-.link{border:0;background:none;padding:0;font-weight:600;text-decoration:underline;text-underline-offset:4px}
 .close{position:absolute;right:16px;top:12px;border:0;background:none;font-size:26px;line-height:1;color:var(--mid)}
 
+@media (max-width:1180px){
+  .hero{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "copy" "fig";gap:24px}
+  .hero-copy{max-width:760px}.facts-row{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .feat{grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 20px}
+  .kitband{grid-template-columns:minmax(0,1fr)}.kitband .pitch{border-right:0;border-bottom:1px solid var(--line)}
+}
+@media (max-width:900px){
+  .why{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .top nav a.sec{display:none}
+}
 @media (max-width:760px){
-  .intro{grid-template-columns:minmax(0,1fr)}.tabs{margin-bottom:-15px}
+  .wrap{padding:0 16px}
+  .logo{padding:0 16px}.top nav a{padding:0 12px}
+  .hero{padding-top:32px}
+  .facts-row{display:none}
+  .mbody{padding:10px}
+  .mgrid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;gap:10px}
+  .blk{grid-row:auto!important;grid-column:auto!important}
+  .k-rom,.k-cpu,.k-ram,.k-vid{grid-column:1/3!important}
+  .k-rom .hex{display:none}
+  .k-vid .scr{width:min(100%,400px)}
+  .wires,.mhead .mframe{display:none}
+  .mcap{grid-template-columns:minmax(0,1fr)}.mcap li{border-left:0;border-top:1px solid var(--line)}.mcap li:first-child{border-top:0}
+  .why{grid-template-columns:minmax(0,1fr)}
+  .band-head{grid-template-columns:minmax(0,1fr)}
+  .tabs{margin-bottom:-23px}
+  .feat{gap:28px 12px}.tile h3{font-size:17px}.tile p{font-size:13px}
+  .kitband .pitch{padding:24px 18px}.steps li{padding:20px 18px 20px 52px}.steps li:before{left:18px;top:21px}
   .carts{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 6px}
   .slot .model{scale:.82;margin:-16px 0}
   .sheet{grid-template-columns:minmax(0,1fr)}
   .sheet .pic{padding:12px}.vm-status{flex-basis:100%;margin:8px 0 0}.deck input[type=range]{flex:1}
-  .logo{padding:0 16px}.top nav a{padding:0 14px}.wrap{padding:0 16px 80px}
+  .foot .wrap{grid-template-columns:minmax(0,1fr)}.foot .bd{text-align:left}
 }
-@media (prefers-reduced-motion:reduce){.model,.shadow{transition:none}}
+@media (max-width:460px){
+  .top nav a.gh{display:none}
+  .feat{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.model,.shadow,.code ol{transition:none}}
 </style>
 </head>
 <body>
+<canvas id="backdrop" aria-hidden="true"></canvas>
 <header class="top">
   <a class="logo" href="./">Demo<span>/</span>Bench</a>
-  <nav><a href="./" aria-current="page">Cartridges</a><a href="studio.html">Studio</a></nav>
+  <nav>
+    <a class="sec" href="#why">Why it’s hard</a><a class="sec" href="#demos">Demos</a><a href="studio.html">Studio</a>
+    <a class="gh" href="https://github.com/janekm/demobench">GitHub</a>
+    <a class="kit" href="https://github.com/janekm/demobench-agent-kit">Agent kit</a>
+  </nav>
 </header>
 
 <div class="wrap">
-  <section class="intro">
-    <div>
-      <h1>Cartridges</h1>
-      <p>Programs for <b>DB32</b>, a tiny machine agents learn from its manual. <b>4,096 bytes</b> each, 160×120 pixels, and nothing drawn by the host. Hover to preview, click to run it on the real machine.</p>
+  <section class="hero">
+    <div class="hero-head">
+      <div class="kicker"><b>DB32</b> · a benchmark for AI agents</div>
+      <h1>Demos written by AI agents for a computer they’ve <em>never seen</em>.</h1>
     </div>
-    <div class="tabs" role="group" aria-label="Filter cartridges" id="tabs"></div>
+    <div class="hero-copy">
+      <p class="lead">DemoBench gives an agent the manual for DB32, a small fantasy computer with its own CPU, GPU and sound chip, and asks for an audiovisual demo in <b>4,096 bytes</b>. Every pixel and every sound is the agent’s own code.</p>
+      <div class="ctas">
+        <a class="btn hot" href="https://github.com/janekm/demobench-agent-kit">Get the agent kit <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a>
+        <a class="btn ghost" href="#demos">Watch the demos</a>
+      </div>
+      <div class="facts-row" aria-label="Machine limits">
+        <div><b>4 KiB</b><span>cartridge for code, art and music</span></div>
+        <div><b>128 KiB</b><span>RAM, shared by everything</span></div>
+        <div><b>160×120</b><span>pixels at 60 Hz</span></div>
+        <div><b>48 kHz</b><span>stereo, synthesised by the demo</span></div>
+      </div>
+    </div>
+
+    <figure class="machine" id="machine" aria-label="Diagram of the DB32 machine: a cartridge ROM, CPU, GPU and sound processor share one bus and 128 KiB of RAM; video shows frames from RAM.">
+      <div class="mhead"><span class="mstep" id="m-step" aria-live="off"><i></i><span>Inside the machine</span></span><span class="mframe">DB32 · frame <b id="m-frame">0000</b></span></div>
+      <div class="mbody">
+        <div class="mgrid" id="m-grid">
+          <section class="blk k-rom" data-k="rom"><header><b>ROM</b><span>cartridge</span></header>
+            <div class="big">4,096<small>bytes for code, pictures, music and data</small></div>
+            <pre class="hex" id="m-hex" aria-hidden="true"></pre></section>
+          <section class="blk k-cpu" data-k="cpu"><header><b>CPU</b><span>16 registers</span></header>
+            <div class="code" aria-hidden="true"><ol id="m-code"></ol></div>
+            <p>Runs the show: scenes, timing, music.</p></section>
+          <section class="blk k-gpu" data-k="gpu"><header><b>GPU</b><span>64 lanes</span></header>
+            <div class="lanes" id="m-lanes" aria-hidden="true"></div>
+            <code class="op" id="m-op" aria-hidden="true"></code>
+            <p>Runs the agent’s kernels, a lane per pixel.</p></section>
+          <section class="blk k-spu" data-k="spu"><header><b>SPU</b><span>48 kHz</span></header>
+            <canvas class="scope" id="m-scope" aria-hidden="true"></canvas>
+            <p>No synth chip. Every sample is code.</p></section>
+          <section class="blk k-ram" data-k="ram"><header><b>RAM</b><span>131,072 bytes</span></header>
+            <div class="map" aria-hidden="true"><i class="fr shown" id="m-fa"><u></u><span>frame A</span></i><i class="fr" id="m-fb"><u></u><span>frame B</span></i><i class="rest"><span>rest</span></i></div>
+            <div class="maplegend"><span>2 × 57,600 B true-colour frames</span><span>15,872 B</span></div>
+            <p>Two frames fill 88%. Code, sound and scene data share what is left.</p></section>
+          <section class="blk k-vid" data-k="vid"><header><b>Video</b><span>160×120</span></header>
+            <div class="scr" aria-hidden="true"><img id="m-img" alt="" width="160" height="120"><img id="m-next" class="next" alt="" width="160" height="120"><i class="beam" id="m-beam"></i></div></section>
+        </div>
+        <svg class="wires" id="m-wires" aria-hidden="true"></svg>
+      </div>
+      <ol class="mcap" id="m-cap">
+        <li data-s="0"><b>01 · CPU</b>Reads the cartridge and starts a GPU job.</li>
+        <li data-s="1"><b>02 · GPU</b>64 lanes draw the next frame into RAM.</li>
+        <li data-s="2"><b>03 · Video</b>Shows the finished frame at the next vblank.</li>
+      </ol>
+    </figure>
   </section>
-  <main class="carts" id="carts"></main>
+
+  <section class="band" id="why">
+    <div class="band-head"><div>
+      <div class="kicker">What it tests</div>
+      <h2 class="title">Why it’s hard for a language model</h2>
+      <p class="lead">Models write good code when they have seen a thousand similar programs. DemoBench takes that away, then asks for something that has to look and sound good.</p>
+    </div></div>
+    <div class="why">
+      <article><span class="n">01</span><h3>A computer nobody has programmed</h3><p>DB32 was designed for this benchmark. There are no tutorials, forum answers or open-source demos to remember. The agent learns the instruction set from a short manual and by experiment.</p></article>
+      <article><span class="n">02</span><h3>4,096 bytes for everything</h3><p>Code, 3D scenes, animation and a soundtrack share one cartridge, about a thousand instructions. There is no room to store pictures or samples, so <b>everything is generated by code</b>.</p></article>
+      <article><span class="n">03</span><h3>Nothing comes built in</h3><p>No fonts, sprites, samples, synthesiser or 3D engine. Ray tracers, drum machines, reverbs and camera paths are all written from scratch in assembly.</p></article>
+      <article><span class="n">04</span><h3>Real hardware limits</h3><p>An integer CPU, a 64-lane GPU with its own instruction set, and 128 KiB of RAM that two framebuffers nearly fill. Work has a per-frame budget, and a wrong memory access stops the machine.</p></article>
+      <article><span class="n">05</span><h3>It has to look and listen</h3><p>The output is pictures and sound, not a value a test can compare. Agents render frames, inspect the images and check the audio, then fix what they find, over many rounds.</p></article>
+      <article><span class="n">06</span><h3>No answer key</h3><p>“Make a demo” has no correct output. What it shows, how it moves and how it sounds is up to the agent, and that is what people judge.</p></article>
+    </div>
+  </section>
+
+  <section class="band" id="demos">
+    <div class="band-head"><div>
+      <div class="kicker">Made by agents</div>
+      <h2 class="title">Four kilobytes each</h2>
+      <p class="lead">Each of these fits in a 4,096-byte cartridge. Click one to run it live, with sound, on the real machine in your browser.</p>
+    </div></div>
+    <div class="feat" id="feat"></div>
+  </section>
+
+  <section class="kitband" id="kit" aria-labelledby="kit-title">
+    <div class="pitch">
+      <div class="kicker">Try it</div>
+      <h2 class="title" id="kit-title">Give your agent the kit</h2>
+      <p class="lead">One repository with everything an agent needs to write a demo. It runs offline with Node.js 22 and needs no Rust toolchain.</p>
+      <ul>
+        <li>The authoring skill and the machine manual</li>
+        <li>The pinned reference engine and a compressor</li>
+        <li>A validator that captures frames, audio and a report</li>
+        <li>A local viewer with an editor and WebGPU preview</li>
+      </ul>
+      <div class="ctas">
+        <a class="btn hot" href="https://github.com/janekm/demobench-agent-kit">Get the agent kit <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a>
+        <a class="btn ghost" href="https://github.com/janekm/demobench">Engine source</a>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><h3>Clone the kit</h3><p>Or install it as the <code>demo-bench</code> folder in your agent’s skills directory.</p>
+        <div class="cmd"><code>git clone https://github.com/janekm/demobench-agent-kit.git</code><button type="button" data-copy>Copy</button></div></li>
+      <li><h3>Ask your agent for a demo</h3><p>It reads <code>SKILL.md</code>, writes assembly, and checks its own frames and audio.</p>
+        <div class="cmd prompt"><code>Follow SKILL.md in demobench-agent-kit and make a 30-second demo with music.</code><button type="button" data-copy>Copy</button></div></li>
+      <li><h3>Validate and watch</h3><p>The validator runs the cartridge headlessly on the reference engine. The viewer plays it at <code>127.0.0.1:4173</code>.</p>
+        <div class="cmd"><code>npm run validate -- ./demo.asm --frames 3600 --out ./artifacts/demo
+npm run viewer</code><button type="button" data-copy>Copy</button></div></li>
+    </ol>
+  </section>
+
+  <section class="band" id="cartridges">
+    <div class="band-head">
+      <div>
+        <div class="kicker">The shelf</div>
+        <h2 class="title">All cartridges</h2>
+        <p class="lead">Agent-made demos next to the reference programs that test each part of the machine. Hover to preview, click to run.</p>
+      </div>
+      <div class="tabs" role="group" aria-label="Filter cartridges" id="tabs"></div>
+    </div>
+    <main class="carts" id="carts"></main>
+  </section>
 </div>
+
+<footer class="foot">
+  <div class="wrap">
+    <div>
+      <nav><a href="https://github.com/janekm/demobench-agent-kit">Agent kit</a><a href="https://github.com/janekm/demobench">Engine &amp; site on GitHub</a><a href="studio.html">Studio</a></nav>
+      <p>DemoBench is an open benchmark. The machine, tools and demos are on GitHub.</p>
+    </div>
+    <div class="bd" id="bd-credit">Background: <b>backdrop.asm</b>, a Truchet pattern<br><span id="bd-status">drawn by the CPU, animated by palette</span> · <a href="studio.html?demo=backdrop">open in Studio</a></div>
+  </div>
+</footer>
 
 <dialog id="detail" aria-label="Cartridge details"></dialog>
 
@@ -144,6 +436,7 @@ dialog::backdrop{background:#000000a0}
 import { PcmAudioPlayer } from './audio-player.js';
 
 const ORDER = ['daybreak','pelican','limit-set','elsewhere','lightcone','astra','supersaw','carpet','aurora','rgb-study','ray-tracer','ray-tracer-r1','gpu-ray-tracer','gpu-ray-tracer-fast','signal-garden','neon-stadium'];
+const FEATURED = ['pelican','carpet','limit-set','daybreak'];
 const list = ORDER.map(id => DEMOS.find(d => d.id === id)).filter(Boolean);
 list.forEach((d, i) => d.no = `DB-${201 + i}`);
 const byId = Object.fromEntries(list.map(d => [d.id, d]));
@@ -152,6 +445,213 @@ const fmt = n => n.toLocaleString('en-US');
 const poster = d => `previews/${d.poster ?? d.keyframes[0].file}`;
 const kind = d => d.author ? 'agent' : d.engines.includes('SPU') ? 'spu' : d.engines.includes('GPU') ? 'gpu' : 'cpu';
 const title = d => /revision|rays/.test(d.subtitle) ? `${d.title} ${d.subtitle}` : d.title;
+const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+const gauge = d => { const on = Math.round(d.payloadBytes / 4096 * 32); return `<div class="gauge" aria-hidden="true">${Array.from({ length: 32 }, (_, i) => `<i class="${i < on ? 'on' : ''}"></i>`).join('')}</div>`; };
+// Anything that animates on the page pauses while a cartridge plays in the dialog or the tab is hidden.
+const quiet = () => document.hidden || $('#detail').open;
+const onQuietChange = fns => { document.addEventListener('visibilitychange', fns); $('#detail').addEventListener('close', fns); };
+
+/* ── backdrop: the tiling background is a cartridge (examples/backdrop.asm) running on its own machine ── */
+(function backdrop() {
+  const canvas = $('#backdrop');
+  if (!canvas.transferControlToOffscreen || !window.Worker) return;
+  const SCALE = innerWidth < 760 ? 2 : 3;
+  const worker = new Worker(new URL('./backdrop-worker.js', import.meta.url), { type: 'module' });
+  const size = () => ({ width: Math.ceil(innerWidth), height: Math.ceil(innerHeight) });
+  const theme = () => {
+    const css = getComputedStyle(document.documentElement);
+    const room = css.getPropertyValue('--room').trim().replace('#', '');
+    const dark = css.getPropertyValue('color-scheme').trim() === 'dark';
+    return { dark, room: [0, 2, 4].map(i => parseInt(room.slice(i, i + 2), 16)), line: dark ? .32 : 1.5, glow: dark ? .28 : .32 };
+  };
+  const off = canvas.transferControlToOffscreen();
+  const running = () => !reduced.matches && !quiet();
+  worker.postMessage({ type: 'init', canvas: off, ...size(), scale: SCALE, theme: theme(), running: running() }, [off]);
+  worker.onmessage = ({ data }) => {
+    if (data.type === 'ready') $('#bd-status').textContent = `${fmt(data.payloadBytes)} bytes, running live on DB32 in your browser`;
+  };
+  let pending = 0;
+  addEventListener('resize', () => { cancelAnimationFrame(pending); pending = requestAnimationFrame(() => worker.postMessage({ type: 'resize', ...size() })); });
+  const sync = () => worker.postMessage({ type: 'run', running: running() });
+  onQuietChange(sync); reduced.addEventListener('change', sync);
+  $('#detail').addEventListener('toggle', sync);
+  // follow theme changes, both from the OS and from the design switcher's data-theme attribute
+  const retheme = () => worker.postMessage({ type: 'theme', theme: theme() });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', retheme);
+  new MutationObserver(retheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  // the pattern recedes a little once the reader is past the hero
+  const fade = () => document.documentElement.style.setProperty('--bd', String(1 - Math.min(1, scrollY / 900) * .45));
+  addEventListener('scroll', fade, { passive: true }); fade();
+})();
+
+/* ── the machine diagram ──
+   One loop of the frame cycle every PERIOD ms: the CPU fetches and starts a GPU job, the GPU's lanes draw into the
+   back frame in RAM, and at vblank video scans the finished frame out. The SPU writes audio blocks throughout. */
+(function diagram() {
+  const PERIOD = 3200;
+  const root = $('#machine'), grid = $('#m-grid'), svg = $('#m-wires');
+  const HEX = '44 42 33 32 04 00 00 00 f8 0f 00 00 00 00 00 00 10 01 00 00 0e 11 61 01 10 d2 02 00 0e 22 c0 06 10 f3 02 00 0e 33 78 00 0c 04 ff ff 01 05 00 00 0c 06 04 00 0c 08 08 00 07 55 08 00 12 17 00 00 05 55 07 00 0c 11 01 00 0c 66 ff ff 1a 06 fa ff'.split(' ');
+  // Daybreak's frame loop, from design/previews/src/daybreak.asm
+  const CODE = [
+    ['sw   r10, 0x40(r13)', '; back buffer'], ['addi r1, r0, 1', ''], ['sw   r1, 16(r13)', '; start GPU'],
+    ['wgpu: wfi', ''], ['lw   r1, 20(r13)', '; GPU done?'], ['beq  r1, r2, wgpu', ''],
+    ['sw   r10, 0(r14)', '; show frame'], ['sw   r2, 20(r14)', ''], ['wvbl: wfi', '; vblank'],
+    ['xor  r10, r10, r11', '; swap'], ['j    frame', ''],
+  ];
+  const OPS = ['g.id g26, 0', 'g.itof g21, g26', 'g.fmul g1, g26, g27', 'g.uniform g26, 1', 'g.ftoi g27, g1', 'g.sub g26, g27, g26', 'g.shr g27, g27, g30', 'g.fli g23, 110.0'];
+  const SHOTS = ['pelican-k01', 'carpet-k03', 'limit-set-k02', 'daybreak-k04', 'pelican-k05', 'carpet-k06', 'limit-set-k05', 'daybreak-k06'].map(f => `previews/${f}.png`);
+  const steps = [...document.querySelectorAll('#m-cap li')];
+  const stepText = ['CPU starts a GPU job', 'GPU draws the next frame', 'Video shows it at vblank'];
+
+  $('#m-hex').innerHTML = HEX.map(b => `<span>${b}</span>`).join(' ');
+  const hex = [...$('#m-hex').children];
+  $('#m-code').innerHTML = CODE.map(([c, k]) => `<li>${c.padEnd(19)}${k}</li>`).join('');
+  const code = [...$('#m-code').children];
+  $('#m-lanes').innerHTML = '<i></i>'.repeat(64);
+  const lanes = [...$('#m-lanes').children];
+  const img = $('#m-img'), next = $('#m-next'), beam = $('#m-beam');
+  img.src = SHOTS[0];
+  const blocks = Object.fromEntries([...grid.children].map(b => [b.dataset.k, b]));
+  const fa = $('#m-fa'), fb = $('#m-fb');
+
+  /* wires: a bus between the rows, stubs down from CPU/GPU/SPU and up to RAM/Video, and the ROM's edge onto the bus */
+  let routes = {}, packets = [];
+  const NS = 'http://www.w3.org/2000/svg';
+  function layout() {
+    const box = svg.getBoundingClientRect();
+    if (!box.width || getComputedStyle(svg).display === 'none') { routes = {}; return; }
+    const r = k => { const b = blocks[k].getBoundingClientRect(); return { l: b.left - box.left, r: b.right - box.left, t: b.top - box.top, b: b.bottom - box.top, x: (b.left + b.right) / 2 - box.left }; };
+    const rom = r('rom'), cpu = r('cpu'), gpu = r('gpu'), spu = r('spu'), ram = r('ram'), vid = r('vid');
+    const y = (cpu.b + ram.t) / 2, end = spu.r;
+    const ramX = gpu.x; // RAM's port sits under the GPU
+    const P = { rom: [rom.r, y], cpu: [cpu.x, cpu.b], gpu: [gpu.x, gpu.b], spu: [spu.x - 18, spu.b], ram: [ramX, ram.t], ramA: [ramX, ram.t], vid: [vid.x, vid.t] };
+    const via = (a, b) => { const [ax, ay] = P[a], [bx, by] = P[b]; return [[ax, ay], [ax, y], [bx, y], [bx, by]]; };
+    routes = { fetch: via('rom', 'cpu'), start: via('cpu', 'gpu'), draw: via('gpu', 'ram'), scan: via('ram', 'vid'), sound: via('spu', 'ram') };
+    const d = pts => 'M' + pts.map(p => p.map(v => v.toFixed(1)).join(' ')).join(' L');
+    svg.innerHTML = `<path class="bus" d="M${rom.r} ${y} H${end}"/>` +
+      ['cpu', 'gpu', 'spu', 'ram', 'vid'].map(k => `<path d="M${P[k][0]} ${P[k][1]} V${y}"/>`).join('') +
+      `<text x="${end - 2}" y="${y - 5}" text-anchor="end">bus</text>`;
+    packets = [];
+  }
+  const along = (pts, t) => {
+    const seg = pts.slice(1).map((p, i) => Math.hypot(p[0] - pts[i][0], p[1] - pts[i][1]));
+    let d = t * seg.reduce((a, b) => a + b, 0);
+    for (let i = 0; i < seg.length; i++) {
+      if (d <= seg[i] || i === seg.length - 1) { const f = seg[i] ? Math.min(1, d / seg[i]) : 0; return [pts[i][0] + (pts[i + 1][0] - pts[i][0]) * f, pts[i][1] + (pts[i + 1][1] - pts[i][1]) * f]; }
+      d -= seg[i];
+    }
+  };
+  function packet(color) { const el = document.createElementNS(NS, 'rect'); el.setAttribute('width', 7); el.setAttribute('height', 7); el.style.fill = color; svg.appendChild(el); return el; }
+  // [route, start ms, duration ms, colour]
+  const FLIGHTS = [
+    ['fetch', 0, 420, 'var(--ink)'], ['start', 420, 420, 'var(--accent)'],
+    ['draw', 1000, 520, 'var(--gpu)'], ['draw', 1250, 520, 'var(--gpu)'], ['draw', 1500, 520, 'var(--gpu)'], ['draw', 1750, 520, 'var(--gpu)'],
+    ['scan', 2250, 460, 'var(--accent)'],
+    ['sound', 200, 700, 'var(--spu)'], ['sound', 1267, 700, 'var(--spu)'], ['sound', 2333, 700, 'var(--spu)'],
+  ];
+
+  /* SPU oscilloscope: a detuned saw pair through a slow filter sweep, drawn from the same kind of maths a kernel runs */
+  const scope = $('#m-scope'), sctx = scope.getContext('2d');
+  function drawScope(t) {
+    const w = scope.clientWidth, h = scope.clientHeight, dpr = devicePixelRatio || 1;
+    if (!w) return;
+    if (scope.width !== Math.round(w * dpr)) { scope.width = Math.round(w * dpr); scope.height = Math.round(h * dpr); }
+    sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    sctx.clearRect(0, 0, w, h);
+    sctx.strokeStyle = getComputedStyle(root).getPropertyValue('--spu');
+    sctx.lineWidth = 1.5;
+    sctx.beginPath();
+    const beat = (t / 468.75) % 1, env = Math.exp(-beat * 3.2) * .85 + .15, cut = 2 + 5 * (.5 + .5 * Math.sin(t / 1900));
+    for (let x = 0; x <= w; x += 1) {
+      const p = x / w * 3 + t / 900;
+      let v = 0;
+      for (let k = 1; k <= cut; k++) v += (Math.sin(2 * Math.PI * k * p) + Math.sin(2 * Math.PI * k * p * 1.007 + 1)) / k;
+      const y = h / 2 - v * env * h * .16;
+      x ? sctx.lineTo(x, y) : sctx.moveTo(x, y);
+    }
+    sctx.stroke();
+  }
+
+  let shot = 0, lastCycle = -1, frame = 412, visible = true, raf = 0, t0 = performance.now();
+  function show(t) {
+    const cycle = Math.floor(t / PERIOD), c = t % PERIOD;
+    if (cycle !== lastCycle) {
+      lastCycle = cycle;
+      shot = (shot + 1) % SHOTS.length;
+      next.src = SHOTS[shot];
+      new Image().src = SHOTS[(shot + 1) % SHOTS.length]; // warm the following frame
+      const back = cycle % 2 ? fa : fb; back.firstChild.style.width = '0';
+    }
+    const phase = c < 900 ? 0 : c < 2250 ? 1 : 2;
+    steps.forEach((s, i) => s.classList.toggle('on', i === phase));
+    $('#m-step span').textContent = stepText[phase];
+    // blocks light up while they work
+    blocks.rom.classList.toggle('on', c < 420); blocks.cpu.classList.toggle('on', c < 900 || c > 2200 && c < 2500);
+    blocks.gpu.classList.toggle('on', c >= 840 && c < 2250); blocks.ram.classList.toggle('on', c >= 1000 && c < 2710);
+    blocks.vid.classList.toggle('on', c >= 2250); blocks.spu.classList.toggle('on', true);
+    // ROM fetch cursor walks the cartridge bytes
+    const at = Math.floor(t / 90) % hex.length;
+    hex.forEach((h, i) => h.classList.toggle('pc', i === at || i === at + 1 || i === at + 2 || i === at + 3));
+    // CPU program counter follows the frame loop
+    const line = c < 280 ? 0 : c < 560 ? 1 : c < 900 ? 2 : c < 2250 ? 3 + Math.floor(c / 180) % 3 : c < 2450 ? 6 + (c > 2350) : c < 3000 ? 8 : c < 3100 ? 9 : 10;
+    code.forEach((l, i) => l.classList.toggle('pc', i === line));
+    code[0].parentNode.style.transform = `translateY(${-Math.max(0, Math.min(line - 2, CODE.length - 5)) * 17}px)`;
+    // GPU lanes: a wave of busy lanes while the job runs
+    const busy = c >= 840 && c < 2250;
+    const k = Math.floor(t / 70);
+    lanes.forEach((l, i) => l.classList.toggle('on', busy && ((i * 7 + k * 5 + (i >> 3) * 3) % 11) < 6));
+    if (busy && k % 3 === 0) $('#m-op').innerHTML = `<b>›</b> ${OPS[k / 3 % OPS.length | 0]}`;
+    if (!busy && c > 2300) $('#m-op').innerHTML = 'idle · waiting for the CPU';
+    // RAM: the back frame fills while the GPU draws; at vblank the two frames swap roles
+    const back = cycle % 2 ? fa : fb, front = cycle % 2 ? fb : fa;
+    back.firstChild.style.width = `${Math.max(0, Math.min(1, (c - 1000) / 1270)) * 100}%`;
+    front.firstChild.style.width = '0';
+    back.classList.toggle('shown', c >= 2250); front.classList.toggle('shown', c < 2250);
+    // Video: the finished frame scans in top to bottom after vblank
+    const s = Math.max(0, Math.min(1, (c - 2500) / 520));
+    next.style.clipPath = `inset(0 0 ${(1 - s) * 100}% 0)`;
+    beam.style.top = `${s * 100}%`; beam.style.opacity = s > 0 && s < 1 ? .8 : 0;
+    if (s >= 1 && img.src !== next.src) { img.src = next.src; }
+    $('#m-frame').textContent = String(frame + Math.floor(t / 1000 * 60)).padStart(4, '0');
+    // packets on the bus
+    if (!packets.length && routes.fetch) packets = FLIGHTS.map(f => packet(f[3]));
+    FLIGHTS.forEach(([route, start, dur], i) => {
+      const el = packets[i]; if (!el) return;
+      const u = (c - start + PERIOD) % PERIOD / dur;
+      if (u > 1) { el.style.display = 'none'; return; }
+      const [x, y] = along(routes[route], u);
+      el.style.display = ''; el.setAttribute('x', (x - 3.5).toFixed(1)); el.setAttribute('y', (y - 3.5).toFixed(1));
+    });
+    drawScope(t);
+  }
+  function loop(now) { raf = 0; show(now - t0); schedule(); }
+  function schedule() { if (!raf && visible && !quiet() && !reduced.matches) raf = requestAnimationFrame(loop); }
+  new ResizeObserver(() => { layout(); if (reduced.matches) show(2400); }).observe(grid);
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; schedule(); }).observe(root);
+  onQuietChange(schedule); reduced.addEventListener('change', () => { layout(); schedule(); show(2400); });
+  layout(); show(reduced.matches ? 2400 : 0); schedule();
+})();
+
+/* ── featured demos ── */
+$('#feat').innerHTML = FEATURED.map(id => byId[id]).filter(Boolean).map(d => `<button class="tile" type="button" data-id="${d.id}" aria-label="Run ${title(d)} live, ${fmt(d.payloadBytes)} bytes">
+  <span class="pic"><img src="${poster(d)}" alt="" width="160" height="120" loading="lazy"><span class="play"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 0 10 5 1 10z" fill="currentColor"/></svg>Run live</span></span>
+  <span class="by">by <b>${d.author}</b> · ${Math.round(d.seconds)} s${d.audio ? ' · with sound' : ''}</span>
+  <h3>${title(d)}</h3><p>${d.description ?? d.notes[0] ?? ''}</p>
+  ${gauge(d)}<span class="gauge-cap"><span>${fmt(d.payloadBytes)} of 4,096 B</span><span>${fmt(4096 - d.payloadBytes)} free</span></span></button>`).join('');
+document.querySelectorAll('.tile').forEach(tile => {
+  const d = byId[tile.dataset.id], img = tile.querySelector('img');
+  const live = on => { img.src = on ? `previews/${d.gif}` : poster(d); };
+  tile.addEventListener('mouseenter', () => live(true)); tile.addEventListener('mouseleave', () => live(false));
+  tile.addEventListener('click', () => open(d, true));
+  tile.addEventListener('pointerenter', () => source(d).catch(() => {}), { once: true });
+});
+
+/* ── agent kit: copy buttons ── */
+document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(b.previousElementSibling.textContent.trim()); b.textContent = 'Copied'; }
+  catch { b.textContent = 'Select'; }
+  setTimeout(() => b.textContent = 'Copy', 1600);
+}));
 
 /* ── cartridge geometry ──
    The outline is a rounded rectangle (top corners RT, bottom corners RB), traced clockwise in screen space.
@@ -188,7 +688,7 @@ function sides() {
 const SIDES = sides();
 const model = (front) => `<div class="model" style="--w:${W}px;--h:${H}px;--d:${D}px;--rt:${RT}px;--rb:${RB}px">
   <i class="plate back"></i>${SIDES}<i class="plate front">${front}</i></div>`;
-const label = d => `<div class="sticker"><img src="${poster(d)}" alt="" width="160" height="120"><h3>${title(d)}</h3>
+const label = d => `<div class="sticker"><img src="${poster(d)}" alt="" width="160" height="120" loading="lazy"><h3>${title(d)}</h3>
   <div class="row"><span>${d.no}</span><span>${fmt(d.payloadBytes)} B</span></div></div><div class="brand">DB32</div>`;
 
 /* ── shelf ── */
@@ -202,8 +702,8 @@ $('#tabs').addEventListener('click', e => {
 $('#carts').innerHTML = list.map(d => `<button class="slot cart ${kind(d)}" type="button" data-id="${d.id}" aria-label="${title(d)}, ${fmt(d.payloadBytes)} bytes. Show details.">
     ${model(label(d))}<div class="shadow"></div>
     <div class="cap">${title(d)}<small>${d.author ? `by ${d.author} · ` : ''}${fmt(d.payloadBytes)} B · ${d.engines.join('+')}</small></div></button>`).join('')
-  + `<div class="slot cart blank">${model('<div class="sticker"><p>Your agent’s<br>demo here<br><br>pilot · 12 tasks</p></div><div class="brand">DB32</div>')}
-    <div class="shadow"></div><div class="cap">Blank cartridge<small>pilot benchmark opens soon</small></div></div>`;
+  + `<a class="slot cart blank" href="#kit">${model('<div class="sticker"><p>Your agent’s<br>demo here<br><br>get the kit</p></div><div class="brand">DB32</div>')}
+    <div class="shadow"></div><div class="cap">Blank cartridge<small>give your agent the kit</small></div></a>`;
 
 // hover plays the demo on the label; the static poster returns afterwards
 document.querySelectorAll('.slot[data-id]').forEach(slot => {
@@ -303,7 +803,7 @@ Object.defineProperty(window, '__cartPlayer', { get: () => ({
 
 /* ── detail ── */
 function open(d, gesture = false) {
-  const dlg = $('#detail'), on = Math.round(d.payloadBytes / 4096 * 32);
+  const dlg = $('#detail');
   dlg.innerHTML = `<div class="sheet${d.author ? ' agent-sheet' : ''}">
     <div class="pic">
       <div class="screen" id="screen"><img src="${poster(d)}" alt=""><canvas width="160" height="120" aria-label="${title(d)}, running live on the DB32 machine"></canvas><span class="boot">Starting the machine…</span></div>
@@ -314,7 +814,7 @@ function open(d, gesture = false) {
       <div class="cat">${d.no} · ${d.author ? `<b>by ${d.author}</b>` : 'reference cartridge'}</div>
       <h2>${title(d)}</h2><p class="sub">${d.subtitle}</p>
       <p>${d.description ?? d.notes[0] ?? ''}</p>
-      <div class="gauge" aria-hidden="true">${Array.from({ length: 32 }, (_, i) => `<i class="${i < on ? 'on' : ''}"></i>`).join('')}</div>
+      ${gauge(d)}
       <div class="gauge-cap"><span>${fmt(d.payloadBytes)} of 4,096 bytes</span><span>${fmt(4096 - d.payloadBytes)} free</span></div>
       <dl class="facts">
         <div><dt>Hardware</dt><dd>${d.engines.join(' + ')}</dd></div><div><dt>Profile</dt><dd>${d.profile}</dd></div>

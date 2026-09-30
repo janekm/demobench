@@ -19,7 +19,8 @@ function page(from, to, replacements) {
   writeFileSync(resolve(web, to), html);
 }
 const common = [['<script src="switcher.js"></script>\n', ''], ['href="console.html"', 'href="./"']];
-page('console.html', 'index.html', [...common, ["'../web/audio-player.js'", "'./audio-player.js'"], ["'../web/machine-worker.js'", "'./machine-worker.js'"]]);
+page('console.html', 'index.html', [...common, ["'../web/audio-player.js'", "'./audio-player.js'"], ["'../web/machine-worker.js'", "'./machine-worker.js'"],
+  ["'../web/backdrop-worker.js'", "'./backdrop-worker.js'"]]);
 page('studio.html', 'studio.html', [...common, ['src="../web/app.js"', 'src="./app.js"'], ['value="../design/previews/src/', 'value="previews/src/']]);
 page('notes.html', 'notes.html', [...common, ["const SHELF = 'console.html'", "const SHELF = './'"]]);
 
@@ -37,6 +38,8 @@ for (const r of records) {
   copy(`src/${r.id}.asm`);
   if (r.readme) copy(r.readme); // the author's notes, rendered by notes.html
 }
+// frames cycled by the homepage's machine diagram that are not already part of a scene strip
+for (const file of ['pelican-k01.png', 'pelican-k05.png']) copy(file);
 const slim = records.map((r) => ({
   id: r.id, title: r.title, subtitle: r.subtitle, author: r.author, description: r.description, notes: r.notes.slice(0, 1),
   profile: r.profile, format: r.format, engines: r.engines, payloadBytes: r.payloadBytes, lines: r.lines, seconds: r.seconds,

@@ -8,7 +8,7 @@ A benchmark project for agents that learn a small unfamiliar machine, write a ti
 
 All four profiles share a 4,096-byte cartridge limit, 128 KiB working RAM, a sixteen-register integer CPU, and 160×120 scanout. Video supports 1/2/4/8-bit indexed buffers with RGB palettes and RGB888. Guest CPU or GPU assembly writes every displayed pixel or palette entry. In `spu-1`, guest `g.*` kernels also write stereo sample buffers and persistent DSP state in RAM. The reference CPU, GPU, SPU, assembler, bus, clock, and video controller execute in the same import-free WASM module. The browser can accelerate eligible guest GPU and SPU kernels using WebGPU.
 
-The site opens on a cartridge shelf of captured demos; the machine boots in the background after the page loads, so clicking a cartridge runs it live, with sound, straight away. The Studio (`/studio.html`) offers playback, pause, frame stepping, reset, editable assembly, a live register and telemetry inspector, a listing, and PNG/cartridge export. A Node headless host executes the identical module and captures PNG plus exact raw-frame hashes. The future Wasmtime embedding is not implemented yet.
+The homepage explains the benchmark around an animated diagram of the machine, features the strongest agent-made demos, points to the agent kit, and ends with the full cartridge shelf. The machine boots in the background after the page loads, so clicking any demo runs it live, with sound, straight away. The page's tiling background is itself a cartridge, [backdrop.asm](examples/backdrop.asm) (486 bytes): the CPU draws a Truchet pattern once and then only cycles 40 palette entries per vblank, running on a second machine instance in a worker. The Studio (`/studio.html`) offers playback, pause, frame stepping, reset, editable assembly, a live register and telemetry inspector, a listing, and PNG/cartridge export. A Node headless host executes the identical module and captures PNG plus exact raw-frame hashes. The future Wasmtime embedding is not implemented yet.
 
 ## Run locally
 
@@ -69,6 +69,7 @@ demos and checks their rendered frames and audio against delayed originals.
 | [GPU ray tracer](examples/gpu-ray-tracer.asm) | 1,652 B | Animated point lighting, shadows, three surface hits, sphere/floor reflections, and double-buffered presentation |
 | [Signal garden](examples/signal-garden.asm) | 1,400 B | Guest-programmed stereo signal generation and visual output using the shared kernel ISA |
 | [Neon stadium](examples/neon-stadium.asm) | 3,604 B | Sustained seven-saw stereo riff, drums, bass and an eight-bar build/drop at 128 BPM |
+| [Backdrop](examples/backdrop.asm) | 486 B | The homepage's tiling I8 wallpaper: Truchet arcs drawn once, with a glow animated purely by palette cycling |
 
 The sizes exclude only the fixed 32-byte validated cartridge header. No host-generated images, fonts, or asset sidecars are loaded into the guest.
 
@@ -87,7 +88,7 @@ Supersaw and Carpet are the unchanged submitted cartridges from the sibling `../
 
 LIMIT SET and Elsewhere are the unchanged submitted cartridges from `../opus_demo` (`limit.asm`, `elsewhere.asm`; readable sources in `limit/` and `elsewhere/`). Lightcone is the unchanged `lightcone.packed.asm` from the sibling `../opusdemo2` project. All three are packed `dynamic-1` cartridges and assemble byte-identically to their submitted `.db32` files on the current engine. The reference WASM engine presents a new image every one to three vblanks; WebGPU plays them at full rate. Each author's README, minus its local file table and build steps, is published as a notes page (`/notes.html?demo=elsewhere`), linked as **How it works** from the cartridge's details. Regenerate their shelf assets and notes with `node design/tools/make-previews.mjs --only limit-set,elsewhere,lightcone`.
 
-Edit the shelf, Studio and notes page in `design/console.html`, `design/studio.html` and `design/notes.html`, then run `publish-web.mjs` to refresh the deployed pages and preview records in `web/`.
+Edit the homepage, Studio and notes page in `design/console.html`, `design/studio.html` and `design/notes.html`, then run `publish-web.mjs` to refresh the deployed pages and preview records in `web/`.
 
 The ray tracer progressively fills the screen, then halts. It traces up to three surface hits per pixel (two reflection bounces), including sphere-to-sphere, sphere-to-floor, and floor-to-sphere paths. Each hit casts a finite shadow ray toward a point light; unblocked surfaces receive diffuse/specular illumination with distance attenuation. Positions use Q4 fixed point, directions use Q10, and normalization, square root, division, and gamma correction all run as guest instructions. A small constant ambient term remains in shadows; this is bounded Whitted ray tracing, without indirect diffuse illumination. The example finishes within 480 virtual frames (eight seconds at 60 Hz). Select **Ray tracer / spheres & reflections** in the viewer's demo menu.
 
