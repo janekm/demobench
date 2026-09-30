@@ -42,6 +42,11 @@ const LIMIT_SET_SCENES = [
   ['{4,3,6}', 1900], ['{4,3,∞}', 2560], ['Indra’s pearls', 2800], ['Outside, OPUS', 3380],
 ];
 // LIGHTCONE: nine 384-frame scenes (the ninth returns to the star and is left out), one window each.
+// KOI: nine 400-frame scenes; one window from each except the tilt back down.
+const KOI_SCENES = [
+  ['A drop falls', 150], ['KOI pressed into the water', 470], ['Tilt to the sky', 1080], ['Wind', 1750],
+  ['Rain shower', 2150], ['Koi rise', 2550], ['Golden hour', 2950], ['Dusk', 3330],
+];
 const LIGHTCONE_SCENES = [
   ['Light echo', 110], ['Kick echoes', 580], ['Clap echoes', 1048], ['Relativistic flight', 1242],
   ['Terrell rotation', 1662], ['Photoelastic disks', 2022], ['Force-chain surges', 2382], ['0.99 c', 2922],
@@ -82,6 +87,16 @@ const DEMOS = [
     description: 'Light slowed down so you can watch it work: light echoes sweeping through a dust nebula, a flight to 0.99 c with aberration and Doppler shift, a title turned by light-travel time (Terrell rotation), and force chains glowing in photoelastic glass disks. Original 150 BPM hard techno, packed to 4,071 bytes.',
     segments: LIGHTCONE_SCENES.map(([, at]) => [at, at + 96]), poster: 5,
     scenes: LIGHTCONE_SCENES.map(([name], i) => ({ name, at: Math.round(i * 6.4 * 10) / 10 })) },
+  { id: 'koi', title: 'Koi', subtitle: 'koi pond · 60 s', author: 'Opus 5.5', source: '../opusdemo2/koi/koi.packed.asm', frames: 3600, step: 4, fps: 15, readme: '../opusdemo2/koi/README.md',
+    description: 'A koi pond seen from above and at a slant, from morning light through wind and a rain shower to a golden evening. The water is a GPU wave equation plus Gerstner waves and ripples; refraction, Beer–Lambert absorption and caustics traced back to the pond floor light a school of koi that swim as boids. The title is pressed into the surface and ripples away. Silent, packed to 4,061 bytes.',
+    segments: KOI_SCENES.map(([, at]) => [at, at + 96]), poster: 1,
+    scenes: KOI_SCENES.map(([name, at]) => ({ name, at: Math.round(at / 6) / 10 })) },
+  // one full 20-second camera orbit, starting after extraction
+  { id: 'pelican-pedal-club', title: 'Pelican Pedal Club', subtitle: 'beach ride · 120 BPM', author: 'Sol 6.1', source: '../sol61demo/artifacts/pelican.packed.asm', frames: 1216, skip: 16, step: 4, fps: 15, readme: '../sol61demo/README.md',
+    description: 'A white pelican in a coral cap pedals a turquoise bicycle along the beach, past a palm tree and a striped parasol, while the camera circles it. Fifty analytic ellipsoids make up the rider, bike and scenery; animated ocean normals reflect the clouds and break the sun into a moving golden trail. A 120 BPM stereo loop of plucks, bass and kick runs through a cross-feedback delay. Packed to 4,045 bytes.' },
+  // the first 20 seconds of its uncut 60-second camera move
+  { id: 'pelican-bicycle', title: 'Pelican on a Bicycle', subtitle: 'golden-hour beach · 88 BPM', author: 'Sonnet 5.5', source: '../sonnet_demo_2/deliverable/pelican_bicycle.packed.asm', frames: 1216, skip: 16, step: 4, fps: 15,
+    description: 'A pelican in sunglasses rides a red beach cruiser in circles on the sand at golden hour, pedalling once per bar of the music. Forty-nine capsules and ray-marched tyres, hard ray-traced shadows, a glittering sea with Fresnel reflections and a tyre track in the sand; the camera swings, dollies and rises without a cut. An eight-voice FM and noise synth plays a G-major loop at 88 BPM with a ping-pong echo. Packed to 4,094 bytes.' },
   { id: 'aurora', title: 'Aurora', subtitle: 'indexed colour', frames: 240, step: 2, fps: 30 },
   { id: 'rgb-study', title: 'RGB study', subtitle: 'true colour', frames: 90, step: 1, fps: 30, hold: 2.5 },
   { id: 'ray-tracer', title: 'Ray tracer', subtitle: 'spheres & reflections', frames: 480, step: 6, fps: 20, hold: 2.5 },
@@ -123,7 +138,7 @@ function bytemap(id, payload) {
 // The author's README becomes the demo's notes page: the local file table and build instructions are left out.
 function notes(demo) {
   const text = readFileSync(resolve(root, demo.readme), 'utf8').replace(/\r\n/g, '\n');
-  const kept = text.split(/\n(?=## )/).filter((s) => !/^## (Build|Rebuilding)\b/.test(s)).join('\n')
+  const kept = text.split(/\n(?=## )/).filter((s) => !/^## (Build|Rebuilding|Play|Reproduce)\b/.test(s)).join('\n')
     .replace(/\n\| file \| what \|\n(\|.*\n)+/, '\n').replace(/\n{3,}/g, '\n\n');
   mkdirSync(resolve(out, 'notes'), { recursive: true });
   writeFileSync(resolve(out, 'notes', `${demo.id}.md`), kept.trimEnd() + '\n');

@@ -435,8 +435,8 @@ npm run viewer</code><button type="button" data-copy>Copy</button></div></li>
 <script type="module">
 import { PcmAudioPlayer } from './audio-player.js';
 
-const ORDER = ['daybreak','pelican','limit-set','elsewhere','lightcone','astra','supersaw','carpet','aurora','rgb-study','ray-tracer','ray-tracer-r1','gpu-ray-tracer','gpu-ray-tracer-fast','signal-garden','neon-stadium'];
-const FEATURED = ['pelican','carpet','limit-set','daybreak'];
+const ORDER = ['daybreak','pelican','koi','limit-set','pelican-pedal-club','pelican-bicycle','elsewhere','lightcone','astra','supersaw','carpet','aurora','rgb-study','ray-tracer','ray-tracer-r1','gpu-ray-tracer','gpu-ray-tracer-fast','signal-garden','neon-stadium'];
+const FEATURED = ['pelican','koi','carpet','daybreak'];
 const list = ORDER.map(id => DEMOS.find(d => d.id === id)).filter(Boolean);
 list.forEach((d, i) => d.no = `DB-${201 + i}`);
 const byId = Object.fromEntries(list.map(d => [d.id, d]));
@@ -499,7 +499,7 @@ const onQuietChange = fns => { document.addEventListener('visibilitychange', fns
     ['xor  r10, r10, r11', '; swap'], ['j    frame', ''],
   ];
   const OPS = ['g.id g26, 0', 'g.itof g21, g26', 'g.fmul g1, g26, g27', 'g.uniform g26, 1', 'g.ftoi g27, g1', 'g.sub g26, g27, g26', 'g.shr g27, g27, g30', 'g.fli g23, 110.0'];
-  const SHOTS = ['pelican-k01', 'carpet-k03', 'limit-set-k02', 'daybreak-k04', 'pelican-k05', 'carpet-k06', 'limit-set-k05', 'daybreak-k06'].map(f => `previews/${f}.png`);
+  const SHOTS = ['pelican-k01', 'carpet-k03', 'koi-k01', 'daybreak-k04', 'pelican-k05', 'carpet-k06', 'koi-k06', 'daybreak-k06'].map(f => `previews/${f}.png`);
   const steps = [...document.querySelectorAll('#m-cap li')];
   const stepText = ['CPU starts a GPU job', 'GPU draws the next frame', 'Video shows it at vblank'];
 

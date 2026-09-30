@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const design = resolve(root, 'design'), previews = resolve(design, 'previews'), web = resolve(root, 'web');
-const ORDER = ['daybreak', 'pelican', 'limit-set', 'elsewhere', 'lightcone', 'astra', 'supersaw', 'carpet', 'aurora', 'rgb-study', 'ray-tracer', 'ray-tracer-r1', 'gpu-ray-tracer', 'gpu-ray-tracer-fast', 'signal-garden', 'neon-stadium'];
+const ORDER = ['daybreak', 'pelican', 'koi', 'limit-set', 'pelican-pedal-club', 'pelican-bicycle', 'elsewhere', 'lightcone', 'astra', 'supersaw', 'carpet', 'aurora', 'rgb-study', 'ray-tracer', 'ray-tracer-r1', 'gpu-ray-tracer', 'gpu-ray-tracer-fast', 'signal-garden', 'neon-stadium'];
 
 function page(from, to, replacements) {
   let html = readFileSync(resolve(design, from), 'utf8');
