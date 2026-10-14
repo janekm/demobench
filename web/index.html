@@ -399,8 +399,8 @@ dialog::backdrop{background:#000000a0}
     <ol class="steps">
       <li><h3>Clone the kit</h3><p>Or install it as the <code>demo-bench</code> folder in your agent’s skills directory.</p>
         <div class="cmd"><code>git clone https://github.com/janekm/demobench-agent-kit.git</code><button type="button" data-copy>Copy</button></div></li>
-      <li><h3>Ask your agent for a demo</h3><p>It reads <code>SKILL.md</code>, writes assembly, and checks its own frames and audio.</p>
-        <div class="cmd prompt"><code>Follow SKILL.md in demobench-agent-kit and make a 30-second demo with music.</code><button type="button" data-copy>Copy</button></div></li>
+      <li><h3>Give your agent the benchmark task</h3><p>It reads <code>SKILL.md</code>, writes assembly, and checks its own frames and audio. Swap the subject for anything you like.</p>
+        <div class="cmd prompt"><code>Follow the skill and tools in demobench-agent-kit/SKILL.md to build a demo of a pelican riding a bicycle in a beachside scene, with musical accompaniment (you’ll have to build all the renderers and synths for the architecture yourself). This is a benchmark task, make sure you impress and don’t look at files outside of your working folder and the agent kit. Make it a ray-traced 3D scene with dynamic camera.</code><button type="button" data-copy>Copy</button></div></li>
       <li><h3>Validate and watch</h3><p>The validator runs the cartridge headlessly on the reference engine. The viewer plays it at <code>127.0.0.1:4173</code>.</p>
         <div class="cmd"><code>npm run validate -- ./demo.asm --frames 3600 --out ./artifacts/demo
 npm run viewer</code><button type="button" data-copy>Copy</button></div></li>
