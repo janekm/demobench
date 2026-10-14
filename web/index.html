@@ -158,18 +158,15 @@ section.band{padding:88px 0 0}
 .kitband ul{margin:18px 0 0;padding:0;list-style:none;font-size:14.5px;line-height:1.45;color:var(--mid)}
 .kitband ul li{padding:6px 0 6px 20px;border-top:1px solid var(--line);position:relative}
 .kitband ul li:before{content:"";position:absolute;left:2px;top:13px;width:7px;height:7px;background:var(--accent)}
-.steps{margin:0;padding:0;list-style:none;counter-reset:s}
-.steps li{counter-increment:s;padding:24px 36px 24px 84px;position:relative;border-top:1px solid var(--line)}
-.steps li:first-child{border-top:0}
-.steps li:before{content:counter(s,decimal-leading-zero);position:absolute;left:36px;top:24px;font-family:var(--mono);font-size:13px;color:var(--accent)}
-.steps h3{margin:0 0 4px;font-size:16px;font-weight:700}
-.steps p{margin:0 0 10px;font-size:14px;line-height:1.45;color:var(--mid)}
+.task{padding:36px;align-self:center}
+.task h3{margin:0 0 12px;font-size:16px;font-weight:700}
+.task p{margin:14px 0 0;font-size:14px;line-height:1.5;color:var(--mid)}
 .cmd{display:flex;align-items:stretch;border:1px solid var(--line);background:var(--room);min-width:0}
 .cmd code{flex:1;min-width:0;padding:10px 12px;font-size:12.5px;line-height:1.5;overflow-x:auto;white-space:pre}
 .cmd code .c{color:var(--mid)}
 .cmd button{border:0;border-left:1px solid var(--line);background:none;padding:0 14px;font-size:12px;font-weight:700;color:var(--mid)}
 .cmd button:hover{color:var(--ink);background:var(--well)}
-.cmd.prompt code{font-family:var(--ui);font-size:14px;white-space:normal}
+.cmd.prompt code{font-family:var(--ui);font-size:14px;line-height:1.55;white-space:normal;overflow-wrap:anywhere}
 
 /* ── shelf ── */
 .tabs{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:-23px}
@@ -276,7 +273,7 @@ dialog::backdrop{background:#000000a0}
   .band-head{grid-template-columns:minmax(0,1fr)}
   .tabs{margin-bottom:-23px}
   .feat{gap:28px 12px}.tile h3{font-size:17px}.tile p{font-size:13px}
-  .kitband .pitch{padding:24px 18px}.steps li{padding:20px 18px 20px 52px}.steps li:before{left:18px;top:21px}
+  .kitband .pitch{padding:24px 18px}.task{padding:24px 18px}
   .carts{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 6px}
   .slot .model{scale:.82;margin:-16px 0}
   .sheet{grid-template-columns:minmax(0,1fr)}
@@ -396,15 +393,11 @@ dialog::backdrop{background:#000000a0}
         <a class="btn ghost" href="https://github.com/janekm/demobench">Engine source</a>
       </div>
     </div>
-    <ol class="steps">
-      <li><h3>Clone the kit</h3><p>Or install it as the <code>demo-bench</code> folder in your agent’s skills directory.</p>
-        <div class="cmd"><code>git clone https://github.com/janekm/demobench-agent-kit.git</code><button type="button" data-copy>Copy</button></div></li>
-      <li><h3>Give your agent the benchmark task</h3><p>It reads <code>SKILL.md</code>, writes assembly, and checks its own frames and audio. Swap the subject for anything you like.</p>
-        <div class="cmd prompt"><code>Follow the skill and tools in demobench-agent-kit/SKILL.md to build a demo of a pelican riding a bicycle in a beachside scene, with musical accompaniment (you’ll have to build all the renderers and synths for the architecture yourself). This is a benchmark task, make sure you impress and don’t look at files outside of your working folder and the agent kit. Make it a ray-traced 3D scene with dynamic camera.</code><button type="button" data-copy>Copy</button></div></li>
-      <li><h3>Validate and watch</h3><p>The validator runs the cartridge headlessly on the reference engine. The viewer plays it at <code>127.0.0.1:4173</code>.</p>
-        <div class="cmd"><code>npm run validate -- ./demo.asm --frames 3600 --out ./artifacts/demo
-npm run viewer</code><button type="button" data-copy>Copy</button></div></li>
-    </ol>
+    <div class="task">
+      <h3>Paste this into your coding agent</h3>
+      <div class="cmd prompt"><code>Follow the demo-bench skill at https://github.com/janekm/demobench-agent-kit (clone it and read SKILL.md) to build a demo of a pelican riding a bicycle in a beachside scene, with musical accompaniment. You’ll have to build all the renderers and synths for the architecture yourself. This is a benchmark task, so make sure you impress, and don’t look at files outside your working folder and the agent kit. Make it a ray-traced 3D scene with a dynamic camera.</code><button type="button" data-copy>Copy</button></div>
+      <p>The agent writes the assembly and checks its own frames and audio with the kit’s validator. To watch the result, run <code>npm run viewer</code> in the kit folder and open <code>127.0.0.1:4173</code>.</p>
+    </div>
   </section>
 
   <section class="band" id="cartridges">
